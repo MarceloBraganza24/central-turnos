@@ -6,13 +6,21 @@ import { getCache, setCache } from "@/lib/cache";
 
 export const runtime = "nodejs";
 
+type LocationItem = {
+  _id: {
+    city: string;
+    province: string;
+  };
+  count: number;
+};
+
 export default async function PublicLocationsPage() {
   
   await connectDB();
 
   const cacheKey = "public:locations";
 
-  const cachedLocations = await getCache<any[]>(cacheKey);
+  const cachedLocations = await getCache<LocationItem[]>(cacheKey);
 
   const locations =
     cachedLocations ||

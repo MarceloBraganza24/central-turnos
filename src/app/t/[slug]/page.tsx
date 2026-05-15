@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Tenant } from "@/models/Tenant";
 import { Professional } from "@/models/Professional";
 import { Availability } from "@/models/Availability";
+import Image from "next/image";
 
 export const runtime = "nodejs";
 
@@ -19,6 +20,13 @@ const days = [
 
 type Props = {
   params: Promise<{ slug: string }>;
+};
+
+type AvailabilityItem = {
+  _id: string;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
 };
 
 export default async function TenantPublicPage({ params }: Props) {
@@ -63,21 +71,23 @@ export default async function TenantPublicPage({ params }: Props) {
         <div className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900">
           <div className="p-8" style={{ backgroundColor: tenant.primaryColor }}>
             <div className="flex items-center gap-5">
-              {tenant.logoUrl ? (
-                <img
+              {tenant.logoUrl && (
+                <Image
                   src={tenant.logoUrl}
-                  alt={tenant.name}
+                  alt={tenant.name || "Logo"}
+                  width={80}
+                  height={80}
                   className="h-20 w-20 rounded-3xl object-cover"
                 />
-              ) : (
+              )} : (
                 <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-black/20 text-3xl font-bold">
                   {tenant.name.charAt(0)}
                 </div>
-              )}
+              )
 
               <div>
                 <p className="text-sm font-medium text-black/70">
-                  {(professional.category as any)?.name}
+                  {professional?.category?.name}
                 </p>
 
                 <h1 className="text-4xl font-bold text-black">
@@ -103,7 +113,7 @@ export default async function TenantPublicPage({ params }: Props) {
                 <h3 className="font-semibold">Horarios de atención</h3>
 
                 <div className="mt-3 divide-y divide-neutral-800">
-                  {availability.map((item: any) => (
+                  {availability.map((item: AvailabilityItem) => (
                     <div
                       key={item._id.toString()}
                       className="flex justify-between py-3 text-sm"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback,useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type Service = {
@@ -27,15 +27,27 @@ export default function ServicesPage() {
     depositAmount: "0",
   });
 
-  async function loadServices() {
-    const response = await fetch("/api/services");
-    const data = await response.json();
-    setServices(Array.isArray(data) ? data : []);
-  }
+  const loadServices = useCallback(async () => {
+    try {
+      const response = await fetch("/api/services");
+      const data = await response.json();
+
+      setServices(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error(error);
+      setServices([]);
+    }
+  }, []);
 
   useEffect(() => {
-    loadServices();
-  }, []);
+    const timer = window.setTimeout(() => {
+      void loadServices();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [loadServices]);
 
   async function createService(e: React.FormEvent) {
     e.preventDefault();
@@ -92,7 +104,7 @@ export default function ServicesPage() {
 
       <form
         onSubmit={createService}
-        className="mt-8 rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+        className="mt-8 premium-card premium-card-hover premium-gradient rounded-3xl p-6"
       >
         <h2 className="text-xl font-semibold">Nuevo servicio</h2>
 
@@ -163,7 +175,7 @@ export default function ServicesPage() {
         {services.map((service) => (
           <div
             key={service._id}
-            className="rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+            className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
           >
             <p
               className={`inline-flex rounded-full border px-3 py-1 text-xs ${

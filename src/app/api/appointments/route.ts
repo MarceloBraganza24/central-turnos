@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 import { connectDB } from "@/lib/mongodb";
 import { Appointment } from "@/models/Appointment";
 import { getCurrentTenant } from "@/lib/get-current-tenant";
@@ -8,8 +9,21 @@ import { sendWhatsAppText } from "@/lib/whatsapp";
 
 export const runtime = "nodejs";
 
+type PopulatedClient = {
+  _id: string;
+  fullName?: string;
+  phone?: string;
+  email?: string;
+};
+
+type PopulatedProfessional = {
+  _id: string;
+  displayName?: string;
+  phone?: string;
+};
+
 export async function GET() {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
@@ -41,7 +55,7 @@ export async function GET() {
 }
 
 export async function PATCH(request: Request) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
@@ -124,10 +138,13 @@ export async function PATCH(request: Request) {
       .populate("client")
       .populate("professional");
 
-    const client = populatedAppointment?.client as any;
-    const professional = populatedAppointment?.professional as any;
+    const client =
+      populatedAppointment?.client as PopulatedClient | null;
 
-    if (client?.phone) {
+    const professional =
+      populatedAppointment?.professional as PopulatedProfessional | null;
+
+    if (client?.phone && professional?.displayName) {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
       await sendWhatsAppText({

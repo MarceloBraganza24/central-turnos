@@ -1,18 +1,25 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 import { connectDB } from "@/lib/mongodb";
 import { Availability } from "@/models/Availability";
 import { timesOverlap } from "@/lib/validations";
 import { getCurrentTenant } from "@/lib/get-current-tenant";
 import { deleteCacheByPattern } from "@/lib/cache";
+import { requireTenantPermission } from "@/lib/permissions";
 
 export const runtime = "nodejs";
 
-export async function GET() {
-  const session = await auth();
+async function getAvailabilityContext() {
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return {
+      error: NextResponse.json(
+        { message: "No autorizado" },
+        { status: 401 }
+      ),
+    };
   }
 
   await connectDB();
@@ -20,31 +27,92 @@ export async function GET() {
   const context = await getCurrentTenant();
 
   if (!context) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return {
+      error: NextResponse.json(
+        { message: "No autorizado" },
+        { status: 401 }
+      ),
+    };
   }
 
   const { professional, tenant } = context;
 
   if (!professional) {
-    return NextResponse.json([]);
+    return {
+      error: NextResponse.json(
+        { message: "No existe perfil profesional" },
+        { status: 404 }
+      ),
+    };
+  }
+
+  return {
+    session,
+    professional,
+    tenant,
+  };
+}
+
+async function checkAvailabilityPermission(tenantId: string) {
+  const permission = await requireTenantPermission(
+    tenantId,
+    "canManageAvailability"
+  );
+
+  if (!permission.allowed) {
+    return NextResponse.json(
+      { message: permission.message },
+      { status: permission.status }
+    );
+  }
+
+  return null;
+}
+
+export async function GET() {
+  const context = await getAvailabilityContext();
+
+  if ("error" in context) {
+    return context.error;
+  }
+
+  const { professional, tenant } = context;
+
+  const permissionError = await checkAvailabilityPermission(
+    tenant._id.toString()
+  );
+
+  if (permissionError) {
+    return permissionError;
   }
 
   const availability = await Availability.find({
     tenant: tenant._id,
     professional: professional._id,
-  }).sort({ dayOfWeek: 1, startTime: 1 });
+  }).sort({
+    dayOfWeek: 1,
+    startTime: 1,
+  });
 
   return NextResponse.json(availability);
 }
 
 export async function POST(request: Request) {
-  const session = await auth();
+  const context = await getAvailabilityContext();
 
-  if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+  if ("error" in context) {
+    return context.error;
   }
 
-  await connectDB();
+  const { professional, tenant } = context;
+
+  const permissionError = await checkAvailabilityPermission(
+    tenant._id.toString()
+  );
+
+  if (permissionError) {
+    return permissionError;
+  }
 
   const body = await request.json();
 
@@ -61,21 +129,6 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { message: "La hora de inicio debe ser menor a la hora de fin" },
       { status: 400 }
-    );
-  }
-
-  const context = await getCurrentTenant();
-
-  if (!context) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
-  }
-
-  const { professional, tenant } = context;
-
-  if (!professional) {
-    return NextResponse.json(
-      { message: "No existe perfil profesional" },
-      { status: 404 }
     );
   }
 
@@ -111,13 +164,21 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const session = await auth();
+  const context = await getAvailabilityContext();
 
-  if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+  if ("error" in context) {
+    return context.error;
   }
 
-  await connectDB();
+  const { professional, tenant } = context;
+
+  const permissionError = await checkAvailabilityPermission(
+    tenant._id.toString()
+  );
+
+  if (permissionError) {
+    return permissionError;
+  }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
@@ -129,26 +190,13 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const context = await getCurrentTenant();
-
-  if (!context) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
-  }
-
-  const { professional, tenant } = context;
-
-  if (!professional) {
-    return NextResponse.json(
-      { message: "No existe perfil profesional" },
-      { status: 404 }
-    );
-  }
-
   await Availability.deleteOne({
     _id: id,
     tenant: tenant._id,
     professional: professional._id,
   });
+
+  await deleteCacheByPattern("public:*");
 
   return NextResponse.json({
     message: "Horario eliminado correctamente",

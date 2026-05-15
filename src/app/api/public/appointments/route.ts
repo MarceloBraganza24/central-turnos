@@ -275,20 +275,18 @@ ${cancelUrl}`;
       ? "sent"
       : "failed";
 
-    const professionalMessage = `
-      Hola ${client.fullName} 👋
+    const professionalMessage = `Nuevo turno reservado.
 
-      Tu turno con ${professional.displayName} fue reservado.
+Cliente: ${client.fullName}
+Fecha: ${appointment.appointmentDate}
+Horario: ${appointment.startTime} a ${appointment.endTime}
+Servicio: ${selectedService?.name || "Consulta"}
 
-      📅 ${appointment.appointmentDate}
-      ⏰ ${appointment.startTime}
+Confirmar:
+${confirmUrl}
 
-      Confirmar turno:
-      ${confirmUrl}
-
-      Cancelar turno:
-      ${cancelUrl}
-    `
+Cancelar:
+${cancelUrl}`;
 
     if (professional.phone) {
       const professionalWhatsappResult = await sendWhatsAppText({

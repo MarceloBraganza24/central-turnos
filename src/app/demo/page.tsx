@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import FadeIn from "@/components/animations/FadeIn";
 
 const slots = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30"];
 
@@ -175,32 +176,34 @@ export default function DemoPage() {
           </div>
 
           <aside className="space-y-5">
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-bold">Qué pasa detrás</h2>
+            <FadeIn delay={0.1}>
+              <div className="premium-card rounded-3xl p-6">
+                <h2 className="text-xl font-bold">Qué pasa detrás</h2>
 
-              <div className="mt-5 space-y-4">
-                <div className="rounded-2xl bg-neutral-950 p-4">
-                  <p className="font-medium">1. Cliente elige horario</p>
-                  <p className="mt-1 text-sm text-neutral-400">
-                    El sistema muestra solo turnos disponibles.
-                  </p>
-                </div>
+                <div className="mt-5 space-y-4">
+                  <div className="rounded-2xl bg-neutral-950 p-4">
+                    <p className="font-medium">1. Cliente elige horario</p>
+                    <p className="mt-1 text-sm text-neutral-400">
+                      El sistema muestra solo turnos disponibles.
+                    </p>
+                  </div>
 
-                <div className="rounded-2xl bg-neutral-950 p-4">
-                  <p className="font-medium">2. Se crea la reserva</p>
-                  <p className="mt-1 text-sm text-neutral-400">
-                    El profesional la ve en su calendario.
-                  </p>
-                </div>
+                  <div className="rounded-2xl bg-neutral-950 p-4">
+                    <p className="font-medium">2. Se crea la reserva</p>
+                    <p className="mt-1 text-sm text-neutral-400">
+                      El profesional la ve en su calendario.
+                    </p>
+                  </div>
 
-                <div className="rounded-2xl bg-neutral-950 p-4">
-                  <p className="font-medium">3. Llega WhatsApp</p>
-                  <p className="mt-1 text-sm text-neutral-400">
-                    Cliente y profesional reciben confirmación.
-                  </p>
+                  <div className="rounded-2xl bg-neutral-950 p-4">
+                    <p className="font-medium">3. Llega WhatsApp</p>
+                    <p className="mt-1 text-sm text-neutral-400">
+                      Cliente y profesional reciben confirmación.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </FadeIn>
 
             <div className="premium-card premium-gradient rounded-3xl p-6">
               <h2 className="text-xl font-bold">Vista profesional</h2>

@@ -1,22 +1,33 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import type { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+type AppUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
+export const authOptions: NextAuthOptions = {
+  secret: process.env.AUTH_SECRET,
+
   session: {
     strategy: "jwt",
   },
 
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "credentials",
+
       credentials: {
         email: {},
         password: {},
       },
 
-      async authorize(credentials) {
+      async authorize(credentials): Promise<AppUser | null> {
         await connectDB();
 
         const email = String(credentials?.email || "").toLowerCase();
@@ -26,8 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const user = await User.findOne({ email }).select("+password");
 
-        if (!user) return null;
-        if (!user.isActive) return null;
+        if (!user || !user.isActive) return null;
 
         const passwordIsValid = await bcrypt.compare(password, user.password);
 
@@ -46,7 +56,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.role = (user as AppUser).role;
       }
 
       return token;
@@ -54,8 +64,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.sub!;
-        session.user.role = token.role as string;
+        session.user.id = token.sub || "";
+        session.user.role =
+          typeof token.role === "string" ? token.role : "";
       }
 
       return session;
@@ -65,4 +76,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
   },
-});
+};

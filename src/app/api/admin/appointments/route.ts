@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { Appointment } from "@/models/Appointment";
@@ -7,7 +8,7 @@ import { Appointment } from "@/models/Appointment";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });

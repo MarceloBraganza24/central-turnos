@@ -40,7 +40,7 @@ export default function HelpPage() {
           {items.map((item) => (
             <div
               key={item.title}
-              className="rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+              className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
             >
               <h2 className="text-xl font-semibold">
                 {item.title}

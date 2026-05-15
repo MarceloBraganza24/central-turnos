@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback,useEffect, useState } from "react";
 
 type AuditLog = {
   _id: string;
@@ -36,24 +36,36 @@ export default function AdminAuditLogsPage() {
   const [action, setAction] = useState("");
   const [loading, setLoading] = useState(true);
 
-  async function loadLogs() {
-    setLoading(true);
+  const loadLogs = useCallback(async () => {
+    try {
+      setLoading(true);
 
-    const params = new URLSearchParams();
+      const params = new URLSearchParams();
 
-    if (severity) params.set("severity", severity);
-    if (action) params.set("action", action);
+      if (severity) params.set("severity", severity);
+      if (action) params.set("action", action);
 
-    const response = await fetch(`/api/admin/audit-logs?${params.toString()}`);
-    const data = await response.json();
+      const response = await fetch(`/api/admin/audit-logs?${params.toString()}`);
+      const data = await response.json();
 
-    setLogs(Array.isArray(data) ? data : []);
-    setLoading(false);
-  }
+      setLogs(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error(error);
+      setLogs([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [severity, action]);
 
   useEffect(() => {
-    loadLogs();
-  }, [severity, action]);
+    const timer = window.setTimeout(() => {
+      void loadLogs();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [loadLogs]);
 
   return (
     <main className="min-h-screen bg-neutral-950 p-6 text-white">

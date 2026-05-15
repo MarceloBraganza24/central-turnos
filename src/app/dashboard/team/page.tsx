@@ -58,7 +58,11 @@ export default function TeamPage() {
   }
 
   useEffect(() => {
-    loadMembers();
+    const timer = window.setTimeout(() => {
+      void loadMembers();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   async function addMember(e: React.FormEvent) {
@@ -131,7 +135,7 @@ export default function TeamPage() {
 
       <form
         onSubmit={addMember}
-        className="mt-8 grid gap-4 rounded-3xl border border-neutral-800 bg-neutral-900 p-6 md:grid-cols-5"
+        className="mt-8 grid gap-4 premium-card premium-card-hover premium-gradient rounded-3xl p-6 md:grid-cols-5"
       >
         <input
           value={form.fullName}

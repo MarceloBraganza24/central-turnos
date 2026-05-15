@@ -1,7 +1,8 @@
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 export const runtime = "nodejs";
 
@@ -10,7 +11,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
     redirect("/login");

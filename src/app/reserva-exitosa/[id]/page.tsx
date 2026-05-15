@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
 import { Appointment } from "@/models/Appointment";
 import PayDepositButton from "@/components/payments/PayDepositButton";
+import StatusBadge from "@/components/ui/StatusBadge";
 
 export const runtime = "nodejs";
 
@@ -159,13 +160,10 @@ export default async function ReservationSuccessPage({ params }: Props) {
 
               <div>
                 <p className="text-sm text-neutral-500">Pago</p>
-                <p className="mt-1 font-medium">
-                  {appointment.paymentStatus === "paid"
-                    ? "Pagado"
-                    : appointment.paymentStatus === "pending"
-                      ? "Pendiente"
-                      : "Sin pago"}
-                </p>
+                <StatusBadge
+                  type="payment"
+                  status={appointment.paymentStatus || "unpaid"}
+                />
               </div>
             </div>
           </div>

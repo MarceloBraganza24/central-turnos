@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 type PlanName = "free" | "pro" | "premium";
@@ -25,21 +26,26 @@ export default function BillingPage() {
   const [billing, setBilling] = useState<BillingStatus | null>(null);
   const [loadingPlan, setLoadingPlan] = useState<PlanName | null>(null);
 
-  async function loadBilling() {
-    const response = await fetch("/api/billing/status");
-    const data = await response.json();
+  const router = useRouter();
 
-    if (!response.ok) {
-      toast.error(data.message || "Error al cargar facturación");
-      return;
+  const loadBilling = useCallback(async () => {
+    try {
+      const response = await fetch("/api/billing/status");
+      const data = await response.json();
+
+      setBilling(data);
+    } catch (error) {
+      console.error(error);
     }
-
-    setBilling(data);
-  }
+  }, []);
 
   useEffect(() => {
-    loadBilling();
-  }, []);
+    const timer = window.setTimeout(() => {
+      void loadBilling();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [loadBilling]);
 
   async function subscribe(plan: PlanName) {
     if (plan === "free") return;
@@ -63,7 +69,7 @@ export default function BillingPage() {
       return;
     }
 
-    window.location.href = data.initPoint;
+    router.push(data.initPoint);
   }
 
   if (!billing) {

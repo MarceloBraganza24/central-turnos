@@ -45,95 +45,105 @@ export async function GET(request: Request) {
 
     await connectDB();
 
+    const normalizedEmail = email.toLowerCase();
+    const slug = createSlug(fullName);
+
     const existingAdmin = await User.findOne({
       role: "super_admin",
+      email: { $ne: normalizedEmail },
     });
 
     if (existingAdmin) {
       return NextResponse.json(
         {
-          message: "Ya existe un super admin. Seeder cancelado.",
+          message: "Ya existe otro super admin. Seeder cancelado.",
         },
         { status: 409 }
       );
     }
 
-    const existingUser = await User.findOne({
-      email: email.toLowerCase(),
+    let user = await User.findOne({
+      email: normalizedEmail,
     });
 
-    if (existingUser) {
-      existingUser.role = "super_admin";
-      existingUser.plan = "premium";
-      existingUser.isActive = true;
-      await existingUser.save();
+    if (user) {
+      user.fullName = fullName;
+      user.role = "super_admin";
+      user.plan = "premium";
+      user.isActive = true;
+      await user.save();
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-      const professional = await Professional.findOneAndUpdate(
-        { user: user._id },
-        {
-          displayName: fullName,
-          slug: createSlug(fullName),
-          isActive: false,
-        },
-        { upsert: true, new: true }
-      );
-
-      const tenant = await Tenant.findOneAndUpdate(
-        { professional: professional._id },
-        {
-          professional: professional._id,
-          owner: user._id,
-          name: fullName,
-          slug: createSlug(fullName),
-          subdomain: createSlug(fullName),
-        },
-        { upsert: true, new: true }
-      );
-
-      await TenantMember.findOneAndUpdate(
-        {
-          tenant: tenant._id,
-          user: user._id,
-        },
-        {
-          tenant: tenant._id,
-          user: user._id,
-          role: "owner",
-          permissions: ROLE_PERMISSIONS.owner,
-          isActive: true,
-        },
-        { upsert: true }
-      );
-
-      return NextResponse.json({
-        message: "Usuario existente actualizado como super admin",
-        email: existingUser.email,
+      user = await User.create({
+        fullName,
+        email: normalizedEmail,
+        password: hashedPassword,
+        role: "super_admin",
+        plan: "premium",
+        isActive: true,
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const userId = user._id.toString();
 
-    const user = await User.create({
-      fullName,
-      email: email.toLowerCase(),
-      password: hashedPassword,
-      role: "super_admin",
-      plan: "premium",
-      isActive: true,
-    });
+    const professional = await Professional.findOneAndUpdate(
+      {
+        user: userId,
+      },
+      {
+        user: userId,
+        displayName: fullName,
+        slug,
+        isActive: false,
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
 
-    await Professional.create({
-      user: user._id,
-      displayName: fullName,
-      isActive: false,
-    });
+    const tenant = await Tenant.findOneAndUpdate(
+      {
+        professional: professional._id,
+      },
+      {
+        professional: professional._id,
+        owner: userId,
+        name: fullName,
+        slug,
+        subdomain: slug,
+        isActive: true,
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+
+    await TenantMember.findOneAndUpdate(
+      {
+        tenant: tenant._id,
+        user: userId,
+      },
+      {
+        tenant: tenant._id,
+        user: userId,
+        role: "owner",
+        permissions: ROLE_PERMISSIONS.owner,
+        isActive: true,
+      },
+      {
+        upsert: true,
+      }
+    );
 
     return NextResponse.json(
       {
-        message: "Super admin creado correctamente",
+        message: "Super admin creado/actualizado correctamente",
         email: user.email,
       },
-      { status: 201 }
+      { status: user ? 200 : 201 }
     );
   } catch (error) {
     console.error("Error creando super admin:", error);

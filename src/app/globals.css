@@ -1,83 +1,152 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-:root {
   color-scheme: dark;
 
-  --brand: #8B5CF6;
-  --brand-hover: #7C3AED;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --brand: #8b5cf6;
+  --brand-hover: #7c3aed;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer base {
-  button,
-  a,
-  input,
-  select,
-  textarea {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-  }
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 
-@layer utilities {
-  .touch-card {
-    @apply rounded-3xl border border-neutral-800 bg-neutral-900 p-5 active:scale-[0.98];
-    transition: transform 0.15s ease, background-color 0.15s ease;
-  }
+button,
+a {
+  cursor: pointer;
+}
 
-  .touch-button {
-    @apply min-h-12 rounded-xl px-5 py-3 font-medium active:scale-[0.98];
-    transition: transform 0.15s ease, background-color 0.15s ease;
-  }
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
 
-  .mobile-section {
-    @apply max-w-7xl text-white;
-  }
-
-  .mobile-title {
-    @apply text-2xl font-bold tracking-tight md:text-3xl;
-  }
-
-  .mobile-subtitle {
-    @apply mt-2 text-sm text-neutral-400 md:text-base;
-  }
+input,
+select,
+textarea {
+  font-size: 16px;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: rgba(139,92,246,0.7);
+  border-color: rgba(139, 92, 246, 0.7);
   box-shadow:
-    0 0 0 1px rgba(139,92,246,0.5),
-    0 0 0 4px rgba(139,92,246,0.08);
+    0 0 0 1px rgba(139, 92, 246, 0.5),
+    0 0 0 4px rgba(139, 92, 246, 0.08);
+}
+
+.premium-card {
+  border: 1px solid rgb(38 38 38);
+  background: rgb(23 23 23);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 40px rgba(139, 92, 246, 0.05);
+}
+
+.premium-card-hover {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.premium-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 50px rgba(139, 92, 246, 0.08);
+}
+
+.premium-gradient {
+  background:
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.08), transparent 40%),
+    linear-gradient(to bottom right, rgb(23 23 23), rgb(10 10 10));
+}
+
+.glass-effect {
+  background: rgba(23, 23, 23, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.touch-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgb(38 38 38);
+  background: rgb(23 23 23);
+  padding: 1.25rem;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.touch-card:active {
+  transform: scale(0.98);
+}
+
+.touch-button {
+  min-height: 3rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.touch-button:active {
+  transform: scale(0.98);
+}
+
+.mobile-section {
+  max-width: 80rem;
+  color: white;
+}
+
+.mobile-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.mobile-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: rgb(163 163 163);
+}
+
+@media (min-width: 768px) {
+  .mobile-title {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .mobile-subtitle {
+    font-size: 1rem;
+  }
 }

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function WhatsAppSection() {
   return (
     <section className="border-t border-neutral-900 px-6 py-28">
@@ -57,9 +59,11 @@ export default function WhatsAppSection() {
           <div className="absolute inset-0 bg-brand/20 blur-3xl" />
 
           <div className="relative overflow-hidden rounded-[42px] border border-neutral-800 bg-black shadow-2xl">
-            <img
+            <Image
               src="/screenshots/whatsapp-confirmation.png"
               alt="WhatsApp Central Turnos"
+              width={340}
+              height={680}
               className="w-full"
             />
           </div>

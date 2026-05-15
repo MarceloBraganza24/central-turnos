@@ -6,19 +6,19 @@ type CompletedSteps = {
   firstAppointmentReceived: boolean;
   whatsappSent: {
     welcome: {
-      type: Boolean,
+      type: boolean,
       default: false,
     },
     profileCompleted: {
-      type: Boolean,
+      type: boolean,
       default: false,
     },
     availabilityConfigured: {
-      type: Boolean,
+      type: boolean,
       default: false,
     },
     firstAppointmentReceived: {
-      type: Boolean,
+      type: boolean,
       default: false,
     },
   },

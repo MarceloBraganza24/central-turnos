@@ -4,6 +4,26 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter,useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
+type Service = {
+  _id: string;
+  name: string;
+  durationMinutes: number;
+  price: number;
+  requiresDeposit?: boolean;
+  depositAmount?: number;
+};
+
+type Slot = {
+  startTime: string;
+  endTime: string;
+};
+
+type TenantConfig = {
+  requiresDeposit: boolean;
+  defaultDepositAmount: number;
+  name: string;
+};
+
 export default function ReservarTurnoPage() {
   const params = useParams();
   const router = useRouter();
@@ -14,14 +34,16 @@ export default function ReservarTurnoPage() {
   const professionalId = params.id as string;
 
   const [date, setDate] = useState("");
-  const [slots, setSlots] = useState<string[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState<string>("");
 
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const [services, setServices] = useState<any[]>([]);
   const [selectedServiceId, setSelectedServiceId] = useState("");
+
+  const [services, setServices] = useState<Service[]>([]);
+  const [slots, setSlots] = useState<Slot[]>([]);
+  const [tenantConfig, setTenantConfig] = useState<TenantConfig | null>(null);
 
   const [form, setForm] = useState({
     fullName: "",
@@ -30,12 +52,6 @@ export default function ReservarTurnoPage() {
     notes: "",
     depositAmount: "0",
   });
-
-  const [tenantConfig, setTenantConfig] = useState<{
-    requiresDeposit: boolean;
-    defaultDepositAmount: number;
-    name: string;
-  } | null>(null);
 
   useEffect(() => {
     async function loadServices() {
@@ -173,7 +189,7 @@ export default function ReservarTurnoPage() {
           onSubmit={handleSubmit}
           className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_0.8fr]"
         >
-          <div className="space-y-6 rounded-3xl border border-neutral-800 bg-neutral-900 p-6">
+          <div className="space-y-6 premium-card premium-card-hover premium-gradient rounded-3xl p-6">
             <div>
               <label className="mb-2 block text-sm text-neutral-300">
                 Fecha
@@ -206,18 +222,18 @@ export default function ReservarTurnoPage() {
                 </p>
               ) : (
                 <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
-                  {slots.map((slot) => (
+                  {slots.map((slot: Slot) => (
                     <button
+                      key={slot.startTime}
                       type="button"
-                      key={slot}
-                      onClick={() => setSelectedSlot(slot)}
-                      className={`rounded-xl border px-4 py-3 text-sm transition ${
-                        selectedSlot === slot
-                          ? "border-white bg-brand text-white hover:bg-brand-hover"
-                          : "border-neutral-700 bg-neutral-950 text-white hover:bg-neutral-800"
+                      onClick={() => setSelectedSlot(slot.startTime)}
+                      className={`rounded-xl border px-4 py-3 text-sm ${
+                        selectedSlot === slot.startTime
+                          ? "border-brand bg-brand text-white"
+                          : "border-neutral-700 bg-neutral-950 text-white"
                       }`}
                     >
-                      {slot}
+                      {slot.startTime}
                     </button>
                   ))}
                 </div>
@@ -305,7 +321,7 @@ export default function ReservarTurnoPage() {
             </div>
           </div>
 
-          <aside className="h-fit rounded-3xl border border-neutral-800 bg-neutral-900 p-6">
+          <aside className="h-fit premium-card premium-card-hover premium-gradient rounded-3xl p-6">
             <h2 className="text-xl font-bold">Resumen</h2>
 
             <div className="mt-5 space-y-4 text-sm">

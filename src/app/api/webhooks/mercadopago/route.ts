@@ -4,7 +4,6 @@ import { connectDB } from "@/lib/mongodb";
 import { Appointment } from "@/models/Appointment";
 import { sendWhatsAppText } from "@/lib/whatsapp";
 import { createAuditLog } from "@/lib/audit";
-import { acquireLock, releaseLock } from "@/lib/locks";
 
 export const runtime = "nodejs";
 
@@ -12,33 +11,32 @@ const client = new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
 });
 
+type PopulatedClient = {
+  _id: string;
+  fullName?: string;
+  phone?: string;
+};
+
+type PopulatedProfessional = {
+  _id: string;
+  displayName?: string;
+  phone?: string;
+};
+
 export async function POST(request: Request) {
-  await connectDB();
-
-  const body = await request.json();
-
-  const paymentId =
-    body?.data?.id ||
-    body?.id ||
-    new URL(request.url).searchParams.get("data.id");
-
-  if (!paymentId) {
-    return NextResponse.json({ received: true });
-  }
-
-  const lockKey = `webhook:mercadopago:payment:${paymentId}`;
-
-  const locked = await acquireLock(lockKey, 120);
-
-  if (!locked) {
-    return NextResponse.json({
-      received: true,
-      message: "Webhook ya está siendo procesado",
-    });
-  }
-
   try {
-    const eventKey = `mercadopago:${paymentId}`;
+    await connectDB();
+
+    const body = await request.json();
+
+    const paymentId =
+      body?.data?.id ||
+      body?.id ||
+      new URL(request.url).searchParams.get("data.id");
+
+    if (!paymentId) {
+      return NextResponse.json({ received: true });
+    }
 
     const paymentClient = new Payment(client);
 
@@ -55,25 +53,10 @@ export async function POST(request: Request) {
     const appointment = await Appointment.findById(appointmentId)
       .populate("tenant")
       .populate("client")
-      .populate("professional")
+      .populate("professional");
 
     if (!appointment) {
       return NextResponse.json({ received: true });
-    }
-
-    if (appointment.webhookEvents?.includes(eventKey)) {
-      await createAuditLog({
-        tenant: appointment.tenant?.toString?.() || null,
-        actorRole: "system",
-        action: "payment.webhook_duplicate",
-        entityType: "Appointment",
-        entityId: appointment._id.toString(),
-        message: "Webhook duplicado ignorado",
-        metadata: { paymentId },
-        severity: "warning",
-      });
-
-      return NextResponse.json({ received: true, duplicated: true });
     }
 
     appointment.paymentId = String(payment.id || "");
@@ -87,13 +70,12 @@ export async function POST(request: Request) {
       appointment.paymentStatus = "failed";
     }
 
-    appointment.webhookEvents.push(eventKey);
-    appointment.paymentProcessedAt = new Date();
-
     await appointment.save();
 
+    const tenantId = appointment.tenant?.toString?.() || null;
+
     await createAuditLog({
-      tenant: appointment.tenant?.toString?.() || null,
+      tenant: tenantId,
       actor: null,
       actorRole: "system",
       action: "payment.webhook_received",
@@ -109,56 +91,55 @@ export async function POST(request: Request) {
     });
 
     if (payment.status === "approved") {
-      appointment.paymentStatus = "paid";
-      appointment.status = "confirmed";
-      const clientData = appointment.client;
-      const professional = appointment.professional;
-
-      const tenantId = appointment.tenant?.toString() || null;
+      const clientData = appointment.client as PopulatedClient | null;
+      const professional =
+        appointment.professional as PopulatedProfessional | null;
 
       if (clientData?.phone && professional?.displayName) {
         await sendWhatsAppText({
           to: clientData.phone,
-          message: `Pago recibido. Tu turno con ${professional.displayName} quedó confirmado para el ${appointment.appointmentDate} a las ${appointment.startTime}.`,
           tenant: tenantId,
           entityId: appointment._id.toString(),
+          message: `Pago recibido. Tu turno con ${professional.displayName} quedó confirmado para el ${appointment.appointmentDate} a las ${appointment.startTime}.`,
         });
       }
 
       if (professional?.phone && clientData?.fullName) {
         await sendWhatsAppText({
           to: professional.phone,
-          message: `Se pagó la seña de un turno.
-
-      Cliente: ${clientData.fullName}
-      Fecha: ${appointment.appointmentDate}
-      Horario: ${appointment.startTime}`,
           tenant: tenantId,
           entityId: appointment._id.toString(),
-        });
-      }
-
-      await sendWhatsAppText({
-        to: clientData.phone,
-        message: `Pago recibido. Tu turno con ${professional.displayName} quedó confirmado para el ${appointment.appointmentDate} a las ${appointment.startTime}.`,
-      });
-
-      if (professional.phone) {
-        await sendWhatsAppText({
-          to: professional.phone,
           message: `Se pagó la seña de un turno.
 
-  Cliente: ${clientData.fullName}
-  Fecha: ${appointment.appointmentDate}
-  Horario: ${appointment.startTime}`,
+Cliente: ${clientData.fullName}
+Fecha: ${appointment.appointmentDate}
+Horario: ${appointment.startTime}`,
         });
       }
     }
 
     return NextResponse.json({ received: true });
-  } finally {
-    await releaseLock(lockKey);
-  }
+  } catch (error) {
+    console.error(error);
 
-  
+    await createAuditLog({
+      actorRole: "system",
+      action: "payment.webhook_failed",
+      entityType: "Payment",
+      message: "Falló el procesamiento del webhook de Mercado Pago",
+      metadata: {
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      severity: "error",
+    });
+
+    return NextResponse.json(
+      {
+        message: "Webhook processing failed",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }

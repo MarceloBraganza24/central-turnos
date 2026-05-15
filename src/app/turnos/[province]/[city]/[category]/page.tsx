@@ -8,6 +8,47 @@ import { createSlug } from "@/lib/slug";
 
 export const runtime = "nodejs";
 
+type TenantItem = {
+  _id: string;
+  city: string;
+  province: string;
+  neighborhood?: string;
+  offersOnline?: boolean;
+};
+
+type CategoryItem = {
+  _id: string;
+  name: string;
+  slug: string;
+};
+
+type ProfessionalItem = {
+  _id: string;
+  displayName: string;
+  bio?: string;
+  tenant: string;
+  neighborhood?: string;
+  offersOnline?: boolean;
+  languages?: string[];
+  insuranceProviders?: string[];
+  price?: number;
+  ratingAverage?: number;
+  ratingCount?: number;
+};
+
+type ProfessionalQuery = {
+  tenant: {
+    $in: string[];
+  };
+  category: string;
+  isActive: boolean;
+  languages?: string;
+  insuranceProviders?: string;
+  price?: {
+    $lte: number;
+  };
+};
+
 type Props = {
   params: Promise<{
     province: string;
@@ -51,46 +92,50 @@ export default async function CityProfessionalsPage({
 
   await connectDB();
 
-  const selectedCategory = await Category.findOne({
+  const selectedCategory = (await Category.findOne({
     slug: category,
     isActive: true,
-  }).lean();
+  }).lean()) as CategoryItem | null;
 
   if (!selectedCategory) {
     return null;
   }
 
-  const tenants = await Tenant.find({
+  const tenants = (await Tenant.find({
     isActive: true,
-  }).lean();
+  }).lean()) as TenantItem[];
 
   const matchingTenants = tenants.filter(
-    (tenant: any) =>
+    (tenant: TenantItem) =>
       createSlug(tenant.province) === province &&
       createSlug(tenant.city) === city
   );
 
-  let tenantIds = matchingTenants.map((tenant: any) => tenant._id);
+  let tenantIds = matchingTenants.map((tenant: TenantItem) =>
+    tenant._id.toString()
+  );
 
   if (filters.online === "true") {
     tenantIds = matchingTenants
-      .filter((tenant: any) => tenant.offersOnline)
-      .map((tenant: any) => tenant._id);
+      .filter((tenant: TenantItem) => tenant.offersOnline)
+      .map((tenant: TenantItem) => tenant._id.toString());
   }
 
   if (filters.neighborhood) {
     tenantIds = matchingTenants
       .filter(
-        (tenant: any) =>
+        (tenant: TenantItem) =>
           createSlug(tenant.neighborhood || "") ===
           createSlug(filters.neighborhood || "")
       )
-      .map((tenant: any) => tenant._id);
+      .map((tenant: TenantItem) => tenant._id.toString());
   }
 
-  const professionalQuery: Record<string, any> = {
-    tenant: { $in: tenantIds },
-    category: selectedCategory._id,
+  const professionalQuery: ProfessionalQuery = {
+    tenant: {
+      $in: tenantIds,
+    },
+    category: selectedCategory._id.toString(),
     isActive: true,
   };
 
@@ -103,29 +148,40 @@ export default async function CityProfessionalsPage({
   }
 
   if (filters.maxPrice) {
-    professionalQuery.price = { $lte: Number(filters.maxPrice) };
+    professionalQuery.price = {
+      $lte: Number(filters.maxPrice),
+    };
   }
 
-  let professionals = await Professional.find(professionalQuery)
-    .populate("category")
-    .sort({ ratingAverage: -1, displayName: 1 })
-    .lean();
+  let professionals = (await Professional.find(professionalQuery)
+    .sort({
+      ratingAverage: -1,
+      displayName: 1,
+    })
+    .lean()) as ProfessionalItem[];
 
   if (filters.availableToday === "true") {
     const today = getTodayDayOfWeek();
 
-    const professionalIds = professionals.map((p: any) => p._id);
+    const professionalIds = professionals.map(
+      (professional: ProfessionalItem) => professional._id
+    );
 
     const availableToday = await Availability.find({
-      professional: { $in: professionalIds },
+      professional: {
+        $in: professionalIds,
+      },
       dayOfWeek: today,
       isActive: true,
     }).distinct("professional");
 
-    const availableSet = new Set(availableToday.map((id) => id.toString()));
+    const availableSet = new Set(
+      availableToday.map((id) => id.toString())
+    );
 
-    professionals = professionals.filter((professional: any) =>
-      availableSet.has(professional._id.toString())
+    professionals = professionals.filter(
+      (professional: ProfessionalItem) =>
+        availableSet.has(professional._id.toString())
     );
   }
 
@@ -148,7 +204,7 @@ export default async function CityProfessionalsPage({
 
         <p className="mt-4 text-neutral-400">{provinceName}</p>
 
-        <form className="mt-8 grid gap-3 rounded-3xl border border-neutral-800 bg-neutral-900 p-5 md:grid-cols-6">
+        <form className="premium-card mt-8 grid gap-3 rounded-3xl p-5 md:grid-cols-6">
           <input
             name="neighborhood"
             placeholder="Barrio"
@@ -203,23 +259,24 @@ export default async function CityProfessionalsPage({
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {professionals.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-neutral-800 bg-neutral-900 p-10 text-center md:col-span-3">
+            <div className="premium-card rounded-3xl border-dashed p-10 text-center md:col-span-3">
               <h2 className="text-xl font-bold">
                 No encontramos profesionales
               </h2>
+
               <p className="mt-2 text-neutral-400">
                 Probá quitando filtros o cambiando de categoría.
               </p>
             </div>
           ) : (
-            professionals.map((professional: any) => (
+            professionals.map((professional: ProfessionalItem) => (
               <Link
                 key={professional._id.toString()}
                 href={`/profesionales/${professional._id.toString()}`}
-                className="premium-card premium-card-hover rounded-3xl p-6"
+                className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-xl font-bold text-white">
-                  {professional.displayName?.charAt(0)}
+                  {professional.displayName.charAt(0)}
                 </div>
 
                 <h2 className="mt-5 text-xl font-semibold">
@@ -227,7 +284,8 @@ export default async function CityProfessionalsPage({
                 </h2>
 
                 <p className="mt-2 line-clamp-3 text-sm text-neutral-400">
-                  {professional.bio || "Profesional adherido a Central Turnos."}
+                  {professional.bio ||
+                    "Profesional adherido a Central Turnos."}
                 </p>
 
                 <div className="mt-5 space-y-1 text-sm text-neutral-500">
@@ -237,12 +295,14 @@ export default async function CityProfessionalsPage({
 
                   {professional.offersOnline && <p>Atiende online</p>}
 
-                  {professional.price > 0 && <p>Desde ${professional.price}</p>}
+                  {(professional.price ?? 0) > 0 && (
+                    <p>Desde ${professional.price}</p>
+                  )}
 
-                  {professional.ratingAverage > 0 && (
+                  {(professional.ratingAverage ?? 0) > 0 && (
                     <p>
-                      ⭐ {professional.ratingAverage.toFixed(1)} ·{" "}
-                      {professional.ratingCount} reseñas
+                      ⭐ {(professional.ratingAverage ?? 0).toFixed(1)} ·{" "}
+                      {professional.ratingCount ?? 0} reseñas
                     </p>
                   )}
                 </div>

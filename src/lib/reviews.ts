@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Review } from "@/models/Review";
 import { Professional } from "@/models/Professional";
 import { Tenant } from "@/models/Tenant";
@@ -12,8 +13,8 @@ export async function recalculateProfessionalRating({
   const result = await Review.aggregate([
     {
       $match: {
-        tenant: tenantId as any,
-        professional: professionalId as any,
+        tenant: new Types.ObjectId(tenantId),
+        professional: new Types.ObjectId(professionalId),
         isPublic: true,
       },
     },

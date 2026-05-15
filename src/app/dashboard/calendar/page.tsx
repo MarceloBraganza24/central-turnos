@@ -16,6 +16,7 @@ type Appointment = {
   startTime: string;
   endTime: string;
   status: "pending" | "confirmed" | "cancelled" | "completed";
+  paymentStatus?: "unpaid" | "pending" | "paid" | "failed";
   notes?: string;
   client: Client;
 };

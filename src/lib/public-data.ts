@@ -9,6 +9,24 @@ function getTodayDayOfWeek() {
   return new Date().getDay();
 }
 
+type TenantItem = {
+  _id: string;
+  city: string;
+  province: string;
+};
+
+type ProfessionalItem = {
+  _id: string;
+  category?: string;
+  ratingAverage?: number;
+};
+
+type PublicPageData = {
+  city: string;
+  province: string;
+  professionals: ProfessionalItem[];
+};
+
 export async function getPublicCityData({
   province,
   city,
@@ -18,19 +36,20 @@ export async function getPublicCityData({
 }) {
   const cacheKey = `public:city:${province}:${city}`;
 
-  const cached = await getCache<any>(cacheKey);
+  const cached =
+    await getCache<PublicPageData>(cacheKey);
 
   if (cached) return cached;
 
   const tenants = await Tenant.find({ isActive: true }).lean();
 
   const matchingTenants = tenants.filter(
-    (tenant: any) =>
+    (tenant: TenantItem) =>
       createSlug(tenant.province) === province &&
       createSlug(tenant.city) === city
   );
 
-  const tenantIds = matchingTenants.map((tenant: any) => tenant._id);
+  const tenantIds = matchingTenants.map((tenant: TenantItem) => tenant._id);
 
   const professionals = await Professional.find({
     tenant: { $in: tenantIds },
@@ -41,7 +60,7 @@ export async function getPublicCityData({
     .lean();
 
   const categoryIds = [
-    ...new Set(professionals.map((item: any) => item.category?.toString())),
+    ...new Set(professionals.map((item: ProfessionalItem) => item.category?.toString())),
   ];
 
   const categories = await Category.find({
@@ -59,12 +78,12 @@ export async function getPublicCityData({
     todayAvailableIds.map((id) => id.toString())
   );
 
-  const availableToday = professionals.filter((p: any) =>
+  const availableToday = professionals.filter((p: ProfessionalItem) =>
     availableTodaySet.has(p._id.toString())
   );
 
   const topRated = professionals
-    .filter((p: any) => p.ratingAverage > 0)
+    .filter((p: ProfessionalItem) => (p.ratingAverage || 0))
     .slice(0, 6);
 
   const data = {

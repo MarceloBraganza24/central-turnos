@@ -27,7 +27,11 @@ export default function DashboardReviewsPage() {
   }
 
   useEffect(() => {
-    loadReviews();
+    const timer = window.setTimeout(() => {
+      void loadReviews();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   async function updateReview(reviewId: string, body: Record<string, unknown>) {
@@ -67,7 +71,7 @@ export default function DashboardReviewsPage() {
           reviews.map((review) => (
             <div
               key={review._id}
-              className="rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+              className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
             >
               <div className="flex flex-col justify-between gap-4 md:flex-row">
                 <div>

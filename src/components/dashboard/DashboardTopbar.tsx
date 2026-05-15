@@ -1,32 +1,25 @@
-import { auth, signOut } from "@/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 import DashboardMobileNav from "./DashboardMobileNav";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 export default async function DashboardTopbar() {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   return (
-    <header className="flex items-center justify-between border-b border-neutral-800 bg-neutral-950 px-6 py-4">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 z-40 border-b border-neutral-800 bg-neutral-950/80 px-4 py-3 backdrop-blur md:px-6">
+      <div className="flex items-center justify-between">
         <DashboardMobileNav />
 
         <div>
-          <p className="text-sm text-neutral-500">Bienvenido nuevamente</p>
-          <h2 className="text-xl font-semibold text-white">
-            {session?.user?.name || "Profesional"}
-          </h2>
+          <p className="text-sm text-neutral-500">Central Turnos</p>
+          <p className="text-sm font-medium text-white">
+            {session?.user?.email || "Usuario"}
+          </p>
         </div>
-      </div>
 
-      <form
-        action={async () => {
-          "use server";
-          await signOut({ redirectTo: "/login" });
-        }}
-      >
-        <button className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-white transition hover:bg-neutral-900">
-          Cerrar sesión
-        </button>
-      </form>
+        <LogoutButton />
+      </div>
     </header>
   );
 }

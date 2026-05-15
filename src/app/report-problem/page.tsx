@@ -43,7 +43,7 @@ export default function ReportProblemPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="mt-10 rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+          className="mt-10 premium-card premium-card-hover premium-gradient rounded-3xl p-6"
         >
           <textarea
             value={message}

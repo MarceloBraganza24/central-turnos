@@ -152,7 +152,7 @@ export default function HomePage() {
             {useCases.map((item) => (
               <div
                 key={item}
-                className="rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+                className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
                 <h3 className="text-xl font-semibold">{item}</h3>
                 <p className="mt-2 text-sm text-neutral-400">
@@ -297,7 +297,7 @@ export default function HomePage() {
             {testimonials.map((item) => (
               <div
                 key={item.name}
-                className="rounded-3xl border border-neutral-800 bg-neutral-900 p-6"
+                className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
                 <p className="text-neutral-300">“{item.quote}”</p>
                 <p className="mt-5 text-sm font-medium text-neutral-500">
