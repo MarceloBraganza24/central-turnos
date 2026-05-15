@@ -1,0 +1,25 @@
+"use client";
+
+import { toast } from "sonner";
+
+export default function CopyButton({
+  value,
+  label = "Copiar",
+}: {
+  value: string;
+  label?: string;
+}) {
+  async function copy() {
+    await navigator.clipboard.writeText(value);
+    toast.success("Copiado al portapapeles");
+  }
+
+  return (
+    <button
+      onClick={copy}
+      className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-white transition hover:bg-neutral-800 active:scale-[0.98]"
+    >
+      {label}
+    </button>
+  );
+}

@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+:root {
+  color-scheme: dark;
+
+  --brand: #8B5CF6;
+  --brand-hover: #7C3AED;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@layer utilities {
+  .touch-card {
+    @apply rounded-3xl border border-neutral-800 bg-neutral-900 p-5 active:scale-[0.98];
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  .touch-button {
+    @apply min-h-12 rounded-xl px-5 py-3 font-medium active:scale-[0.98];
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  .mobile-section {
+    @apply max-w-7xl text-white;
+  }
+
+  .mobile-title {
+    @apply text-2xl font-bold tracking-tight md:text-3xl;
+  }
+
+  .mobile-subtitle {
+    @apply mt-2 text-sm text-neutral-400 md:text-base;
+  }
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(139,92,246,0.7);
+  box-shadow:
+    0 0 0 1px rgba(139,92,246,0.5),
+    0 0 0 4px rgba(139,92,246,0.08);
+}
