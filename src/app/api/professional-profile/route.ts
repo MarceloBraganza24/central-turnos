@@ -6,6 +6,7 @@ import { Professional } from "@/models/Professional";
 import { Category } from "@/models/Category";
 import { createSlug } from "@/lib/slug";
 import QRCode from "qrcode";
+import { deleteCacheByPattern } from "@/lib/cache";
 
 export const runtime = "nodejs";
 
@@ -13,26 +14,61 @@ export async function GET() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
   }
 
   await connectDB();
 
-  const professional = await Professional.findOne({ user: session.user.id });
+  const professional = await Professional.findOne({
+    user: session.user.id,
+  });
 
-  if (!professional?.slug) {
-    return NextResponse.json(
-      { message: "Primero completá tu perfil profesional" },
-      { status: 400 }
-    );
+  if (!professional) {
+    return NextResponse.json({
+      displayName: "",
+      category: "",
+      bio: "",
+      phone: "",
+      address: "",
+      city: "",
+      province: "",
+      price: 0,
+      appointmentDurationMinutes: 30,
+      appointmentBufferMinutes: 0,
+      publicUrl: "",
+      qr: "",
+    });
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const publicUrl = `${appUrl}/p/${professional.slug}`;
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-  const qr = await QRCode.toDataURL(publicUrl);
+  const publicUrl = professional.slug
+    ? `${appUrl}/p/${professional.slug}`
+    : "";
+
+  const qr = professional.slug
+    ? await QRCode.toDataURL(publicUrl)
+    : "";
 
   return NextResponse.json({
+    _id: professional._id.toString(),
+    displayName: professional.displayName || "",
+    slug: professional.slug || "",
+    category: professional.category?.toString?.() || "",
+    bio: professional.bio || "",
+    phone: professional.phone || "",
+    address: professional.address || "",
+    city: professional.city || "",
+    province: professional.province || "",
+    price: professional.price || 0,
+    appointmentDurationMinutes:
+      professional.appointmentDurationMinutes || 30,
+    appointmentBufferMinutes:
+      professional.appointmentBufferMinutes || 0,
     publicUrl,
     qr,
   });
@@ -42,7 +78,10 @@ export async function PUT(request: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
   }
 
   await connectDB();
@@ -59,6 +98,7 @@ export async function PUT(request: Request) {
     province,
     price,
     appointmentDurationMinutes,
+    appointmentBufferMinutes,
   } = body;
 
   if (!displayName) {
@@ -82,24 +122,61 @@ export async function PUT(request: Request) {
   const slug = createSlug(displayName);
 
   const professional = await Professional.findOneAndUpdate(
-    { user: session.user.id },
     {
+      user: session.user.id,
+    },
+    {
+      user: session.user.id,
       displayName,
       slug,
       category: category || null,
-      bio,
-      phone,
-      address,
-      city,
-      province,
+      bio: bio || "",
+      phone: phone || "",
+      address: address || "",
+      city: city || "",
+      province: province || "",
       price: Number(price) || 0,
-      appointmentDurationMinutes: Number(appointmentDurationMinutes) || 30,
+      appointmentDurationMinutes:
+        Number(appointmentDurationMinutes) || 30,
+      appointmentBufferMinutes:
+        Number(appointmentBufferMinutes) || 0,
+      isActive: true,
     },
     {
-      new: true,
       upsert: true,
+      returnDocument: "after",
     }
   );
 
-  return NextResponse.json(professional);
+  await deleteCacheByPattern("public:*");
+
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+  const publicUrl = professional.slug
+    ? `${appUrl}/p/${professional.slug}`
+    : "";
+
+  const qr = professional.slug
+    ? await QRCode.toDataURL(publicUrl)
+    : "";
+
+  return NextResponse.json({
+    _id: professional._id.toString(),
+    displayName: professional.displayName || "",
+    slug: professional.slug || "",
+    category: professional.category?.toString?.() || "",
+    bio: professional.bio || "",
+    phone: professional.phone || "",
+    address: professional.address || "",
+    city: professional.city || "",
+    province: professional.province || "",
+    price: professional.price || 0,
+    appointmentDurationMinutes:
+      professional.appointmentDurationMinutes || 30,
+    appointmentBufferMinutes:
+      professional.appointmentBufferMinutes || 0,
+    publicUrl,
+    qr,
+  });
 }

@@ -13,7 +13,10 @@ export async function GET() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
   }
 
   await connectDB();
@@ -29,30 +32,74 @@ export async function GET() {
     );
   }
 
-  let tenant = await Tenant.findOne({
+  const tenant = await Tenant.findOne({
     professional: professional._id,
   });
 
   if (!tenant) {
-    tenant = await Tenant.create({
-      professional: professional._id,
-      owner: session.user.id,
-      name: professional.displayName,
-      slug: professional.slug || createSlug(professional.displayName),
-      subdomain: professional.slug || createSlug(professional.displayName),
+    return NextResponse.json({
+      name: professional.displayName || "",
+      slug: professional.slug || "",
+      subdomain: professional.slug || "",
+      customDomain: "",
+      logoUrl: "",
+      primaryColor: "#8b5cf6",
+      accentColor: "#7c3aed",
+      welcomeMessage: "",
+      cancellationPolicy: "",
+      requiresDeposit: false,
+      defaultDepositAmount: 0,
+      city: professional.city || "",
+      province: professional.province || "",
+      country: "Argentina",
+      neighborhood: professional.neighborhood || "",
+      offersOnline: Boolean(professional.offersOnline),
+      languages: Array.isArray(professional.languages)
+        ? professional.languages
+        : ["Español"],
+      insuranceProviders: Array.isArray(professional.insuranceProviders)
+        ? professional.insuranceProviders
+        : [],
+      exists: false,
     });
   }
 
-  await deleteCacheByPattern("public:*");
-
-  return NextResponse.json(tenant);
+  return NextResponse.json({
+    _id: tenant._id.toString(),
+    name: tenant.name || "",
+    slug: tenant.slug || "",
+    subdomain: tenant.subdomain || "",
+    customDomain: tenant.customDomain || "",
+    logoUrl: tenant.logoUrl || "",
+    primaryColor: tenant.primaryColor || "#8b5cf6",
+    accentColor: tenant.accentColor || "#7c3aed",
+    welcomeMessage: tenant.welcomeMessage || "",
+    cancellationPolicy: tenant.cancellationPolicy || "",
+    requiresDeposit: Boolean(tenant.requiresDeposit),
+    defaultDepositAmount: tenant.defaultDepositAmount || 0,
+    city: tenant.city || "",
+    province: tenant.province || "",
+    country: tenant.country || "Argentina",
+    neighborhood: tenant.neighborhood || "",
+    offersOnline: Boolean(tenant.offersOnline),
+    languages: Array.isArray(tenant.languages)
+      ? tenant.languages
+      : ["Español"],
+    insuranceProviders: Array.isArray(tenant.insuranceProviders)
+      ? tenant.insuranceProviders
+      : [],
+    exists: true,
+  });
 }
 
 export async function PUT(request: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
   }
 
   await connectDB();
@@ -93,13 +140,16 @@ export async function PUT(request: Request) {
 
   if (!name || !slug || !city || !province) {
     return NextResponse.json(
-      { message: "Nombre y slug son obligatorios" },
+      {
+        message:
+          "Nombre, slug, ciudad y provincia son obligatorios",
+      },
       { status: 400 }
     );
   }
 
   const cleanSlug = createSlug(slug);
-  const cleanSubdomain = subdomain ? createSlug(subdomain) : "";
+  const cleanSubdomain = subdomain ? createSlug(subdomain) : cleanSlug;
 
   const existingSlug = await Tenant.findOne({
     slug: cleanSlug,
@@ -127,6 +177,14 @@ export async function PUT(request: Request) {
     }
   }
 
+  const normalizedLanguages = Array.isArray(languages)
+    ? languages
+    : ["Español"];
+
+  const normalizedInsuranceProviders = Array.isArray(insuranceProviders)
+    ? insuranceProviders
+    : [];
+
   const tenant = await Tenant.findOneAndUpdate(
     {
       professional: professional._id,
@@ -134,43 +192,73 @@ export async function PUT(request: Request) {
     {
       professional: professional._id,
       owner: session.user.id,
+
       name,
       slug: cleanSlug,
       subdomain: cleanSubdomain,
-      customDomain: customDomain?.toLowerCase() || "",
-      logoUrl,
-      primaryColor,
-      accentColor,
-      welcomeMessage,
-      cancellationPolicy,
+      customDomain: customDomain?.toLowerCase?.() || "",
+
+      logoUrl: logoUrl || "",
+      primaryColor: primaryColor || "#8b5cf6",
+      accentColor: accentColor || "#7c3aed",
+      welcomeMessage: welcomeMessage || "",
+      cancellationPolicy: cancellationPolicy || "",
+
       requiresDeposit: Boolean(requiresDeposit),
       defaultDepositAmount: Number(defaultDepositAmount) || 0,
+
       city,
       province,
       country: country || "Argentina",
-      neighborhood,
+      neighborhood: neighborhood || "",
       offersOnline: Boolean(offersOnline),
-      languages: Array.isArray(languages) ? languages : ["Español"],
-      insuranceProviders: Array.isArray(insuranceProviders)
-        ? insuranceProviders
-        : [],
+      languages: normalizedLanguages,
+      insuranceProviders: normalizedInsuranceProviders,
+
+      isActive: true,
     },
     {
-      new: true,
       upsert: true,
+      returnDocument: "after",
     }
   );
 
   professional.slug = cleanSlug;
   professional.city = city;
   professional.province = province;
-  professional.neighborhood = neighborhood;
+  professional.neighborhood = neighborhood || "";
   professional.offersOnline = Boolean(offersOnline);
-  professional.languages = Array.isArray(languages) ? languages : ["Español"];
-  professional.insuranceProviders = Array.isArray(insuranceProviders)
-    ? insuranceProviders
-    : [];
+  professional.languages = normalizedLanguages;
+  professional.insuranceProviders = normalizedInsuranceProviders;
+
   await professional.save();
 
-  return NextResponse.json(tenant);
+  await deleteCacheByPattern("public:*");
+
+  return NextResponse.json({
+    _id: tenant._id.toString(),
+    name: tenant.name || "",
+    slug: tenant.slug || "",
+    subdomain: tenant.subdomain || "",
+    customDomain: tenant.customDomain || "",
+    logoUrl: tenant.logoUrl || "",
+    primaryColor: tenant.primaryColor || "#8b5cf6",
+    accentColor: tenant.accentColor || "#7c3aed",
+    welcomeMessage: tenant.welcomeMessage || "",
+    cancellationPolicy: tenant.cancellationPolicy || "",
+    requiresDeposit: Boolean(tenant.requiresDeposit),
+    defaultDepositAmount: tenant.defaultDepositAmount || 0,
+    city: tenant.city || "",
+    province: tenant.province || "",
+    country: tenant.country || "Argentina",
+    neighborhood: tenant.neighborhood || "",
+    offersOnline: Boolean(tenant.offersOnline),
+    languages: Array.isArray(tenant.languages)
+      ? tenant.languages
+      : ["Español"],
+    insuranceProviders: Array.isArray(tenant.insuranceProviders)
+      ? tenant.insuranceProviders
+      : [],
+    exists: true,
+  });
 }

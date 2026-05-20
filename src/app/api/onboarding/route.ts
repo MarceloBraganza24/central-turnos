@@ -12,8 +12,37 @@ import {
 
 export const runtime = "nodejs";
 
+function getDefaultCompletedSteps() {
+  return {
+    profileCompleted: false,
+    categorySelected: false,
+    availabilityConfigured: false,
+    firstAppointmentReceived: false,
+  };
+}
+
+function getDefaultWhatsappSent() {
+  return {
+    profileCompleted: false,
+    servicesCompleted: false,
+    availabilityConfigured: false,
+    firstAppointmentReceived: false,
+    onboardingCompleted: false,
+  };
+}
+
 export async function GET() {
   const context = await getCurrentTenant();
+
+  if (!context?.tenant) {
+    return NextResponse.json(
+      {
+        message:
+          "Primero completá la configuración de tu espacio",
+      },
+      { status: 400 }
+    );
+  }
 
   if (!context) {
     return NextResponse.json(
@@ -31,7 +60,17 @@ export async function GET() {
   if (!onboarding) {
     onboarding = await Onboarding.create({
       tenant: tenant._id,
+      completedSteps: getDefaultCompletedSteps(),
+      whatsappSent: getDefaultWhatsappSent(),
     });
+  }
+
+  if (!onboarding.completedSteps) {
+    onboarding.completedSteps = getDefaultCompletedSteps();
+  }
+
+  if (!onboarding.whatsappSent) {
+    onboarding.whatsappSent = getDefaultWhatsappSent();
   }
 
   const hasAvailability = await Availability.exists({
@@ -44,11 +83,19 @@ export async function GET() {
     professional: professional._id,
   });
 
-  onboarding.completedSteps.profileCompleted =
-    Boolean(professional.displayName);
+  const profileCompleted = Boolean(
+    professional.displayName &&
+      professional.bio &&
+      professional.phone &&
+      professional.city &&
+      professional.province
+  );
 
-  onboarding.completedSteps.categorySelected =
-    Boolean(professional.category);
+  onboarding.completedSteps.profileCompleted = profileCompleted;
+
+  onboarding.completedSteps.categorySelected = Boolean(
+    professional.category
+  );
 
   onboarding.completedSteps.availabilityConfigured =
     Boolean(hasAvailability);
@@ -128,8 +175,8 @@ export async function PATCH(request: Request) {
     },
     body,
     {
-      new: true,
       upsert: true,
+      returnDocument: "after",
     }
   );
 

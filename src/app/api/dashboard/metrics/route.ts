@@ -1,39 +1,53 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 import { connectDB } from "@/lib/mongodb";
-import { Professional } from "@/models/Professional";
 import { Appointment } from "@/models/Appointment";
 import { Client } from "@/models/Client";
+import { getCurrentTenant } from "@/lib/get-current-tenant";
+import { requireTenantPermission } from "@/lib/permissions";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user?.id) {
-    return NextResponse.json({ message: "No autorizado" }, { status: 401 });
-  }
-
   await connectDB();
 
-  const professional = await Professional.findOne({
-    user: session.user.id,
-  });
+  const context = await getCurrentTenant();
 
-  if (!professional) {
+  if (!context) {
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
+  }
+
+  if (!context.tenant) {
     return NextResponse.json({
       todayAppointments: 0,
       weekAppointments: 0,
       totalClients: 0,
       estimatedIncome: 0,
+      needsTenantSetup: true,
     });
+  }
+
+  const { tenant, professional } = context;
+
+  const permission = await requireTenantPermission(
+    tenant._id.toString(),
+    "canViewReports"
+  );
+
+  if (!permission.allowed) {
+    return NextResponse.json(
+      { message: permission.message },
+      { status: permission.status }
+    );
   }
 
   const today = new Date().toISOString().split("T")[0];
 
   const now = new Date();
   const day = now.getDay();
+
   const monday = new Date(now);
   monday.setDate(now.getDate() - day + (day === 0 ? -6 : 1));
 
@@ -44,31 +58,37 @@ export async function GET() {
   const weekEnd = sunday.toISOString().split("T")[0];
 
   const todayAppointments = await Appointment.countDocuments({
+    tenant: tenant._id,
     professional: professional._id,
     appointmentDate: today,
     status: { $ne: "cancelled" },
   });
 
   const weekAppointments = await Appointment.countDocuments({
+    tenant: tenant._id,
     professional: professional._id,
     appointmentDate: { $gte: weekStart, $lte: weekEnd },
     status: { $ne: "cancelled" },
   });
 
-  const appointments = await Appointment.find({
+  const clientIds = await Appointment.find({
+    tenant: tenant._id,
     professional: professional._id,
   }).distinct("client");
 
   const totalClients = await Client.countDocuments({
-    _id: { $in: appointments },
+    tenant: tenant._id,
+    _id: { $in: clientIds },
   });
 
-  const estimatedIncome = weekAppointments * Number(professional.price || 0);
+  const estimatedIncome =
+    weekAppointments * Number(professional.price || 0);
 
   return NextResponse.json({
     todayAppointments,
     weekAppointments,
     totalClients,
     estimatedIncome,
+    needsTenantSetup: false,
   });
 }

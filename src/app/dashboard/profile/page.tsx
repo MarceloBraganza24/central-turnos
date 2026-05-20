@@ -13,10 +13,7 @@ type Category = {
 type ProfessionalProfile = {
   _id?: string;
   displayName: string;
-  category?: {
-    _id: string;
-    name: string;
-  } | null;
+  category?: string;
   bio?: string;
   phone?: string;
   address?: string;
@@ -58,7 +55,7 @@ export default function DashboardProfilePage() {
       if (profileData) {
         setForm({
           displayName: profileData.displayName || "",
-          category: profileData.category?._id || "",
+          category: profileData.category || "",
           bio: profileData.bio || "",
           phone: profileData.phone || "",
           address: profileData.address || "",

@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import PostHogProvider from "@/components/providers/PostHogProvider";
 import FloatingSupportButton from "@/components/support/FloatingSupportButton";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Central Turnos",
@@ -18,10 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" data-scroll-behavior="smooth">
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} bg-neutral-950 text-white antialiased`}
       >
+        <Toaster
+          position="top-right"
+          richColors
+          theme="dark"
+        />
         <PostHogProvider>
           {children}
         </PostHogProvider>

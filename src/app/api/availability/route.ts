@@ -35,6 +35,18 @@ async function getAvailabilityContext() {
     };
   }
 
+  if (!context.tenant) {
+    return {
+      error: NextResponse.json(
+        {
+          message:
+            "Primero completá la configuración de tu espacio",
+        },
+        { status: 400 }
+      ),
+    };
+  }
+
   const { professional, tenant } = context;
 
   if (!professional) {
@@ -127,7 +139,10 @@ export async function POST(request: Request) {
 
   if (startTime >= endTime) {
     return NextResponse.json(
-      { message: "La hora de inicio debe ser menor a la hora de fin" },
+      {
+        message:
+          "La hora de inicio debe ser menor a la hora de fin",
+      },
       { status: 400 }
     );
   }
@@ -140,7 +155,12 @@ export async function POST(request: Request) {
   });
 
   const duplicatedOrOverlapped = existingBlocks.some((block) =>
-    timesOverlap(startTime, endTime, block.startTime, block.endTime)
+    timesOverlap(
+      startTime,
+      endTime,
+      block.startTime,
+      block.endTime
+    )
   );
 
   if (duplicatedOrOverlapped) {

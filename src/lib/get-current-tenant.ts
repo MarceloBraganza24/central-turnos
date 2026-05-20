@@ -21,18 +21,16 @@ export async function getCurrentTenant() {
     return null;
   }
 
-  let tenant = await Tenant.findOne({
+  const tenant = await Tenant.findOne({
     professional: professional._id,
   });
 
   if (!tenant) {
-    tenant = await Tenant.create({
-      professional: professional._id,
-      owner: session.user.id,
-      name: professional.displayName,
-      slug: professional.slug,
-      subdomain: professional.slug,
-    });
+    return {
+      session,
+      professional,
+      tenant: null,
+    };
   }
 
   return {

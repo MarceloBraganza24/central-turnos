@@ -13,6 +13,16 @@ export async function GET() {
   if (!context) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
   }
+  
+  if (!context?.tenant) {
+    return NextResponse.json(
+      {
+        message:
+          "Primero completá la configuración de tu espacio",
+      },
+      { status: 400 }
+    );
+  }
 
   const { tenant, professional } = context;
 
@@ -31,6 +41,16 @@ export async function POST(request: Request) {
 
   if (!context) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+  }
+  
+  if (!context?.tenant) {
+    return NextResponse.json(
+      {
+        message:
+          "Primero completá la configuración de tu espacio",
+      },
+      { status: 400 }
+    );
   }
 
   const { tenant, professional, session } = context;
@@ -98,6 +118,16 @@ export async function PATCH(request: Request) {
 
   if (!context) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
+  }
+  
+  if (!context?.tenant) {
+    return NextResponse.json(
+      {
+        message:
+          "Primero completá la configuración de tu espacio",
+      },
+      { status: 400 }
+    );
   }
 
   const { tenant, professional } = context;
