@@ -66,7 +66,9 @@ export default function DashboardCalendarPage() {
     const response = await fetch("/api/appointments");
     const data = await response.json();
 
-    setAppointments(data);
+    setAppointments(
+      Array.isArray(data) ? data : []
+    );
     setLoading(false);
   }
 

@@ -3,10 +3,7 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { Professional } from "@/models/Professional";
-import { Tenant } from "@/models/Tenant";
 import { createSlug } from "@/lib/slug";
-import { TenantMember } from "@/models/TenantMember";
-import { ROLE_PERMISSIONS } from "@/lib/role-permissions";
 import { sendProfessionalWelcomeWhatsApp } from "@/lib/whatsapp-onboarding";
 import { authRateLimit, getIp } from "@/lib/rate-limit";
 
@@ -38,8 +35,10 @@ export async function POST(request: Request) {
       );
     }
 
+    const normalizedEmail = String(email).toLowerCase();
+
     const existingUser = await User.findOne({
-      email: email.toLowerCase(),
+      email: normalizedEmail,
     });
 
     if (existingUser) {
@@ -53,44 +52,39 @@ export async function POST(request: Request) {
 
     const user = await User.create({
       fullName,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
       role: "professional",
+      isActive: true,
+      plan: "free",
     });
 
-    const professional = await Professional.create({
+    const slug = createSlug(fullName);
+
+    await Professional.create({
       user: user._id,
       displayName: fullName,
       phone,
-      slug: createSlug(fullName),
-    });
-
-    const tenant = await Tenant.create({
-      professional: professional._id,
-      owner: user._id,
-      name: fullName,
-      slug: createSlug(fullName),
-      subdomain: createSlug(fullName),
-    });
-
-    await TenantMember.create({
-      tenant: tenant._id,
-      user: user._id,
-      role: "owner",
-      permissions: ROLE_PERMISSIONS.owner,
+      slug,
+      isActive: false,
     });
 
     await sendProfessionalWelcomeWhatsApp({
       to: phone,
       fullName,
-      tenantSlug: tenant.slug,
+      tenantSlug: slug,
     });
 
     return NextResponse.json(
-      { message: "Usuario creado correctamente" },
+      {
+        message:
+          "Usuario creado correctamente. Ahora completá la configuración de tu espacio.",
+      },
       { status: 201 }
     );
-  } catch {
+  } catch (error) {
+    console.error("REGISTER_ERROR", error);
+
     return NextResponse.json(
       { message: "Error al registrar usuario" },
       { status: 500 }

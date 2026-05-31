@@ -5,46 +5,46 @@ import { useEffect, useState } from "react";
 import { CheckCircle, Circle } from "lucide-react";
 
 type OnboardingData = {
-  completed: boolean;
+  progress: number;
+  dismissed: boolean;
   steps: {
-    hasProfile: boolean;
-    hasCategory: boolean;
-    hasAvailability: boolean;
-    hasPublicLink: boolean;
-  };
-  professional: {
-    id: string;
-    slug?: string;
-    onboardingCompleted: boolean;
+    profileCompleted: boolean;
+    categorySelected: boolean;
+    availabilityConfigured: boolean;
+    firstAppointmentReceived: boolean;
   };
 };
 
 const steps = [
   {
-    key: "hasProfile",
+    key: "profileCompleted",
     title: "Completá tu perfil profesional",
-    description: "Agregá tu nombre visible, bio, teléfono, ciudad y datos básicos.",
+    description:
+      "Agregá tu nombre visible, bio, teléfono, ciudad y datos básicos.",
     href: "/dashboard/profile",
     action: "Completar perfil",
   },
   {
-    key: "hasCategory",
+    key: "categorySelected",
     title: "Elegí tu categoría",
-    description: "Seleccioná en qué rubro querés aparecer públicamente.",
+    description:
+      "Seleccioná en qué rubro querés aparecer públicamente.",
     href: "/dashboard/profile",
     action: "Elegir categoría",
   },
   {
-    key: "hasAvailability",
-    title: "Cargá tus horarios",
-    description: "Definí los días y horarios en los que vas a recibir turnos.",
+    key: "availabilityConfigured",
+    title: "Configurá tus horarios",
+    description:
+      "Definí cuándo vas a recibir reservas.",
     href: "/dashboard/availability",
-    action: "Cargar horarios",
+    action: "Configurar horarios",
   },
   {
-    key: "hasPublicLink",
-    title: "Compartí tu perfil",
-    description: "Copiá tu link público o descargá tu QR para empezar a recibir reservas.",
+    key: "firstAppointmentReceived",
+    title: "Recibí tu primer turno",
+    description:
+      "Compartí tu perfil y conseguí tu primera reserva.",
     href: "/dashboard/share",
     action: "Compartir perfil",
   },
@@ -83,11 +83,32 @@ export default function OnboardingPage() {
           reservar turnos sin escribirte por WhatsApp.
         </p>
 
-        {data.completed && (
+        {data.progress === 100 && (
           <div className="mt-6 rounded-2xl border border-green-900 bg-green-950/40 p-5 text-green-300">
             Tu perfil ya está listo para recibir reservas.
           </div>
         )}
+      </div>
+
+      <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900 p-5">
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-neutral-400">
+            Progreso de configuración
+          </span>
+
+          <span className="font-semibold">
+            {data.progress}%
+          </span>
+        </div>
+
+        <div className="mt-3 h-3 overflow-hidden rounded-full bg-neutral-800">
+          <div
+            className="h-full rounded-full bg-green-500 transition-all"
+            style={{
+              width: `${data.progress}%`,
+            }}
+          />
+        </div>
       </div>
 
       <div className="mt-8 space-y-4">
@@ -132,7 +153,7 @@ export default function OnboardingPage() {
         })}
       </div>
 
-      {data.completed && (
+      {data.progress === 100 && (
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/dashboard"
