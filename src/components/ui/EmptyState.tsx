@@ -14,14 +14,14 @@ export default function EmptyState({
   actionHref,
 }: EmptyStateProps) {
   return (
-    <div className="rounded-2xl border border-dashed border-neutral-800 bg-neutral-900/60 p-10 text-center">
+    <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)]/60 p-10 text-center">
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-xl">
         ✦
       </div>
 
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
+      <h3 className="text-lg font-semibold text-[var(--foreground)]">{title}</h3>
 
-      <p className="mx-auto mt-2 max-w-md text-sm text-neutral-400">
+      <p className="mx-auto mt-2 max-w-md text-sm text-[var(--muted)]">
         {description}
       </p>
 

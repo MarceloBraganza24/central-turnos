@@ -15,7 +15,8 @@ export async function GET() {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const permission = await requireTenantPermission(
     tenant._id.toString(),
@@ -47,7 +48,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const permission = await requireTenantPermission(
     tenant._id.toString(),
@@ -103,7 +105,8 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const permission = await requireTenantPermission(
     tenant._id.toString(),

@@ -117,7 +117,7 @@ export default function DashboardSettingsPage() {
               Configuración
             </h1>
 
-            <p className="mt-2 text-neutral-400">
+            <p className="mt-2 text-[var(--muted)]">
               Personalizá cómo funciona tu agenda.
             </p>
           </div>
@@ -131,7 +131,7 @@ export default function DashboardSettingsPage() {
 
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               <div>
-                <label className="text-sm text-neutral-400">
+                <label className="text-sm text-[var(--muted)]">
                   Duración por defecto (min)
                 </label>
 
@@ -146,12 +146,12 @@ export default function DashboardSettingsPage() {
                         Number(e.target.value),
                     })
                   }
-                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-neutral-400">
+                <label className="text-sm text-[var(--muted)]">
                   Buffer entre turnos (min)
                 </label>
 
@@ -166,7 +166,7 @@ export default function DashboardSettingsPage() {
                         Number(e.target.value),
                     })
                   }
-                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function DashboardSettingsPage() {
             </h2>
 
             <div className="mt-6 space-y-4">
-              <label className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-950 p-4">
+              <label className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
                 <span>
                   Recordatorios automáticos
                 </span>
@@ -200,7 +200,7 @@ export default function DashboardSettingsPage() {
                 />
               </label>
 
-              <label className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-950 p-4">
+              <label className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
                 <span>
                   Confirmaciones automáticas
                 </span>
@@ -231,7 +231,7 @@ export default function DashboardSettingsPage() {
 
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               <div>
-                <label className="text-sm text-neutral-400">
+                <label className="text-sm text-[var(--muted)]">
                   Color principal
                 </label>
 
@@ -244,12 +244,12 @@ export default function DashboardSettingsPage() {
                       primaryColor: e.target.value,
                     })
                   }
-                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-neutral-950"
+                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-[var(--background)]"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-neutral-400">
+                <label className="text-sm text-[var(--muted)]">
                   Color acento
                 </label>
 
@@ -262,7 +262,7 @@ export default function DashboardSettingsPage() {
                       accentColor: e.target.value,
                     })
                   }
-                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-neutral-950"
+                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-[var(--background)]"
                 />
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function DashboardSettingsPage() {
         <FadeIn delay={0.2}>
           <button
             onClick={saveSettings}
-            className="touch-button rounded-2xl bg-brand px-6 py-4 font-medium text-white hover:bg-brand-hover"
+            className="touch-button rounded-2xl bg-brand px-6 py-4 font-medium text-[var(--foreground)] hover:bg-brand-hover"
           >
             Guardar configuración
           </button>

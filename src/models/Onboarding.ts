@@ -20,12 +20,12 @@ const OnboardingSchema = new Schema(
         default: false,
       },
 
-      availabilityConfigured: {
+      tenantConfigured: {
         type: Boolean,
         default: false,
       },
 
-      publicProfileShared: {
+      availabilityConfigured: {
         type: Boolean,
         default: false,
       },

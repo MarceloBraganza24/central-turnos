@@ -26,9 +26,9 @@ type ProfessionalItem = {
   _id: string;
   displayName: string;
   bio?: string;
-
+  city?: string;
+  province?: string;
   category?: string;
-
   ratingAverage?: number;
   ratingCount?: number;
 };
@@ -71,11 +71,11 @@ export default async function CityCategoriesPage({
 
   if (cached) {
     return (
-      <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+      <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
         <section className="mx-auto max-w-7xl">
           <Link
             href="/turnos"
-            className="text-sm text-neutral-400 underline"
+            className="text-sm text-[var(--muted)] underline"
           >
             Cambiar ciudad
           </Link>
@@ -97,7 +97,7 @@ export default async function CityCategoriesPage({
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl bg-neutral-950 p-5">
+              <div className="rounded-2xl bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">
                   Profesionales
                 </p>
@@ -107,7 +107,7 @@ export default async function CityCategoriesPage({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-950 p-5">
+              <div className="rounded-2xl bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">
                   Categorías
                 </p>
@@ -117,7 +117,7 @@ export default async function CityCategoriesPage({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-950 p-5">
+              <div className="rounded-2xl bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">
                   Disponibles hoy
                 </p>
@@ -146,7 +146,7 @@ export default async function CityCategoriesPage({
                       {category.name}
                     </h3>
 
-                    <p className="mt-2 text-sm text-neutral-400">
+                    <p className="mt-2 text-sm text-[var(--muted)]">
                       {category.description ||
                         "Ver profesionales disponibles"}
                     </p>
@@ -180,7 +180,7 @@ export default async function CityCategoriesPage({
                           }
                         </h3>
 
-                        <p className="mt-2 text-sm text-neutral-400">
+                        <p className="mt-2 text-sm text-[var(--muted)]">
                           {professional.bio ||
                             "Profesional disponible para turnos."}
                         </p>
@@ -252,18 +252,22 @@ export default async function CityCategoriesPage({
     (tenant: TenantItem) => tenant._id
   );
 
-  const professionals =
-    (await Professional.find({
-      tenant: { $in: tenantIds },
-      isActive: true,
-      category: { $ne: null },
-    })
-      .sort({ ratingAverage: -1 })
-      .lean()) as ProfessionalItem[];
+  const professionals = (await Professional.find({
+    isActive: true,
+    category: { $ne: null },
+  })
+    .sort({ ratingAverage: -1 })
+    .lean()) as ProfessionalItem[];
+
+  const cityProfessionals = professionals.filter(
+    (professional) =>
+      createSlug(professional.province || "") === province &&
+      createSlug(professional.city || "") === city
+  );
 
   const categoryIds = [
     ...new Set(
-      professionals
+      cityProfessionals
         .map(
           (
             item: ProfessionalItem
@@ -291,12 +295,12 @@ export default async function CityCategoriesPage({
     )
   );
 
-  const availableToday = professionals.filter(
+  const availableToday = cityProfessionals.filter(
     (p: ProfessionalItem) =>
       availableTodaySet.has(p._id.toString())
   );
 
-  const topRated = professionals
+  const topRated = cityProfessionals
     .filter(
       (p: ProfessionalItem) =>
         (p.ratingAverage ?? 0) > 0
@@ -311,11 +315,11 @@ export default async function CityCategoriesPage({
     province;
 
   return (
-    <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <section className="mx-auto max-w-7xl">
         <Link
           href="/turnos"
-          className="text-sm text-neutral-400 underline"
+          className="text-sm text-[var(--muted)] underline"
         >
           Cambiar ciudad
         </Link>
@@ -336,17 +340,17 @@ export default async function CityCategoriesPage({
           </p>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl bg-neutral-950 p-5">
+            <div className="rounded-2xl bg-[var(--background)] p-5">
               <p className="text-sm text-neutral-500">
                 Profesionales
               </p>
 
               <p className="mt-2 text-3xl font-bold">
-                {professionals.length}
+                {cityProfessionals.length}
               </p>
             </div>
 
-            <div className="rounded-2xl bg-neutral-950 p-5">
+            <div className="rounded-2xl bg-[var(--background)] p-5">
               <p className="text-sm text-neutral-500">
                 Categorías
               </p>
@@ -356,7 +360,7 @@ export default async function CityCategoriesPage({
               </p>
             </div>
 
-            <div className="rounded-2xl bg-neutral-950 p-5">
+            <div className="rounded-2xl bg-[var(--background)] p-5">
               <p className="text-sm text-neutral-500">
                 Disponibles hoy
               </p>
@@ -385,7 +389,7 @@ export default async function CityCategoriesPage({
                     {category.name}
                   </h3>
 
-                  <p className="mt-2 text-sm text-neutral-400">
+                  <p className="mt-2 text-sm text-[var(--muted)]">
                     {category.description ||
                       "Ver profesionales disponibles"}
                   </p>
@@ -419,7 +423,7 @@ export default async function CityCategoriesPage({
                         }
                       </h3>
 
-                      <p className="mt-2 text-sm text-neutral-400">
+                      <p className="mt-2 text-sm text-[var(--muted)]">
                         {professional.bio ||
                           "Profesional disponible para turnos."}
                       </p>

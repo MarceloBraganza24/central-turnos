@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 import { connectDB } from "@/lib/mongodb";
 import { Availability } from "@/models/Availability";
 import { timesOverlap } from "@/lib/validations";
@@ -11,17 +9,6 @@ import { requireTenantPermission } from "@/lib/permissions";
 export const runtime = "nodejs";
 
 async function getAvailabilityContext() {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user?.id) {
-    return {
-      error: NextResponse.json(
-        { message: "No autorizado" },
-        { status: 401 }
-      ),
-    };
-  }
-
   await connectDB();
 
   const context = await getCurrentTenant();
@@ -47,7 +34,7 @@ async function getAvailabilityContext() {
     };
   }
 
-  const { professional, tenant } = context;
+  const { session, professional, tenant } = context;
 
   if (!professional) {
     return {
@@ -73,7 +60,10 @@ async function checkAvailabilityPermission(tenantId: string) {
 
   if (!permission.allowed) {
     return NextResponse.json(
-      { message: permission.message },
+      {
+        message: permission.message || "No tenés permiso para administrar horarios",
+        debug: "requireTenantPermission failed",
+      },
       { status: permission.status }
     );
   }

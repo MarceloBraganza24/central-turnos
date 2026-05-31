@@ -27,7 +27,7 @@ export default function ReportProblemPage() {
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <div className="mx-auto max-w-2xl">
         <p className="text-sm text-brand">
           Soporte
@@ -37,7 +37,7 @@ export default function ReportProblemPage() {
           Reportar problema
         </h1>
 
-        <p className="mt-4 text-neutral-400">
+        <p className="mt-4 text-[var(--muted)]">
           Contanos qué ocurrió y vamos a revisarlo.
         </p>
 
@@ -50,13 +50,13 @@ export default function ReportProblemPage() {
             onChange={(e) => setMessage(e.target.value)}
             rows={8}
             placeholder="Ej: no puedo cargar horarios, error al reservar..."
-            className="w-full rounded-2xl border border-neutral-700 bg-neutral-950 p-4"
+            className="w-full rounded-2xl border border-neutral-700 bg-[var(--background)] p-4"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 rounded-xl bg-brand px-6 py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
+            className="mt-6 rounded-xl bg-brand px-6 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60"
           >
             {loading
               ? "Enviando..."

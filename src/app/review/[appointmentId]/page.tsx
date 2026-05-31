@@ -45,8 +45,8 @@ export default function ReviewPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-neutral-950 p-6 text-white">
-      <section className="w-full max-w-xl rounded-3xl border border-neutral-800 bg-neutral-900 p-8">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] p-6 text-[var(--foreground)]">
+      <section className="w-full max-w-xl rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8">
         {sent ? (
           <div className="text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-3xl bg-brand text-2xl font-bold">
@@ -55,13 +55,13 @@ export default function ReviewPage() {
 
             <h1 className="mt-5 text-3xl font-bold">Gracias por tu reseña</h1>
 
-            <p className="mt-3 text-neutral-400">
+            <p className="mt-3 text-[var(--muted)]">
               Tu opinión ayuda a otros clientes a elegir mejor.
             </p>
 
             <Link
               href="/"
-              className="mt-6 inline-flex rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand-hover"
+              className="mt-6 inline-flex rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover"
             >
               Volver al inicio
             </Link>
@@ -74,7 +74,7 @@ export default function ReviewPage() {
               ¿Cómo fue tu atención?
             </h1>
 
-            <p className="mt-2 text-neutral-400">
+            <p className="mt-2 text-[var(--muted)]">
               Calificá tu experiencia con el profesional.
             </p>
 
@@ -92,8 +92,8 @@ export default function ReviewPage() {
                       onClick={() => setRating(value)}
                       className={`flex h-12 w-12 items-center justify-center rounded-xl border text-xl ${
                         rating >= value
-                          ? "border-brand bg-brand text-white"
-                          : "border-neutral-700 bg-neutral-950 text-neutral-500"
+                          ? "border-brand bg-brand text-[var(--foreground)]"
+                          : "border-neutral-700 bg-[var(--background)] text-neutral-500"
                       }`}
                     >
                       ★
@@ -111,7 +111,7 @@ export default function ReviewPage() {
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   maxLength={500}
-                  className="min-h-32 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="min-h-32 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   placeholder="Contá brevemente cómo fue tu experiencia..."
                 />
 
@@ -122,7 +122,7 @@ export default function ReviewPage() {
 
               <button
                 disabled={saving}
-                className="w-full rounded-xl bg-brand py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
+                className="w-full rounded-xl bg-brand py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60"
               >
                 {saving ? "Enviando..." : "Enviar reseña"}
               </button>

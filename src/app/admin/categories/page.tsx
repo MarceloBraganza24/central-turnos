@@ -125,24 +125,24 @@ export default function AdminCategoriesPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-neutral-950 p-6 text-white">
+      <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
         Cargando categorías...
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
         <h1 className="text-3xl font-bold">Categorías</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Creá y administrá las categorías profesionales visibles en el sistema.
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="mt-8 space-y-5 rounded-2xl border border-neutral-800 bg-neutral-900 p-6"
+          className="mt-8 space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <h2 className="text-xl font-semibold">
             {editingCategoryId ? "Editar categoría" : "Nueva categoría"}
@@ -160,7 +160,7 @@ export default function AdminCategoriesPage() {
                   name: e.target.value,
                 })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Odontología"
             />
           </div>
@@ -177,7 +177,7 @@ export default function AdminCategoriesPage() {
                   description: e.target.value,
                 })
               }
-              className="min-h-24 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Breve descripción de la categoría"
             />
           </div>
@@ -212,7 +212,7 @@ export default function AdminCategoriesPage() {
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-xl border border-neutral-700 px-6 py-3 font-medium text-white hover:bg-neutral-800"
+                className="rounded-xl border border-neutral-700 px-6 py-3 font-medium text-[var(--foreground)] hover:bg-neutral-800"
               >
                 Cancelar
               </button>
@@ -220,9 +220,9 @@ export default function AdminCategoriesPage() {
           </div>
         </form>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
           {categories.length === 0 ? (
-            <p className="p-6 text-neutral-400">
+            <p className="p-6 text-[var(--muted)]">
               Todavía no hay categorías creadas.
             </p>
           ) : (
@@ -238,7 +238,7 @@ export default function AdminCategoriesPage() {
                       /{category.slug}
                     </p>
                     {category.description && (
-                      <p className="mt-2 text-sm text-neutral-400">
+                      <p className="mt-2 text-sm text-[var(--muted)]">
                         {category.description}
                       </p>
                     )}

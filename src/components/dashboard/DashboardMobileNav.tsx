@@ -29,20 +29,20 @@ export default function DashboardMobileNav() {
     <div className="lg:hidden">
       <button
         onClick={() => setOpen(true)}
-        className="rounded-xl border border-neutral-700 p-2 text-white"
+        className="rounded-xl border border-neutral-700 p-2 text-[var(--foreground)]"
       >
         <Menu size={20} />
       </button>
 
       {open && (
         <div className="fixed inset-0 z-50 bg-black/70">
-          <div className="h-full w-80 bg-neutral-950 p-5">
+          <div className="h-full w-80 bg-[var(--background)] p-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-white">Turnero Pro</h2>
+              <h2 className="text-xl font-bold text-[var(--foreground)]">Turnero Pro</h2>
 
               <button
                 onClick={() => setOpen(false)}
-                className="rounded-xl border border-neutral-700 p-2 text-white"
+                className="rounded-xl border border-neutral-700 p-2 text-[var(--foreground)]"
               >
                 <X size={18} />
               </button>
@@ -59,8 +59,8 @@ export default function DashboardMobileNav() {
                     onClick={() => setOpen(false)}
                     className={`block rounded-2xl px-4 py-3 text-sm font-medium ${
                       active
-                        ? "bg-brand text-white hover:bg-brand-hover"
-                        : "text-neutral-300 hover:bg-neutral-900"
+                        ? "bg-brand text-[var(--foreground)] hover:bg-brand-hover"
+                        : "text-neutral-300 hover:bg-[var(--card)]"
                     }`}
                   >
                     {link.label}

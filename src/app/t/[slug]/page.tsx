@@ -59,7 +59,7 @@ export default async function TenantPublicPage({ params }: Props) {
 
   return (
     <main
-      className="min-h-screen bg-neutral-950 p-6 text-white"
+      className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]"
       style={
         {
           "--tenant-primary": tenant.primaryColor,
@@ -68,7 +68,7 @@ export default async function TenantPublicPage({ params }: Props) {
       }
     >
       <section className="mx-auto max-w-5xl">
-        <div className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900">
+        <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)]">
           <div className="p-8" style={{ backgroundColor: tenant.primaryColor }}>
             <div className="flex items-center gap-5">
               {tenant.logoUrl && (
@@ -109,7 +109,7 @@ export default async function TenantPublicPage({ params }: Props) {
                 {professional.bio || "Profesional adherido al sistema."}
               </p>
 
-              <div className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <h3 className="font-semibold">Horarios de atención</h3>
 
                 <div className="mt-3 divide-y divide-neutral-800">
@@ -119,7 +119,7 @@ export default async function TenantPublicPage({ params }: Props) {
                       className="flex justify-between py-3 text-sm"
                     >
                       <span>{days[item.dayOfWeek]}</span>
-                      <span className="text-neutral-400">
+                      <span className="text-[var(--muted)]">
                         {item.startTime} a {item.endTime}
                       </span>
                     </div>
@@ -127,23 +127,23 @@ export default async function TenantPublicPage({ params }: Props) {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <h3 className="font-semibold">Política de cancelación</h3>
-                <p className="mt-2 text-sm text-neutral-400">
+                <p className="mt-2 text-sm text-[var(--muted)]">
                   {tenant.cancellationPolicy}
                 </p>
               </div>
             </div>
 
             <aside className="space-y-4">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">Profesional</p>
                 <p className="mt-1 text-xl font-semibold">
                   {professional.displayName}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">Valor</p>
                 <p className="mt-1 text-3xl font-bold">
                   {professional.price > 0 ? `$${professional.price}` : "Consultar"}
@@ -151,7 +151,7 @@ export default async function TenantPublicPage({ params }: Props) {
               </div>
 
               {tenant.requiresDeposit && (
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                   <p className="text-sm text-neutral-500">Seña requerida</p>
                   <p className="mt-1 text-xl font-semibold">
                     ${tenant.defaultDepositAmount}

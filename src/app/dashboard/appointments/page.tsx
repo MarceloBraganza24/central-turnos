@@ -119,7 +119,7 @@ export default function DashboardAppointmentsPage() {
           Mis turnos
         </h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Acá vas a ver todos los turnos reservados
           por tus clientes.
         </p>
@@ -127,7 +127,7 @@ export default function DashboardAppointmentsPage() {
         <div className="mt-8 space-y-4">
           {appointments.length === 0 ? (
             <div className="premium-card rounded-3xl p-6">
-              <p className="text-neutral-400">
+              <p className="text-[var(--muted)]">
                 Todavía no tenés turnos reservados.
               </p>
             </div>
@@ -148,7 +148,7 @@ export default function DashboardAppointmentsPage() {
                         {appointment.appointmentDate}
                       </p>
 
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-[var(--muted)]">
                         {appointment.startTime} a{" "}
                         {appointment.endTime}
                       </p>
@@ -165,7 +165,7 @@ export default function DashboardAppointmentsPage() {
                         }
                       </p>
 
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-[var(--muted)]">
                         {appointment.client?.phone}
                       </p>
 
@@ -201,7 +201,7 @@ export default function DashboardAppointmentsPage() {
                       </div>
 
                       {appointment.notes && (
-                        <p className="mt-3 text-sm text-neutral-400">
+                        <p className="mt-3 text-sm text-[var(--muted)]">
                           {appointment.notes}
                         </p>
                       )}

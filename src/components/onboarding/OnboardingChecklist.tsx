@@ -100,7 +100,7 @@ export default function OnboardingChecklist() {
   }
 
   return (
-    <section className="rounded-3xl border border-brand/20 bg-linear-to-br from-brand/10 to-neutral-900 p-6 text-white">
+    <section className="rounded-3xl border border-brand/20 bg-linear-to-br from-brand/10 to-neutral-900 p-6 text-[var(--foreground)]">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
           <p className="text-sm text-brand">
@@ -118,7 +118,7 @@ export default function OnboardingChecklist() {
 
         <button
           onClick={dismiss}
-          className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-900"
+          className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
         >
           Ocultar
         </button>
@@ -134,7 +134,7 @@ export default function OnboardingChecklist() {
           />
         </div>
 
-        <p className="mt-2 text-sm text-neutral-400">
+        <p className="mt-2 text-sm text-[var(--muted)]">
           {data.progress}% completado
         </p>
       </div>
@@ -151,7 +151,7 @@ export default function OnboardingChecklist() {
               className={`block rounded-2xl border p-4 transition ${
                 completed
                   ? "border-green-900 bg-green-950/30"
-                  : "border-neutral-800 bg-neutral-900 hover:border-brand/40"
+                  : "border-[var(--border)] bg-[var(--card)] hover:border-brand/40"
               }`}
             >
               <div className="flex items-start gap-4">
@@ -159,7 +159,7 @@ export default function OnboardingChecklist() {
                   className={`mt-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                     completed
                       ? "bg-green-500 text-black"
-                      : "bg-neutral-800 text-neutral-400"
+                      : "bg-neutral-800 text-[var(--muted)]"
                   }`}
                 >
                   {completed ? "✓" : ""}
@@ -170,7 +170,7 @@ export default function OnboardingChecklist() {
                     {item.label}
                   </h3>
 
-                  <p className="mt-1 text-sm text-neutral-400">
+                  <p className="mt-1 text-sm text-[var(--muted)]">
                     {item.description}
                   </p>
                 </div>

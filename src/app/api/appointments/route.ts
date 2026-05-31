@@ -6,6 +6,9 @@ import { Appointment } from "@/models/Appointment";
 import { getCurrentTenant } from "@/lib/get-current-tenant";
 import { createAuditLog } from "@/lib/audit";
 import { sendWhatsAppText } from "@/lib/whatsapp";
+import "@/models/Client";
+import "@/models/Professional";
+import "@/models/Tenant";
 
 export const runtime = "nodejs";
 
@@ -36,15 +39,13 @@ export async function GET() {
   if (!context) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
   }
-  
-  if (!context?.tenant) {
-    return NextResponse.json(
-      {
-        message:
-          "Primero completá la configuración de tu espacio",
-      },
-      { status: 400 }
-    );
+
+  if (!context.professional) {
+    return NextResponse.json([]);
+  }
+
+  if (!context.tenant) {
+    return NextResponse.json([]);
   }
 
   const { professional, tenant } = context;
@@ -56,10 +57,6 @@ export async function GET() {
     .populate("client")
     .sort({ appointmentDate: 1, startTime: 1 })
     .lean();
-
-  if (!professional) {
-    return NextResponse.json([]);
-  }
 
   return NextResponse.json(appointments);
 }
@@ -98,25 +95,22 @@ export async function PATCH(request: Request) {
   if (!context) {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
   }
-  
-  if (!context?.tenant) {
-    return NextResponse.json(
-      {
-        message:
-          "Primero completá la configuración de tu espacio",
-      },
-      { status: 400 }
-    );
-  }
 
-  const { professional, tenant } = context;
-
-  if (!professional) {
+  if (!context.professional) {
     return NextResponse.json(
       { message: "Perfil profesional no encontrado" },
       { status: 404 }
     );
   }
+
+  if (!context.tenant) {
+    return NextResponse.json(
+      { message: "Primero completá la configuración de tu espacio" },
+      { status: 400 }
+    );
+  }
+
+  const { professional, tenant } = context;
 
   const appointment = await Appointment.findOneAndUpdate(
     {
@@ -128,7 +122,7 @@ export async function PATCH(request: Request) {
       status,
     },
     {
-      new: true,
+      returnDocument: "after",
     }
   );
 
@@ -158,25 +152,24 @@ export async function PATCH(request: Request) {
       .populate("client")
       .populate("professional");
 
-    const client =
-      populatedAppointment?.client as PopulatedClient | null;
+    const client = populatedAppointment?.client as PopulatedClient | null;
 
-    const professional =
+    const populatedProfessional =
       populatedAppointment?.professional as PopulatedProfessional | null;
 
-    if (client?.phone && professional?.displayName) {
+    if (client?.phone && populatedProfessional?.displayName) {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
       await sendWhatsAppText({
         to: client.phone,
         tenant: tenant._id.toString(),
         entityId: appointment._id.toString(),
-        message: `Hola ${client.fullName} 👋
+        message: `Hola ${client.fullName || "cliente"} 👋
 
-  Gracias por asistir a tu turno con ${professional.displayName}.
+Gracias por asistir a tu turno con ${populatedProfessional.displayName}.
 
-  ¿Nos dejás una reseña?
-  ${appUrl}/review/${appointment._id.toString()}`,
+¿Nos dejás una reseña?
+${appUrl}/review/${appointment._id.toString()}`,
       });
     }
   }

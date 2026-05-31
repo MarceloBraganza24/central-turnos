@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Professional } from "@/models/Professional";
 import { Availability } from "@/models/Availability";
 import { Review } from "@/models/Review";
+import "@/models/Category";
 
 export const runtime = "nodejs";
 
@@ -92,16 +93,16 @@ export default async function ProfessionalDetailPage({ params }: Props) {
     : null;
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-5xl">
         <Link
           href={`/categorias/${professional.category?.slug || ""}`}
-          className="text-sm text-neutral-400 underline"
+          className="text-sm text-[var(--muted)] underline"
         >
           Volver
         </Link>
 
-        <div className="mt-6 overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900">
+        <div className="mt-6 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)]">
           <div className="bg-linear-to-br from-neutral-800 to-neutral-950 p-8">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
@@ -114,7 +115,7 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                 </h1>
 
                 {professional.city && (
-                  <p className="mt-2 text-neutral-400">
+                  <p className="mt-2 text-[var(--muted)]">
                     {professional.city}, {professional.province}
                   </p>
                 )}
@@ -135,11 +136,11 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                   "Profesional adherido al sistema de turnos."}
               </p>
 
-              <div className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <h3 className="font-semibold">Horarios de atención</h3>
 
                 {availability.length === 0 ? (
-                  <p className="mt-3 text-sm text-neutral-400">
+                  <p className="mt-3 text-sm text-[var(--muted)]">
                     Este profesional todavía no cargó horarios.
                   </p>
                 ) : (
@@ -150,7 +151,7 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                         className="flex justify-between py-3 text-sm"
                       >
                         <span>{days[item.dayOfWeek]}</span>
-                        <span className="text-neutral-400">
+                        <span className="text-[var(--muted)]">
                           {item.startTime} a {item.endTime}
                         </span>
                       </div>
@@ -161,16 +162,16 @@ export default async function ProfessionalDetailPage({ params }: Props) {
             </div>
 
             <aside className="space-y-4">
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">Valor</p>
-                <p className="mt-1 text-3xl font-bold">
-                  {(professional.price ?? 0) > 0 && (
-                    <p>${professional.price}</p>
-                  )}
-                </p>
+                {(professional.price ?? 0) > 0 && (
+                  <p className="mt-1 text-3xl font-bold">
+                    ${professional.price}
+                  </p>
+                )}
               </div>
 
-              <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <p className="text-sm text-neutral-500">Duración</p>
                 <p className="mt-1 text-xl font-semibold">
                   {professional.appointmentDurationMinutes} minutos
@@ -178,13 +179,13 @@ export default async function ProfessionalDetailPage({ params }: Props) {
               </div>
 
               {professional.address && (
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                   <p className="text-sm text-neutral-500">Dirección</p>
                   <p className="mt-1">{professional.address}</p>
                 </div>
               )}
 
-              <div className="mt-6 rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+              <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
                 <h3 className="font-semibold">Reseñas</h3>
 
                 {(professional.ratingCount ?? 0) > 0 ? (
@@ -201,14 +202,14 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                       {reviews.map((review: ReviewItem) => (
                         <div
                           key={review._id.toString()}
-                          className="rounded-xl border border-neutral-800 bg-neutral-900 p-4"
+                          className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4"
                         >
                           <p className="text-sm font-medium">
                             {"★".repeat(review.rating)}
                           </p>
 
                           {review.comment && (
-                            <p className="mt-2 text-sm text-neutral-400">
+                            <p className="mt-2 text-sm text-[var(--muted)]">
                               {review.comment}
                             </p>
                           )}
@@ -221,7 +222,7 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                     </div>
                   </>
                 ) : (
-                  <p className="mt-2 text-sm text-neutral-400">
+                  <p className="mt-2 text-sm text-[var(--muted)]">
                     Este profesional todavía no tiene reseñas.
                   </p>
                 )}
@@ -238,14 +239,14 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                 <a
                   href={whatsappLink}
                   target="_blank"
-                  className="block rounded-xl border border-neutral-700 py-3 text-center font-medium text-white transition hover:bg-neutral-800"
+                  className="block rounded-xl border border-neutral-700 py-3 text-center font-medium text-[var(--foreground)] transition hover:bg-neutral-800"
                 >
                   Consultar por WhatsApp
                 </a>
               )}
 
               {professional.slug && (
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-4">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
                   <p className="text-xs text-neutral-500">Link público</p>
                   <p className="mt-1 break-all text-sm text-neutral-300">
                     /p/{professional.slug}

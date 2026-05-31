@@ -17,6 +17,7 @@ function getDefaultCompletedSteps() {
     profileCompleted: false,
     categorySelected: false,
     availabilityConfigured: false,
+    tenantConfigured: false,
     firstAppointmentReceived: false,
   };
 }
@@ -34,16 +35,6 @@ function getDefaultWhatsappSent() {
 export async function GET() {
   const context = await getCurrentTenant();
 
-  if (!context?.tenant) {
-    return NextResponse.json(
-      {
-        message:
-          "Primero completá la configuración de tu espacio",
-      },
-      { status: 400 }
-    );
-  }
-
   if (!context) {
     return NextResponse.json(
       { message: "No autorizado" },
@@ -51,17 +42,51 @@ export async function GET() {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
-  let onboarding = await Onboarding.findOne({
-    tenant: tenant._id,
-  });
+  let onboarding = tenant
+    ? await Onboarding.findOne({
+        tenant: tenant._id,
+      })
+    : null;
 
-  if (!onboarding) {
+  if (!onboarding && tenant) {
     onboarding = await Onboarding.create({
       tenant: tenant._id,
       completedSteps: getDefaultCompletedSteps(),
       whatsappSent: getDefaultWhatsappSent(),
+    });
+  }
+
+  if (!onboarding) {
+    const completedSteps = {
+      profileCompleted: Boolean(
+        professional.displayName &&
+        professional.bio &&
+        professional.phone &&
+        professional.city &&
+        professional.province
+      ),
+
+      categorySelected: Boolean(
+        professional.category
+      ),
+
+      tenantConfigured: Boolean(tenant),
+
+      availabilityConfigured: false,
+
+      firstAppointmentReceived: false,
+    };
+
+    return NextResponse.json({
+      steps: completedSteps,
+      progress:
+        calculateOnboardingProgress(
+          completedSteps
+        ),
+      dismissed: false,
     });
   }
 
@@ -73,15 +98,21 @@ export async function GET() {
     onboarding.whatsappSent = getDefaultWhatsappSent();
   }
 
-  const hasAvailability = await Availability.exists({
-    tenant: tenant._id,
-    professional: professional._id,
-  });
+  const hasAvailability =
+    tenant
+      ? await Availability.exists({
+          tenant: tenant._id,
+          professional: professional._id,
+        })
+      : false;
 
-  const hasAppointments = await Appointment.exists({
-    tenant: tenant._id,
-    professional: professional._id,
-  });
+  const hasAppointments =
+    tenant
+      ? await Appointment.exists({
+          tenant: tenant._id,
+          professional: professional._id,
+        })
+      : false;
 
   const profileCompleted = Boolean(
     professional.displayName &&
@@ -92,6 +123,8 @@ export async function GET() {
   );
 
   onboarding.completedSteps.profileCompleted = profileCompleted;
+
+  onboarding.completedSteps.tenantConfigured = Boolean(tenant);
 
   onboarding.completedSteps.categorySelected = Boolean(
     professional.category

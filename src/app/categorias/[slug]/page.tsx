@@ -51,21 +51,21 @@ export default async function CategoryProfessionalsPage({ params }: Props) {
     .lean();
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
-        <Link href="/categorias" className="text-sm text-neutral-400 underline">
+        <Link href="/categorias" className="text-sm text-[var(--muted)] underline">
           Volver a categorías
         </Link>
 
         <h1 className="mt-4 text-3xl font-bold">{category.name}</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Profesionales disponibles en esta categoría.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {professionals.length === 0 ? (
-            <p className="text-neutral-400">
+            <p className="text-[var(--muted)]">
               Todavía no hay profesionales activos en esta categoría.
             </p>
           ) : (
@@ -73,13 +73,13 @@ export default async function CategoryProfessionalsPage({ params }: Props) {
               <Link
                 key={professional._id.toString()}
                 href={`/profesionales/${professional._id.toString()}`}
-                className="rounded-2xl border border-neutral-800 bg-neutral-900 p-5 transition hover:bg-neutral-800"
+                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-neutral-800"
               >
                 <h2 className="text-lg font-semibold">
                   {professional.displayName}
                 </h2>
 
-                <p className="mt-2 line-clamp-3 text-sm text-neutral-400">
+                <p className="mt-2 line-clamp-3 text-sm text-[var(--muted)]">
                   {professional.bio || "Profesional adherido al sistema."}
                 </p>
 

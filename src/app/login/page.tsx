@@ -31,10 +31,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-neutral-950 px-6 text-white">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-6 text-[var(--foreground)]">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md rounded-2xl border border-neutral-800 bg-neutral-900 p-6"
+        className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
       >
         <h1 className="text-2xl font-bold">Iniciar sesión</h1>
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -50,7 +50,7 @@ export default function LoginPage() {
           <input
             type="password"
             placeholder="Contraseña"
-            className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -60,9 +60,9 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="mt-4 text-sm text-neutral-400">
+        <p className="mt-4 text-sm text-[var(--muted)]">
           ¿No tenés cuenta?{" "}
-          <Link href="/register" className="text-white underline">
+          <Link href="/register" className="text-[var(--foreground)] underline">
             Registrate
           </Link>
         </p>

@@ -36,7 +36,7 @@ export default function DashboardBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-neutral-800 bg-neutral-950/95 px-2 py-2 backdrop-blur lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--border)] bg-[var(--background)]/95 px-2 py-2 backdrop-blur lg:hidden">
       <div className="grid grid-cols-5 gap-1">
         {links.map((link) => {
           const Icon = link.icon;
@@ -48,8 +48,8 @@ export default function DashboardBottomNav() {
               href={link.href}
               className={`flex flex-col items-center justify-center rounded-2xl px-2 py-2 text-xs transition ${
                 active
-                  ? "bg-brand text-white hover:bg-brand-hover"
-                  : "text-neutral-400 hover:bg-neutral-900 hover:text-white"
+                  ? "bg-brand text-[var(--foreground)] hover:bg-brand-hover"
+                  : "text-[var(--muted)] hover:bg-[var(--card)] hover:text-[var(--foreground)]"
               }`}
             >
               <Icon size={18} />

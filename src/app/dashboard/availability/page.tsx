@@ -33,11 +33,24 @@ export default function AvailabilityPage() {
   });
 
   async function loadAvailability() {
-    const response = await fetch("/api/availability");
-    const data = await response.json();
+    try {
+      const response = await fetch("/api/availability");
+      const data = await response.json();
 
-    setAvailability(data);
-    setLoading(false);
+      if (!response.ok) {
+        toast.error(data.message || "Error al cargar horarios");
+        setAvailability([]);
+        return;
+      }
+
+      setAvailability(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error(error);
+      toast.error("Ocurrió un error al cargar horarios");
+      setAvailability([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -121,14 +134,14 @@ export default function AvailabilityPage() {
       <section className="mx-auto max-w-4xl">
         <h1 className="text-3xl font-bold">Horarios disponibles</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Cargá los días y horarios en los que atendés. Más adelante, el sistema
           usará estos rangos para generar turnos automáticamente.
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="mt-8 grid gap-4 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 md:grid-cols-4"
+          className="mt-8 grid gap-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 md:grid-cols-4"
         >
           <div>
             <label className="mb-2 block text-sm text-neutral-300">Día</label>
@@ -137,7 +150,7 @@ export default function AvailabilityPage() {
               onChange={(e) =>
                 setForm({ ...form, dayOfWeek: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             >
               {days.map((day) => (
                 <option key={day.value} value={day.value}>
@@ -157,7 +170,7 @@ export default function AvailabilityPage() {
               onChange={(e) =>
                 setForm({ ...form, startTime: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             />
           </div>
 
@@ -169,7 +182,7 @@ export default function AvailabilityPage() {
               type="time"
               value={form.endTime}
               onChange={(e) => setForm({ ...form, endTime: e.target.value })}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             />
           </div>
 
@@ -183,13 +196,13 @@ export default function AvailabilityPage() {
           </div>
         </form>
 
-        <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900">
-          <div className="border-b border-neutral-800 p-5">
+        <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)]">
+          <div className="border-b border-[var(--border)] p-5">
             <h2 className="font-semibold">Mis horarios cargados</h2>
           </div>
 
           {availability.length === 0 ? (
-            <p className="p-5 text-sm text-neutral-400">
+            <p className="p-5 text-sm text-[var(--muted)]">
               Todavía no cargaste horarios.
             </p>
           ) : (
@@ -201,7 +214,7 @@ export default function AvailabilityPage() {
                 >
                   <div>
                     <p className="font-medium">{getDayName(item.dayOfWeek)}</p>
-                    <p className="text-sm text-neutral-400">
+                    <p className="text-sm text-[var(--muted)]">
                       {item.startTime} a {item.endTime}
                     </p>
                   </div>

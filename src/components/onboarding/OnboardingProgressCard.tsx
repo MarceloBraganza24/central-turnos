@@ -78,7 +78,7 @@ export default function OnboardingProgressCard() {
             Terminá de configurar tu cuenta
           </h2>
 
-          <p className="mt-2 text-sm text-neutral-400">
+          <p className="mt-2 text-sm text-[var(--muted)]">
             Tu perfil está al {data.progress}%. Completá estos pasos para
             empezar a recibir turnos.
           </p>
@@ -99,7 +99,7 @@ export default function OnboardingProgressCard() {
                 className={`rounded-full border px-3 py-1 text-xs ${
                   step.done
                     ? "border-green-900 text-green-400"
-                    : "border-neutral-700 text-neutral-400"
+                    : "border-neutral-700 text-[var(--muted)]"
                 }`}
               >
                 {step.done ? "✓" : "•"} {step.label}
@@ -110,7 +110,7 @@ export default function OnboardingProgressCard() {
 
         <Link
           href="/dashboard/onboarding"
-          className="rounded-xl bg-brand px-5 py-3 text-center font-medium text-white hover:bg-brand-hover"
+          className="rounded-xl bg-brand px-5 py-3 text-center font-medium text-[var(--foreground)] hover:bg-brand-hover"
         >
           Continuar configuración
         </Link>

@@ -73,14 +73,14 @@ export default function BillingPage() {
   }
 
   if (!billing) {
-    return <section className="text-white">Cargando facturación...</section>;
+    return <section className="text-[var(--foreground)]">Cargando facturación...</section>;
   }
 
   return (
-    <section className="max-w-7xl text-white">
+    <section className="max-w-7xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Facturación</h1>
 
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Elegí el plan de Central Turnos que mejor se adapta a tu volumen de
         trabajo.
       </p>
@@ -102,8 +102,8 @@ export default function BillingPage() {
               key={key}
               className={`rounded-3xl border p-6 ${
                 plan.highlighted
-                  ? "border-brand bg-brand text-white"
-                  : "border-neutral-800 bg-neutral-900"
+                  ? "border-brand bg-brand text-[var(--foreground)]"
+                  : "border-[var(--border)] bg-[var(--card)]"
               }`}
             >
               <p className="text-sm opacity-80">
@@ -150,7 +150,7 @@ export default function BillingPage() {
                   className={`mt-8 w-full rounded-xl px-5 py-3 font-medium ${
                     plan.highlighted
                       ? "bg-white text-black"
-                      : "bg-brand text-white"
+                      : "bg-brand text-[var(--foreground)]"
                   } disabled:opacity-60`}
                 >
                   {current
@@ -165,7 +165,7 @@ export default function BillingPage() {
         })}
       </div>
 
-      <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900 p-5">
+      <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
         <p className="text-sm text-neutral-500">Estado de suscripción</p>
         <p className="mt-1 font-medium">
           {billing.subscriptionStatus || "none"}

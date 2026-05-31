@@ -68,19 +68,19 @@ export default function AdminAuditLogsPage() {
   }, [loadLogs]);
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-7xl">
         <h1 className="text-3xl font-bold">Auditoría y logs</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Registro de acciones importantes del sistema.
         </p>
 
-        <div className="mt-8 grid gap-3 rounded-2xl border border-neutral-800 bg-neutral-900 p-5 md:grid-cols-2">
+        <div className="mt-8 grid gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 md:grid-cols-2">
           <select
             value={severity}
             onChange={(e) => setSeverity(e.target.value)}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           >
             <option value="">Todas las severidades</option>
             <option value="info">Info</option>
@@ -91,16 +91,16 @@ export default function AdminAuditLogsPage() {
           <input
             value={action}
             onChange={(e) => setAction(e.target.value)}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             placeholder="Filtrar por acción. Ej: appointment.created"
           />
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
           {loading ? (
-            <p className="p-6 text-neutral-400">Cargando logs...</p>
+            <p className="p-6 text-[var(--muted)]">Cargando logs...</p>
           ) : logs.length === 0 ? (
-            <p className="p-6 text-neutral-400">No hay logs para mostrar.</p>
+            <p className="p-6 text-[var(--muted)]">No hay logs para mostrar.</p>
           ) : (
             <div className="divide-y divide-neutral-800">
               {logs.map((log) => (
@@ -149,7 +149,7 @@ export default function AdminAuditLogsPage() {
                     </p>
 
                     {log.metadata && (
-                      <pre className="mt-3 max-h-32 overflow-auto rounded-xl bg-neutral-950 p-3 text-xs text-neutral-400">
+                      <pre className="mt-3 max-h-32 overflow-auto rounded-xl bg-[var(--background)] p-3 text-xs text-[var(--muted)]">
                         {JSON.stringify(log.metadata, null, 2)}
                       </pre>
                     )}

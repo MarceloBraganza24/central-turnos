@@ -97,13 +97,13 @@ export default function AdminAppointmentsPage() {
   }, [loadAppointments]);
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-7xl">
         <h1 className="text-3xl font-bold">
           Turnos del sistema
         </h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Vista general de todas las reservas
           generadas en la plataforma.
         </p>
@@ -115,7 +115,7 @@ export default function AdminAppointmentsPage() {
               onChange={(e) =>
                 setStatus(e.target.value)
               }
-              className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             >
               <option value="">
                 Todos los estados
@@ -143,7 +143,7 @@ export default function AdminAppointmentsPage() {
               onChange={(e) =>
                 setPaymentStatus(e.target.value)
               }
-              className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             >
               <option value="">
                 Todos los pagos
@@ -171,7 +171,7 @@ export default function AdminAppointmentsPage() {
         <div className="mt-8 space-y-4">
           {appointments.length === 0 ? (
             <div className="premium-card rounded-3xl p-6">
-              <p className="text-neutral-400">
+              <p className="text-[var(--muted)]">
                 No hay turnos para mostrar.
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function AdminAppointmentsPage() {
                           }
                         </p>
 
-                        <p className="text-sm text-neutral-400">
+                        <p className="text-sm text-[var(--muted)]">
                           {
                             appointment.startTime
                           }{" "}
@@ -217,7 +217,7 @@ export default function AdminAppointmentsPage() {
                           }
                         </p>
 
-                        <p className="text-sm text-neutral-400">
+                        <p className="text-sm text-[var(--muted)]">
                           {
                             appointment
                               .professional
@@ -238,7 +238,7 @@ export default function AdminAppointmentsPage() {
                           }
                         </p>
 
-                        <p className="text-sm text-neutral-400">
+                        <p className="text-sm text-[var(--muted)]">
                           {
                             appointment.client
                               ?.phone
@@ -264,7 +264,7 @@ export default function AdminAppointmentsPage() {
 
                         {(appointment.depositAmount ??
                           0) > 0 && (
-                          <p className="text-sm text-neutral-400">
+                          <p className="text-sm text-[var(--muted)]">
                             Seña: $
                             {
                               appointment.depositAmount

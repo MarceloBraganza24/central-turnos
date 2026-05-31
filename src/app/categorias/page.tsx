@@ -19,11 +19,11 @@ export default async function CategoriesPage() {
     .lean();
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
         <h1 className="text-3xl font-bold">Categorías profesionales</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Elegí una categoría para ver profesionales disponibles.
         </p>
 
@@ -32,11 +32,11 @@ export default async function CategoriesPage() {
             <Link
               key={category._id.toString()}
               href={`/categorias/${category.slug}`}
-              className="rounded-2xl border border-neutral-800 bg-neutral-900 p-5 transition hover:bg-neutral-800"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-neutral-800"
             >
               <h2 className="text-lg font-semibold">{category.name}</h2>
 
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted)]">
                 {category.description || "Ver profesionales disponibles."}
               </p>
             </Link>

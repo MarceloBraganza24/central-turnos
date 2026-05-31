@@ -26,7 +26,7 @@ const items = [
 
 export default function HelpPage() {
   return (
-    <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <div className="mx-auto max-w-4xl">
         <p className="text-sm text-brand">
           Centro de ayuda
@@ -46,7 +46,7 @@ export default function HelpPage() {
                 {item.title}
               </h2>
 
-              <p className="mt-3 text-neutral-400">
+              <p className="mt-3 text-[var(--muted)]">
                 {item.description}
               </p>
             </div>

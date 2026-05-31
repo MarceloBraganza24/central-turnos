@@ -17,6 +17,7 @@ import { createAuditLog } from "@/lib/audit";
 import { isTenantBillingBlocked } from "@/lib/billing-guard";
 import { Service } from "@/models/Service";
 import { reservationRateLimit, getIp } from "@/lib/rate-limit";
+import crypto from "crypto";
 
 export const runtime = "nodejs";
 
@@ -222,6 +223,7 @@ export async function POST(request: Request) {
       servicePrice: selectedService?.price || 0,
       serviceDurationMinutes: duration,
       depositAmount: finalDepositAmount,
+      publicToken: crypto.randomBytes(32).toString("hex"),
     });
 
     await createAuditLog({
@@ -299,6 +301,9 @@ ${cancelUrl}`;
       appointment.whatsappProfessionalStatus = professionalWhatsappResult.success
         ? "sent"
         : "failed";
+
+      console.log("WhatsApp cliente:", clientWhatsappResult);
+      console.log("WhatsApp profesional:", professionalWhatsappResult);
     }
 
     await appointment.save();
@@ -309,6 +314,7 @@ ${cancelUrl}`;
         message: "Turno reservado correctamente",
         appointmentId: appointment._id.toString(),
         requiresPayment: shouldPayDeposit,
+        publicToken: appointment.publicToken,
       },
       { status: 201 }
     );

@@ -30,15 +30,15 @@ export default function ConfirmButton({
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6">
-          <div className="w-full max-w-md rounded-3xl border border-neutral-800 bg-neutral-950 p-6 text-white">
+          <div className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--background)] p-6 text-[var(--foreground)]">
             <h2 className="text-xl font-bold">{confirmTitle}</h2>
 
-            <p className="mt-2 text-sm text-neutral-400">{confirmText}</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">{confirmText}</p>
 
             <div className="mt-6 flex gap-3">
               <button
                 onClick={() => setOpen(false)}
-                className="min-h-12 flex-1 rounded-xl border border-neutral-700 px-5 py-3 font-medium text-white"
+                className="min-h-12 flex-1 rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)]"
               >
                 Cancelar
               </button>
@@ -49,7 +49,7 @@ export default function ConfirmButton({
                   setOpen(false);
                   onConfirm();
                 }}
-                className="flex-1 bg-red-600 text-white hover:bg-red-700"
+                className="flex-1 bg-red-600 text-[var(--foreground)] hover:bg-red-700"
               >
                 Confirmar
               </LoadingButton>

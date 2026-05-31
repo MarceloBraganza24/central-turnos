@@ -14,7 +14,7 @@ export default function ShareProfilePage() {
 
   useEffect(() => {
     async function loadQr() {
-      const response = await fetch("/api/professional-profile/qr");
+      const response = await fetch("/api/professional-profile");
       const result = await response.json();
 
       if (!response.ok) {
@@ -36,17 +36,17 @@ export default function ShareProfilePage() {
   }
 
   return (
-    <section className="max-w-4xl text-white">
+    <section className="max-w-4xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Compartir perfil</h1>
 
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Compartí tu link público o usá el QR en historias, Instagram, tarjetas o
         consultorio.
       </p>
 
-      <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900 p-6">
+      <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
         {!data ? (
-          <p className="text-neutral-400">Generando QR...</p>
+          <p className="text-[var(--muted)]">Generando QR...</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-[260px_1fr]">
             <div className="rounded-2xl bg-white p-4">
@@ -61,7 +61,7 @@ export default function ShareProfilePage() {
 
             <div>
               <p className="text-sm text-neutral-500">Link público</p>
-              <p className="mt-2 break-all rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-300">
+              <p className="mt-2 break-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-neutral-300">
                 {data.publicUrl}
               </p>
 
@@ -75,7 +75,7 @@ export default function ShareProfilePage() {
               <a
                 href={data.qr}
                 download="perfil-qr.png"
-                className="ml-3 inline-flex rounded-xl border border-neutral-700 px-5 py-3 font-medium text-white"
+                className="ml-3 inline-flex rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)]"
               >
                 Descargar QR
               </a>

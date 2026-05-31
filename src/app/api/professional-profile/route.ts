@@ -40,6 +40,7 @@ export async function GET() {
       appointmentBufferMinutes: 0,
       publicUrl: "",
       qr: "",
+      imageUrl: "",
     });
   }
 
@@ -71,6 +72,7 @@ export async function GET() {
       professional.appointmentBufferMinutes || 0,
     publicUrl,
     qr,
+    imageUrl: professional.imageUrl || "",
   });
 }
 
@@ -99,6 +101,7 @@ export async function PUT(request: Request) {
     price,
     appointmentDurationMinutes,
     appointmentBufferMinutes,
+    imageUrl,
   } = body;
 
   if (!displayName) {
@@ -141,6 +144,7 @@ export async function PUT(request: Request) {
       appointmentBufferMinutes:
         Number(appointmentBufferMinutes) || 0,
       isActive: true,
+      imageUrl: imageUrl || "",
     },
     {
       upsert: true,
@@ -177,6 +181,7 @@ export async function PUT(request: Request) {
     appointmentBufferMinutes:
       professional.appointmentBufferMinutes || 0,
     publicUrl,
+    imageUrl: professional.imageUrl || "",
     qr,
   });
 }

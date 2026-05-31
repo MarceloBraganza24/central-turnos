@@ -26,7 +26,8 @@ type ProfessionalItem = {
   _id: string;
   displayName: string;
   bio?: string;
-  tenant: string;
+  city?: string;
+  province?: string;
   neighborhood?: string;
   offersOnline?: boolean;
   languages?: string[];
@@ -153,12 +154,21 @@ export default async function CityProfessionalsPage({
     };
   }
 
-  let professionals = (await Professional.find(professionalQuery)
+  let professionals = (await Professional.find({
+    isActive: true,
+    category: selectedCategory._id,
+  })
     .sort({
       ratingAverage: -1,
       displayName: 1,
     })
     .lean()) as ProfessionalItem[];
+
+  professionals = professionals.filter(
+    (professional) =>
+      createSlug(professional.province || "") === province &&
+      createSlug(professional.city || "") === city
+  );
 
   if (filters.availableToday === "true") {
     const today = getTodayDayOfWeek();
@@ -189,11 +199,11 @@ export default async function CityProfessionalsPage({
   const provinceName = matchingTenants[0]?.province || province;
 
   return (
-    <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <section className="mx-auto max-w-7xl">
         <Link
           href={`/turnos/${province}/${city}`}
-          className="text-sm text-neutral-400 underline"
+          className="text-sm text-[var(--muted)] underline"
         >
           Volver a categorías
         </Link>
@@ -202,20 +212,20 @@ export default async function CityProfessionalsPage({
           {selectedCategory.name} en {cityName}
         </h1>
 
-        <p className="mt-4 text-neutral-400">{provinceName}</p>
+        <p className="mt-4 text-[var(--muted)]">{provinceName}</p>
 
         <form className="premium-card mt-8 grid gap-3 rounded-3xl p-5 md:grid-cols-6">
           <input
             name="neighborhood"
             placeholder="Barrio"
             defaultValue={filters.neighborhood || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <select
             name="online"
             defaultValue={filters.online || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           >
             <option value="">Modalidad</option>
             <option value="true">Online</option>
@@ -225,14 +235,14 @@ export default async function CityProfessionalsPage({
             name="language"
             placeholder="Idioma"
             defaultValue={filters.language || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <input
             name="insurance"
             placeholder="Obra social"
             defaultValue={filters.insurance || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -240,19 +250,19 @@ export default async function CityProfessionalsPage({
             type="number"
             placeholder="Precio máx."
             defaultValue={filters.maxPrice || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <select
             name="availableToday"
             defaultValue={filters.availableToday || ""}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           >
             <option value="">Disponibilidad</option>
             <option value="true">Disponible hoy</option>
           </select>
 
-          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-white md:col-span-6">
+          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] md:col-span-6">
             Aplicar filtros
           </button>
         </form>
@@ -264,7 +274,7 @@ export default async function CityProfessionalsPage({
                 No encontramos profesionales
               </h2>
 
-              <p className="mt-2 text-neutral-400">
+              <p className="mt-2 text-[var(--muted)]">
                 Probá quitando filtros o cambiando de categoría.
               </p>
             </div>
@@ -275,7 +285,7 @@ export default async function CityProfessionalsPage({
                 href={`/profesionales/${professional._id.toString()}`}
                 className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-xl font-bold text-white">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-xl font-bold text-[var(--foreground)]">
                   {professional.displayName.charAt(0)}
                 </div>
 
@@ -283,7 +293,7 @@ export default async function CityProfessionalsPage({
                   {professional.displayName}
                 </h2>
 
-                <p className="mt-2 line-clamp-3 text-sm text-neutral-400">
+                <p className="mt-2 line-clamp-3 text-sm text-[var(--muted)]">
                   {professional.bio ||
                     "Profesional adherido a Central Turnos."}
                 </p>

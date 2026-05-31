@@ -67,14 +67,14 @@ export default function DashboardClientsPage() {
       <section className="mx-auto max-w-6xl">
         <h1 className="text-3xl font-bold">Mis clientes</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Acá vas a ver las personas que reservaron turnos con vos y su
           historial.
         </p>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
           {clients.length === 0 ? (
-            <p className="p-6 text-neutral-400">
+            <p className="p-6 text-[var(--muted)]">
               Todavía no tenés clientes registrados.
             </p>
           ) : (
@@ -88,7 +88,7 @@ export default function DashboardClientsPage() {
                       <div>
                         <p className="text-sm text-neutral-500">Cliente</p>
                         <p className="mt-1 font-medium">{client.fullName}</p>
-                        <p className="text-sm text-neutral-400">
+                        <p className="text-sm text-[var(--muted)]">
                           {client.phone}
                         </p>
                         {client.email && (
@@ -114,7 +114,7 @@ export default function DashboardClientsPage() {
                         <p className="mt-1 font-medium">
                           {client.lastAppointmentDate}
                         </p>
-                        <p className="text-sm text-neutral-400">
+                        <p className="text-sm text-[var(--muted)]">
                           {client.lastAppointmentTime}
                         </p>
                       </div>
@@ -132,8 +132,8 @@ export default function DashboardClientsPage() {
                     </div>
 
                     {isOpen && (
-                      <div className="mt-5 rounded-2xl border border-neutral-800 bg-neutral-950">
-                        <div className="border-b border-neutral-800 p-4">
+                      <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
+                        <div className="border-b border-[var(--border)] p-4">
                           <h2 className="font-semibold">
                             Historial de turnos
                           </h2>
@@ -152,7 +152,7 @@ export default function DashboardClientsPage() {
                                 <p className="font-medium">
                                   {appointment.appointmentDate}
                                 </p>
-                                <p className="text-sm text-neutral-400">
+                                <p className="text-sm text-[var(--muted)]">
                                   {appointment.startTime} a{" "}
                                   {appointment.endTime}
                                 </p>
@@ -171,7 +171,7 @@ export default function DashboardClientsPage() {
                                 <p className="text-sm text-neutral-500">
                                   Notas
                                 </p>
-                                <p className="text-sm text-neutral-400">
+                                <p className="text-sm text-[var(--muted)]">
                                   {appointment.notes || "Sin notas"}
                                 </p>
                               </div>

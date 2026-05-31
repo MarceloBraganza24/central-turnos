@@ -122,14 +122,14 @@ export default function TeamPage() {
   }
 
   if (loading) {
-    return <section className="text-white">Cargando equipo...</section>;
+    return <section className="text-[var(--foreground)]">Cargando equipo...</section>;
   }
 
   return (
-    <section className="max-w-7xl text-white">
+    <section className="max-w-7xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Equipo</h1>
 
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Agregá recepcionistas, staff o managers para ayudarte a gestionar el espacio.
       </p>
 
@@ -141,7 +141,7 @@ export default function TeamPage() {
           value={form.fullName}
           autoComplete="name"
           onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           placeholder="Nombre"
         />
 
@@ -150,7 +150,7 @@ export default function TeamPage() {
           value={form.email}
           autoComplete="email"
           onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           placeholder="Email"
         />
 
@@ -158,7 +158,7 @@ export default function TeamPage() {
           type="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           placeholder="Contraseña inicial"
         />
 
@@ -167,7 +167,7 @@ export default function TeamPage() {
           onChange={(e) =>
             setForm({ ...form, role: e.target.value as TenantRole })
           }
-          className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
         >
           {Object.entries(roleLabels).map(([value, label]) => (
             <option key={value} value={value}>
@@ -184,9 +184,9 @@ export default function TeamPage() {
         </button>
       </form>
 
-      <div className="mt-8 overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900">
+      <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)]">
         {members.length === 0 ? (
-          <p className="p-6 text-neutral-400">Todavía no hay miembros.</p>
+          <p className="p-6 text-[var(--muted)]">Todavía no hay miembros.</p>
         ) : (
           <div className="divide-y divide-neutral-800">
             {members.map((member) => (
@@ -196,7 +196,7 @@ export default function TeamPage() {
               >
                 <div>
                   <p className="font-medium">{member.user.fullName}</p>
-                  <p className="text-sm text-neutral-400">
+                  <p className="text-sm text-[var(--muted)]">
                     {member.user.email}
                   </p>
                 </div>
@@ -210,7 +210,7 @@ export default function TeamPage() {
                         role: e.target.value,
                       })
                     }
-                    className="mt-2 rounded-xl border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm"
+                    className="mt-2 rounded-xl border border-neutral-700 bg-[var(--background)] px-3 py-2 text-sm"
                   >
                     {Object.entries(roleLabels).map(([value, label]) => (
                       <option key={value} value={value}>

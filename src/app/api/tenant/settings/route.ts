@@ -6,6 +6,9 @@ import { Professional } from "@/models/Professional";
 import { Tenant } from "@/models/Tenant";
 import { createSlug } from "@/lib/slug";
 import { deleteCacheByPattern } from "@/lib/cache";
+import { TenantMember } from "@/models/TenantMember";
+import { ROLE_PERMISSIONS } from "@/lib/role-permissions";
+import { Location } from "@/models/Location";
 
 export const runtime = "nodejs";
 
@@ -223,6 +226,24 @@ export async function PUT(request: Request) {
     }
   );
 
+  await TenantMember.findOneAndUpdate(
+    {
+      tenant: tenant._id,
+      user: session.user.id,
+    },
+    {
+      tenant: tenant._id,
+      user: session.user.id,
+      role: "owner",
+      permissions: ROLE_PERMISSIONS.owner,
+      isActive: true,
+    },
+    {
+      upsert: true,
+      returnDocument: "after",
+    }
+  );
+
   professional.slug = cleanSlug;
   professional.city = city;
   professional.province = province;
@@ -232,6 +253,26 @@ export async function PUT(request: Request) {
   professional.insuranceProviders = normalizedInsuranceProviders;
 
   await professional.save();
+
+  await Location.findOneAndUpdate(
+    {
+      citySlug: createSlug(city),
+      provinceSlug: createSlug(province),
+      country: country || "Argentina",
+    },
+    {
+      city,
+      citySlug: createSlug(city),
+      province,
+      provinceSlug: createSlug(province),
+      country: country || "Argentina",
+      isActive: true,
+    },
+    {
+      upsert: true,
+      returnDocument: "after",
+    }
+  );
 
   await deleteCacheByPattern("public:*");
 

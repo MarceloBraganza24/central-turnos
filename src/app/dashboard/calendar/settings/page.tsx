@@ -183,18 +183,18 @@ export default function CalendarSettingsPage() {
   }
 
   if (loading) {
-    return <section className="text-white">Cargando configuración...</section>;
+    return <section className="text-[var(--foreground)]">Cargando configuración...</section>;
   }
 
   const needsTime =
     form.type === "manual_block" || form.type === "special_hours";
 
   return (
-    <section className="max-w-7xl text-white">
+    <section className="max-w-7xl text-[var(--foreground)]">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <h1 className="text-3xl font-bold">Configuración de calendario</h1>
-          <p className="mt-2 text-neutral-400">
+          <p className="mt-2 text-[var(--muted)]">
             Administrá vacaciones, feriados, horarios especiales, buffers y
             bloqueos puntuales.
           </p>
@@ -209,7 +209,7 @@ export default function CalendarSettingsPage() {
           >
             <h2 className="text-xl font-semibold">Buffer entre turnos</h2>
 
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Tiempo extra entre un turno y el siguiente. Sirve para limpiar,
               descansar o preparar la próxima atención.
             </p>
@@ -224,7 +224,7 @@ export default function CalendarSettingsPage() {
                 min={0}
                 value={bufferMinutes}
                 onChange={(e) => setBufferMinutes(e.target.value)}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: 15"
               />
             </div>
@@ -244,7 +244,7 @@ export default function CalendarSettingsPage() {
             >
               <h2 className="text-xl font-semibold">Nueva excepción</h2>
 
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted)]">
                 Configurá un día especial, vacaciones, feriados o bloqueos
                 rápidos.
               </p>
@@ -263,7 +263,7 @@ export default function CalendarSettingsPage() {
                         type: e.target.value as ExceptionType,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   >
                     <option value="vacation">Vacaciones / día libre</option>
                     <option value="holiday">Feriado</option>
@@ -290,7 +290,7 @@ export default function CalendarSettingsPage() {
                         date: e.target.value,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
@@ -310,7 +310,7 @@ export default function CalendarSettingsPage() {
                             startTime: e.target.value,
                           })
                         }
-                        className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                        className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                       />
                     </div>
 
@@ -328,7 +328,7 @@ export default function CalendarSettingsPage() {
                             endTime: e.target.value,
                           })
                         }
-                        className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                        className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                       />
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function CalendarSettingsPage() {
                         reason: e.target.value,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                     placeholder="Ej: vacaciones, feriado, trámite, capacitación..."
                   />
                 </div>
@@ -367,13 +367,13 @@ export default function CalendarSettingsPage() {
           <div className="premium-card rounded-3xl p-6">
             <h2 className="text-xl font-semibold">Configuraciones cargadas</h2>
 
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Estas reglas modifican la disponibilidad real del calendario.
             </p>
 
             <div className="mt-6 space-y-3">
               {exceptions.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-neutral-800 bg-neutral-950 p-8 text-center">
+                <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--background)] p-8 text-center">
                   <p className="font-medium">Sin excepciones cargadas</p>
                   <p className="mt-2 text-sm text-neutral-500">
                     Cuando agregues vacaciones, feriados o bloqueos, van a
@@ -384,7 +384,7 @@ export default function CalendarSettingsPage() {
                 exceptions.map((item) => (
                   <div
                     key={item._id}
-                    className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5"
                   >
                     <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
                       <div>
@@ -398,7 +398,7 @@ export default function CalendarSettingsPage() {
 
                         {(item.type === "manual_block" ||
                           item.type === "special_hours") && (
-                          <p className="mt-1 text-sm text-neutral-400">
+                          <p className="mt-1 text-sm text-[var(--muted)]">
                             {item.startTime} a {item.endTime}
                           </p>
                         )}

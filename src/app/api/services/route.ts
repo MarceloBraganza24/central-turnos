@@ -24,7 +24,8 @@ export async function GET() {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const services = await Service.find({
     tenant: tenant._id,
@@ -130,7 +131,8 @@ export async function PATCH(request: Request) {
     );
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const body = await request.json();
   const { serviceId, ...data } = body;

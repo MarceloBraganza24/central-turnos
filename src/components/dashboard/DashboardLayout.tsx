@@ -8,7 +8,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-neutral-950">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <DashboardSidebar />
 
       <div className="flex flex-1 flex-col">

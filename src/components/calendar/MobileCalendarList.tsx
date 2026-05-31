@@ -60,7 +60,7 @@ export default function MobileCalendarList({
         return (
           <div
             key={formattedDate}
-            className="rounded-3xl border border-neutral-800 bg-neutral-900 p-4"
+            className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-4"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -68,21 +68,21 @@ export default function MobileCalendarList({
                 <p className="text-sm text-neutral-500">{formattedDate}</p>
               </div>
 
-              <span className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-400">
+              <span className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-[var(--muted)]">
                 {dayAppointments.length} turnos
               </span>
             </div>
 
             <div className="mt-4 space-y-3">
               {dayAppointments.length === 0 ? (
-                <p className="rounded-2xl border border-dashed border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-500">
+                <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--background)] p-4 text-sm text-neutral-500">
                   Sin turnos
                 </p>
               ) : (
                 dayAppointments.map((appointment) => (
                   <div
                     key={appointment._id}
-                    className="rounded-2xl border border-neutral-800 bg-neutral-950 p-4"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -104,13 +104,13 @@ export default function MobileCalendarList({
                       <p className="font-medium">
                         {appointment.client?.fullName}
                       </p>
-                      <p className="mt-1 text-sm text-neutral-400">
+                      <p className="mt-1 text-sm text-[var(--muted)]">
                         {appointment.client?.phone}
                       </p>
                     </div>
 
                     {appointment.notes && (
-                      <p className="mt-3 rounded-xl bg-neutral-900 p-3 text-sm text-neutral-400">
+                      <p className="mt-3 rounded-xl bg-[var(--card)] p-3 text-sm text-[var(--muted)]">
                         {appointment.notes}
                       </p>
                     )}
@@ -124,7 +124,7 @@ export default function MobileCalendarList({
                           e.target.value as Appointment["status"]
                         )
                       }
-                      className="mt-4 min-h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white disabled:opacity-60"
+                      className="mt-4 min-h-12 w-full rounded-xl border border-neutral-700 bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] disabled:opacity-60"
                     >
                       <option value="pending">Pendiente</option>
                       <option value="confirmed">Confirmado</option>

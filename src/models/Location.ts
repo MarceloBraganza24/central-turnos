@@ -6,6 +6,11 @@ const LocationSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+    },
+
+    citySlug: {
+      type: String,
+      required: true,
       index: true,
     },
 
@@ -13,6 +18,11 @@ const LocationSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+    },
+
+    provinceSlug: {
+      type: String,
+      required: true,
       index: true,
     },
 
@@ -27,12 +37,20 @@ const LocationSchema = new Schema(
       index: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 LocationSchema.index(
-  { city: 1, province: 1, country: 1 },
-  { unique: true }
+  {
+    citySlug: 1,
+    provinceSlug: 1,
+    country: 1,
+  },
+  {
+    unique: true,
+  }
 );
 
 export const Location =

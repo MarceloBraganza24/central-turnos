@@ -1,33 +1,17 @@
-type CompletedSteps = {
+export type CompletedSteps = {
   profileCompleted: boolean;
   categorySelected: boolean;
+  tenantConfigured: boolean;
   availabilityConfigured: boolean;
-  publicProfileShared: boolean;
   firstAppointmentReceived: boolean;
-  whatsappSent: {
-    welcome: {
-      type: boolean,
-      default: false,
-    },
-    profileCompleted: {
-      type: boolean,
-      default: false,
-    },
-    availabilityConfigured: {
-      type: boolean,
-      default: false,
-    },
-    firstAppointmentReceived: {
-      type: boolean,
-      default: false,
-    },
-  },
 };
 
-export function calculateOnboardingProgress(
-  steps: CompletedSteps
-) {
+export function calculateOnboardingProgress(steps: CompletedSteps) {
   const values = Object.values(steps);
+
+  if (values.length === 0) {
+    return 0;
+  }
 
   const completed = values.filter(Boolean).length;
 

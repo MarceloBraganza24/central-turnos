@@ -122,7 +122,7 @@ export default function AdminProfessionalsPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-neutral-950 p-6 text-white">
+      <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
         Cargando profesionales...
       </main>
     );
@@ -132,33 +132,33 @@ export default function AdminProfessionalsPage() {
   const activeCount = professionals.filter((item) => item.isActive).length;
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-7xl">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <h1 className="text-3xl font-bold">Profesionales</h1>
 
-            <p className="mt-2 text-neutral-400">
+            <p className="mt-2 text-[var(--muted)]">
               Aprobá profesionales, desactivalos o cambiá su plan comercial.
             </p>
           </div>
 
           <div className="flex gap-3">
-            <div className="rounded-2xl border border-neutral-800 bg-neutral-900 px-5 py-3">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-3">
               <p className="text-xs text-neutral-500">Activos</p>
               <p className="text-xl font-bold">{activeCount}</p>
             </div>
 
-            <div className="rounded-2xl border border-neutral-800 bg-neutral-900 px-5 py-3">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-3">
               <p className="text-xs text-neutral-500">Pendientes</p>
               <p className="text-xl font-bold">{pendingCount}</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
           {professionals.length === 0 ? (
-            <p className="p-6 text-neutral-400">
+            <p className="p-6 text-[var(--muted)]">
               Todavía no hay profesionales registrados.
             </p>
           ) : (
@@ -175,7 +175,7 @@ export default function AdminProfessionalsPage() {
                       {professional.displayName}
                     </p>
 
-                    <p className="text-sm text-neutral-400">
+                    <p className="text-sm text-[var(--muted)]">
                       {professional.user?.email}
                     </p>
 
@@ -186,7 +186,7 @@ export default function AdminProfessionalsPage() {
                     )}
 
                     {professional.bio && (
-                      <p className="mt-2 line-clamp-2 text-sm text-neutral-400">
+                      <p className="mt-2 line-clamp-2 text-sm text-[var(--muted)]">
                         {professional.bio}
                       </p>
                     )}
@@ -200,7 +200,7 @@ export default function AdminProfessionalsPage() {
                     </p>
 
                     {(professional.city || professional.province) && (
-                      <p className="mt-1 text-sm text-neutral-400">
+                      <p className="mt-1 text-sm text-[var(--muted)]">
                         {professional.city} {professional.province}
                       </p>
                     )}
@@ -228,7 +228,7 @@ export default function AdminProfessionalsPage() {
                           e.target.value as Plan
                         )
                       }
-                      className="mt-2 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-white"
+                      className="mt-2 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
                     >
                       <option value="free">{planLabels.free}</option>
                       <option value="pro">{planLabels.pro}</option>

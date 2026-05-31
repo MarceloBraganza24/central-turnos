@@ -13,10 +13,6 @@ type Service = {
   depositAmount?: number;
 };
 
-type Slot = {
-  startTime: string;
-  endTime: string;
-};
 
 type TenantConfig = {
   requiresDeposit: boolean;
@@ -25,6 +21,7 @@ type TenantConfig = {
 };
 
 export default function ReservarTurnoPage() {
+  const [slots, setSlots] = useState<string[]>([]);
   const params = useParams();
   const router = useRouter();
 
@@ -42,7 +39,6 @@ export default function ReservarTurnoPage() {
   const [selectedServiceId, setSelectedServiceId] = useState("");
 
   const [services, setServices] = useState<Service[]>([]);
-  const [slots, setSlots] = useState<Slot[]>([]);
   const [tenantConfig, setTenantConfig] = useState<TenantConfig | null>(null);
 
   const [form, setForm] = useState({
@@ -151,13 +147,15 @@ export default function ReservarTurnoPage() {
       return;
     }
 
-    router.push(`/reserva-exitosa/${data.appointmentId}`);
+    router.push(`/mi-reserva/${data.publicToken}`);
   }
 
   const today = new Date().toISOString().split("T")[0];
 
+  console.log("SLOTS", slots);
+
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 pb-28 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 pb-28 text-[var(--foreground)]">
       <section className="mx-auto max-w-5xl">
         <h1 className="text-3xl font-bold">Reservar turno</h1>
 
@@ -169,7 +167,7 @@ export default function ReservarTurnoPage() {
           <select
             value={selectedServiceId}
             onChange={(e) => setSelectedServiceId(e.target.value)}
-            className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           >
             <option value="">Seleccionar servicio</option>
 
@@ -181,7 +179,7 @@ export default function ReservarTurnoPage() {
           </select>
         </div>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Elegí fecha, horario y completá tus datos para confirmar la reserva.
         </p>
 
@@ -199,7 +197,7 @@ export default function ReservarTurnoPage() {
                 min={today}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               />
             </div>
 
@@ -209,31 +207,31 @@ export default function ReservarTurnoPage() {
               </label>
 
               {!date ? (
-                <p className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
+                <p className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--muted)]">
                   Primero seleccioná una fecha.
                 </p>
               ) : loadingSlots ? (
-                <p className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
+                <p className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--muted)]">
                   Buscando horarios...
                 </p>
               ) : slots.length === 0 ? (
-                <p className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
+                <p className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--muted)]">
                   No hay horarios disponibles para esta fecha.
                 </p>
               ) : (
                 <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
-                  {slots.map((slot: Slot) => (
+                  {slots.map((slot) => (
                     <button
-                      key={slot.startTime}
+                      key={slot}
                       type="button"
-                      onClick={() => setSelectedSlot(slot.startTime)}
+                      onClick={() => setSelectedSlot(slot)}
                       className={`rounded-xl border px-4 py-3 text-sm ${
-                        selectedSlot === slot.startTime
-                          ? "border-brand bg-brand text-white"
-                          : "border-neutral-700 bg-neutral-950 text-white"
+                        selectedSlot === slot
+                          ? "border-brand bg-brand text-[var(--foreground)]"
+                          : "border-neutral-700 bg-[var(--background)] text-[var(--foreground)]"
                       }`}
                     >
-                      {slot.startTime}
+                      {slot}
                     </button>
                   ))}
                 </div>
@@ -251,7 +249,7 @@ export default function ReservarTurnoPage() {
                   onChange={(e) =>
                     setForm({ ...form, fullName: e.target.value })
                   }
-                  className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   placeholder="Tu nombre"
                 />
               </div>
@@ -263,7 +261,7 @@ export default function ReservarTurnoPage() {
                 <input
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   placeholder="Ej: 5492926..."
                 />
               </div>
@@ -278,7 +276,7 @@ export default function ReservarTurnoPage() {
                 autoComplete="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="tu@email.com"
               />
             </div>
@@ -290,7 +288,7 @@ export default function ReservarTurnoPage() {
               <textarea
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="min-h-28 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="min-h-28 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: primera consulta, control, dolor, objetivo, etc."
               />
             </div>
@@ -306,7 +304,7 @@ export default function ReservarTurnoPage() {
                 onChange={(e) =>
                   setForm({ ...form, depositAmount: e.target.value })
                 }
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 disabled:opacity-60"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3 disabled:opacity-60"
                 placeholder="Ej: 3000"
               />
               {tenantConfig?.requiresDeposit ? (
@@ -325,26 +323,26 @@ export default function ReservarTurnoPage() {
             <h2 className="text-xl font-bold">Resumen</h2>
 
             <div className="mt-5 space-y-4 text-sm">
-              <div className="rounded-2xl bg-neutral-950 p-4">
+              <div className="rounded-2xl bg-[var(--background)] p-4">
                 <p className="text-neutral-500">Fecha</p>
                 <p className="mt-1 font-medium">{date || "Sin seleccionar"}</p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-950 p-4">
+              <div className="rounded-2xl bg-[var(--background)] p-4">
                 <p className="text-neutral-500">Horario</p>
                 <p className="mt-1 font-medium">
                   {selectedSlot || "Sin seleccionar"}
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-950 p-4">
+              <div className="rounded-2xl bg-[var(--background)] p-4">
                 <p className="text-neutral-500">Cliente</p>
                 <p className="mt-1 font-medium">
                   {form.fullName || "Sin completar"}
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-950 p-4">
+              <div className="rounded-2xl bg-[var(--background)] p-4">
                 <p className="text-neutral-500">Seña</p>
                 <p className="mt-1 font-medium">
                   ${Number(form.depositAmount) || 0}
@@ -352,11 +350,18 @@ export default function ReservarTurnoPage() {
               </div>
             </div>
           </aside>
-          <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-neutral-800 bg-neutral-950 p-4 lg:hidden">
+          <button
+            type="submit"
+            disabled={saving}
+            className="mt-6 hidden w-full rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60 lg:block"
+          >
+            {saving ? "Reservando..." : "Confirmar reserva"}
+          </button>
+          <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--border)] bg-[var(--background)] p-4 lg:hidden">
             <button
               type="submit"
               disabled={saving}
-              className="touch-button w-full bg-brand text-white hover:bg-brand-hover disabled:opacity-60"
+              className="touch-button w-full bg-brand text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60"
             >
               {saving ? "Reservando..." : "Confirmar reserva"}
             </button>

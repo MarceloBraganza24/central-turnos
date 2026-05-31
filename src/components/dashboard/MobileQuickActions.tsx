@@ -26,7 +26,7 @@ export default function MobileQuickActions() {
         <Link
           key={action.href}
           href={action.href}
-          className="touch-card text-sm font-medium text-white"
+          className="touch-card text-sm font-medium text-[var(--foreground)]"
         >
           {action.label}
         </Link>

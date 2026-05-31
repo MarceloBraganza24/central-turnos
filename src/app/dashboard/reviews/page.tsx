@@ -53,17 +53,17 @@ export default function DashboardReviewsPage() {
   }
 
   return (
-    <section className="max-w-7xl text-white">
+    <section className="max-w-7xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Reseñas</h1>
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Revisá opiniones, ocultá reseñas si corresponde y respondé comentarios.
       </p>
 
       <div className="mt-8 space-y-4">
         {reviews.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-neutral-800 bg-neutral-900 p-10 text-center">
+          <div className="rounded-3xl border border-dashed border-[var(--border)] bg-[var(--card)] p-10 text-center">
             <h2 className="text-xl font-bold">Todavía no tenés reseñas</h2>
-            <p className="mt-2 text-neutral-400">
+            <p className="mt-2 text-[var(--muted)]">
               Cuando completes turnos, tus clientes podrán dejar una opinión.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function DashboardReviewsPage() {
               </div>
 
               {review.professionalReply && (
-                <div className="mt-5 rounded-2xl border border-neutral-800 bg-neutral-950 p-4">
+                <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
                   <p className="text-sm text-neutral-500">Tu respuesta</p>
                   <p className="mt-2 text-sm text-neutral-300">
                     {review.professionalReply}
@@ -124,7 +124,7 @@ export default function DashboardReviewsPage() {
                       [review._id]: e.target.value,
                     })
                   }
-                  className="min-h-24 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                  className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   placeholder="Responder reseña..."
                 />
 
@@ -134,7 +134,7 @@ export default function DashboardReviewsPage() {
                       professionalReply: replyById[review._id] ?? "",
                     })
                   }
-                  className="mt-3 rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand-hover"
+                  className="mt-3 rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover"
                 >
                   Guardar respuesta
                 </button>

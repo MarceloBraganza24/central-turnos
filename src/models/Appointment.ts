@@ -127,6 +127,12 @@ const AppointmentSchema = new Schema(
       type: Number,
       default: 0,
     },
+    publicToken: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
   },
   {
     timestamps: true,

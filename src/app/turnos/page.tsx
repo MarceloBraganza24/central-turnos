@@ -14,6 +14,12 @@ type PublicLocationItem = {
   count: number;
 };
 
+type ManualLocationItem = {
+  city: string;
+  province: string;
+  country?: string;
+};
+
 type TenantLocationCount = {
   _id: {
     city: string;
@@ -33,14 +39,14 @@ export default async function PublicLocationsPage() {
   let locations: PublicLocationItem[] = cachedLocations || [];
 
   if (!cachedLocations) {
-    const manualLocations = await Location.find({
+    const manualLocations = (await Location.find({
       isActive: true,
     })
       .sort({
         province: 1,
         city: 1,
       })
-      .lean();
+      .lean()) as ManualLocationItem[];
 
     const tenantCounts =
       (await Tenant.aggregate([
@@ -70,34 +76,58 @@ export default async function PublicLocationsPage() {
         },
       ])) as TenantLocationCount[];
 
-    const countMap = new Map<string, number>();
+    const locationMap = new Map<string, PublicLocationItem>();
 
-    tenantCounts.forEach((item) => {
-      const key = `${createSlug(item._id.province)}-${createSlug(
-        item._id.city
-      )}`;
-
-      countMap.set(key, item.count);
-    });
-
-    locations = manualLocations.map((location) => {
+    for (const location of manualLocations) {
       const key = `${createSlug(location.province)}-${createSlug(
         location.city
       )}`;
 
-      return {
+      locationMap.set(key, {
         city: location.city,
         province: location.province,
         country: location.country || "Argentina",
-        count: countMap.get(key) || 0,
-      };
+        count: 0,
+      });
+    }
+
+    for (const item of tenantCounts) {
+      const key = `${createSlug(item._id.province)}-${createSlug(
+        item._id.city
+      )}`;
+
+      const existing = locationMap.get(key);
+
+      if (existing) {
+        locationMap.set(key, {
+          ...existing,
+          count: item.count,
+        });
+      } else {
+        locationMap.set(key, {
+          city: item._id.city,
+          province: item._id.province,
+          country: "Argentina",
+          count: item.count,
+        });
+      }
+    }
+
+    locations = Array.from(locationMap.values()).sort((a, b) => {
+      const provinceCompare = a.province.localeCompare(b.province);
+
+      if (provinceCompare !== 0) {
+        return provinceCompare;
+      }
+
+      return a.city.localeCompare(b.city);
     });
 
     await setCache(cacheKey, locations, 300);
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
         <p className="text-sm text-brand">Central Turnos</p>
 
@@ -105,7 +135,7 @@ export default async function PublicLocationsPage() {
           ¿Dónde querés sacar turno?
         </h1>
 
-        <p className="mt-4 max-w-2xl text-neutral-400">
+        <p className="mt-4 max-w-2xl text-[var(--muted)]">
           Elegí tu ciudad para ver categorías y profesionales disponibles.
         </p>
 
@@ -115,7 +145,7 @@ export default async function PublicLocationsPage() {
               Todavía no hay ciudades disponibles
             </h2>
 
-            <p className="mt-2 text-neutral-400">
+            <p className="mt-2 text-[var(--muted)]">
               Cuando el administrador cargue localidades, van a aparecer acá.
             </p>
           </div>
@@ -133,7 +163,7 @@ export default async function PublicLocationsPage() {
                   {location.city}
                 </h2>
 
-                <p className="mt-1 text-sm text-neutral-400">
+                <p className="mt-1 text-sm text-[var(--muted)]">
                   {location.province}, {location.country}
                 </p>
 

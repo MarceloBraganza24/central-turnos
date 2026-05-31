@@ -15,7 +15,8 @@ export async function GET() {
     return NextResponse.json({ message: "No autorizado" }, { status: 401 });
   }
 
-  const { tenant, professional } = context;
+  const professional = context.professional;
+  const tenant = context.tenant;
 
   const reviews = await Review.find({
     tenant: tenant._id,

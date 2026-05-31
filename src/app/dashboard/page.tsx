@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="max-w-7xl">
+    <main className="max-w-7xl text-[var(--foreground)]">
       <section className="space-y-6">
         <OnboardingProgressCard />
 
@@ -25,7 +25,7 @@ export default async function DashboardPage() {
             Panel principal
           </h1>
 
-          <p className="mt-2 max-w-2xl text-neutral-400">
+          <p className="mt-2 max-w-2xl text-[var(--muted)]">
             Gestioná tus turnos, clientes, servicios y configuración desde un
             solo lugar.
           </p>
@@ -37,7 +37,7 @@ export default async function DashboardPage() {
             className="premium-card premium-card-hover rounded-3xl p-6"
           >
             <h2 className="text-xl font-semibold">Calendario</h2>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Visualizá tus turnos y cambiá estados rápidamente.
             </p>
           </Link>
@@ -47,7 +47,7 @@ export default async function DashboardPage() {
             className="premium-card premium-card-hover rounded-3xl p-6"
           >
             <h2 className="text-xl font-semibold">Servicios</h2>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Cargá precios, duración y señas por servicio.
             </p>
           </Link>
@@ -57,7 +57,7 @@ export default async function DashboardPage() {
             className="premium-card premium-card-hover rounded-3xl p-6"
           >
             <h2 className="text-xl font-semibold">Horarios</h2>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Definí cuándo pueden reservar tus clientes.
             </p>
           </Link>

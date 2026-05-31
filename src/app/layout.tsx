@@ -19,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" data-scroll-behavior="smooth">
+    <html lang="es" data-scroll-behavior="smooth" className="theme-saas">
       <body
-        className={`${GeistSans.variable} ${GeistMono.variable} bg-neutral-950 text-white antialiased`}
+        className={`${GeistSans.variable} ${GeistMono.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
         <Toaster
           position="top-right"

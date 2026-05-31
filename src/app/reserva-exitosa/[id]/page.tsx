@@ -4,6 +4,10 @@ import { connectDB } from "@/lib/mongodb";
 import { Appointment } from "@/models/Appointment";
 import PayDepositButton from "@/components/payments/PayDepositButton";
 import StatusBadge from "@/components/ui/StatusBadge";
+import "@/models/Professional";
+import "@/models/Client";
+import "@/models/Service";
+import "@/models/Category";
 
 export const runtime = "nodejs";
 
@@ -103,9 +107,9 @@ export default async function ReservationSuccessPage({ params }: Props) {
   )}`;
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto flex min-h-[80vh] max-w-3xl items-center justify-center">
-        <div className="w-full rounded-3xl border border-neutral-800 bg-neutral-900 p-8 text-center">
+        <div className="w-full rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-white text-3xl text-black">
             ✓
           </div>
@@ -114,19 +118,19 @@ export default async function ReservationSuccessPage({ params }: Props) {
             Turno reservado correctamente
           </h1>
 
-          <p className="mt-3 text-neutral-400">
+          <p className="mt-3 text-[var(--muted)]">
             Te dejamos el detalle de la reserva para que puedas guardarla o
             compartirla.
           </p>
 
-          <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 text-left">
+          <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 text-left">
             <div className="grid gap-5 md:grid-cols-2">
               <div>
                 <p className="text-sm text-neutral-500">Profesional</p>
                 <p className="mt-1 font-medium">
                   {professional.displayName}
                 </p>
-                <p className="text-sm text-neutral-400">
+                <p className="text-sm text-[var(--muted)]">
                   {professional.category?.name}
                 </p>
               </div>
@@ -134,7 +138,7 @@ export default async function ReservationSuccessPage({ params }: Props) {
               <div>
                 <p className="text-sm text-neutral-500">Cliente</p>
                 <p className="mt-1 font-medium">{client.fullName}</p>
-                <p className="text-sm text-neutral-400">{client.phone}</p>
+                <p className="text-sm text-[var(--muted)]">{client.phone}</p>
               </div>
 
               <div>
@@ -180,7 +184,7 @@ export default async function ReservationSuccessPage({ params }: Props) {
             <a
               href={whatsappUrl}
               target="_blank"
-              className="rounded-xl border border-neutral-700 px-5 py-3 font-medium text-white transition hover:bg-neutral-800"
+              className="rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)] transition hover:bg-neutral-800"
             >
               Compartir por WhatsApp
             </a>
@@ -194,7 +198,7 @@ export default async function ReservationSuccessPage({ params }: Props) {
 
           <Link
             href="/categorias"
-            className="mt-6 inline-flex text-sm text-neutral-400 underline"
+            className="mt-6 inline-flex text-sm text-[var(--muted)] underline"
           >
             Volver a categorías
           </Link>

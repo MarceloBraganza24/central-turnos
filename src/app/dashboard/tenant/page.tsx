@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import FadeIn from "@/components/animations/FadeIn";
 import Image from "next/image";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type TenantForm = {
   name: string;
@@ -30,6 +31,8 @@ type TenantForm = {
 export default function TenantSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [insuranceProvidersInput, setInsuranceProvidersInput] = useState("");
+
 
   const [form, setForm] = useState<TenantForm>({
     name: "",
@@ -84,6 +87,13 @@ export default function TenantSettingsPage() {
         languages: data.languages || ["Español"],
         insuranceProviders: data.insuranceProviders || [],
       });
+      
+      setInsuranceProvidersInput(
+        Array.isArray(data.insuranceProviders)
+          ? data.insuranceProviders.join(", ")
+          : ""
+      );
+        
 
       setLoading(false);
     }
@@ -101,7 +111,13 @@ export default function TenantSettingsPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        ...form,
+        insuranceProviders: insuranceProvidersInput
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+      }),
     });
 
     const data = await response.json();
@@ -117,16 +133,16 @@ export default function TenantSettingsPage() {
   }
 
   if (loading) {
-    return <section className="text-white">Cargando configuración...</section>;
+    return <section className="text-[var(--foreground)]">Cargando configuración...</section>;
   }
 
   const publicUrl = `${process.env.NEXT_PUBLIC_APP_URL || ""}/p/${form.slug}`;
 
   return (
-    <section className="max-w-5xl text-white">
+    <section className="max-w-5xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Configuración del espacio</h1>
 
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Personalizá tu espacio público, branding, link y políticas de reserva.
       </p>
 
@@ -149,7 +165,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, name: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                     placeholder="Ej: Nutrición Juan Pérez"
                   />
                 </div>
@@ -163,7 +179,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, slug: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                     placeholder="dr-juan-perez"
                   />
                   <p className="mt-2 text-xs text-neutral-500">
@@ -180,7 +196,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, subdomain: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                     placeholder="drjuan"
                   />
                   <p className="mt-2 text-xs text-neutral-500">
@@ -197,7 +213,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, customDomain: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                     placeholder="turnos.drjuanperez.com"
                   />
                 </div>
@@ -212,17 +228,23 @@ export default function TenantSettingsPage() {
 
               <div className="mt-5 space-y-4">
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
-                    Logo URL
+                  <label className="text-sm text-[var(--muted)]">
+                    Logo / imagen del espacio
                   </label>
-                  <input
-                    value={form.logoUrl}
-                    onChange={(e) =>
-                      setForm({ ...form, logoUrl: e.target.value })
-                    }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-                    placeholder="https://..."
-                  />
+
+                  <div className="mt-2">
+                    <ImageUploader
+                      value={form.logoUrl}
+                      folder="central-turnos/tenants"
+                      label="Subir logo"
+                      onChange={(url) =>
+                        setForm({
+                          ...form,
+                          logoUrl: url,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -236,7 +258,7 @@ export default function TenantSettingsPage() {
                       onChange={(e) =>
                         setForm({ ...form, primaryColor: e.target.value })
                       }
-                      className="h-12 w-full rounded-xl border border-neutral-700 bg-neutral-950 p-2"
+                      className="h-12 w-full rounded-xl border border-neutral-700 bg-[var(--background)] p-2"
                     />
                   </div>
 
@@ -250,7 +272,7 @@ export default function TenantSettingsPage() {
                       onChange={(e) =>
                         setForm({ ...form, accentColor: e.target.value })
                       }
-                      className="h-12 w-full rounded-xl border border-neutral-700 bg-neutral-950 p-2"
+                      className="h-12 w-full rounded-xl border border-neutral-700 bg-[var(--background)] p-2"
                     />
                   </div>
                 </div>
@@ -269,10 +291,11 @@ export default function TenantSettingsPage() {
                   </label>
                   <textarea
                     value={form.welcomeMessage}
+                    placeholder="Ej: Hola 👋 Gracias por elegir nuestro consultorio."
                     onChange={(e) =>
                       setForm({ ...form, welcomeMessage: e.target.value })
                     }
-                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
@@ -282,10 +305,11 @@ export default function TenantSettingsPage() {
                   </label>
                   <textarea
                     value={form.cancellationPolicy}
+                    placeholder="Ej: Las cancelaciones deben realizarse con al menos 24 horas de anticipación."
                     onChange={(e) =>
                       setForm({ ...form, cancellationPolicy: e.target.value })
                     }
-                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
@@ -310,7 +334,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, defaultDepositAmount: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                   />
                 </div>
               </div>
@@ -326,28 +350,28 @@ export default function TenantSettingsPage() {
               <input
                 value={form.province}
                 onChange={(e) => setForm({ ...form, province: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Provincia. Ej: Buenos Aires"
               />
 
               <input
                 value={form.city}
                 onChange={(e) => setForm({ ...form, city: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ciudad. Ej: Coronel Suárez"
               />
 
               <input
                 value={form.neighborhood}
                 onChange={(e) => setForm({ ...form, neighborhood: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Barrio / zona opcional"
               />
 
               <input
                 value={form.country}
                 onChange={(e) => setForm({ ...form, country: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="País"
               />
             </div>
@@ -360,20 +384,15 @@ export default function TenantSettingsPage() {
                   languages: e.target.value.split(",").map((item) => item.trim()),
                 })
               }
-              className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Idiomas. Ej: Español, Inglés"
             />
 
             <input
-              value={form.insuranceProviders.join(", ")}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  insuranceProviders: e.target.value.split(",").map((item) => item.trim()),
-                })
-              }
-              className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-              placeholder="Obras sociales. Ej: OSDE, Swiss Medical"
+              value={insuranceProvidersInput}
+              onChange={(e) => setInsuranceProvidersInput(e.target.value)}
+              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              placeholder="Ej: OSDE 210, Swiss Medical, IOMA, PAMI"
             />
 
             <label className="mt-5 flex items-center gap-3 text-sm text-neutral-300">
@@ -393,7 +412,7 @@ export default function TenantSettingsPage() {
           <div className="premium-card premium-gradient rounded-3xl p-6">
             <h2 className="text-xl font-semibold">Vista previa</h2>
 
-            <div className="mt-5 rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+            <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
               {form.logoUrl ? (
                 <Image
                   src={form.logoUrl}
@@ -415,7 +434,7 @@ export default function TenantSettingsPage() {
                 {form.name || "Nombre del espacio"}
               </h3>
 
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted)]">
                 {form.welcomeMessage || "Mensaje de bienvenida"}
               </p>
 

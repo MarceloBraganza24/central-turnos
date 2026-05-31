@@ -96,9 +96,9 @@ export default function ServicesPage() {
   }
 
   return (
-    <section className="max-w-7xl text-white">
+    <section className="max-w-7xl text-[var(--foreground)]">
       <h1 className="text-3xl font-bold">Servicios</h1>
-      <p className="mt-2 text-neutral-400">
+      <p className="mt-2 text-[var(--muted)]">
         Creá servicios con precio, duración y seña propia.
       </p>
 
@@ -109,48 +109,82 @@ export default function ServicesPage() {
         <h2 className="text-xl font-semibold">Nuevo servicio</h2>
 
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <input
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-            placeholder="Ej: Consulta inicial"
-          />
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-300">
+              Nombre del servicio
+            </label>
 
-          <input
-            type="number"
-            value={form.durationMinutes}
-            onChange={(e) =>
-              setForm({ ...form, durationMinutes: e.target.value })
-            }
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-            placeholder="Duración en minutos"
-          />
+            <input
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              placeholder="Ej: Consulta inicial"
+            />
+          </div>
 
-          <input
-            type="number"
-            value={form.price}
-            onChange={(e) => setForm({ ...form, price: e.target.value })}
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-            placeholder="Precio"
-          />
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-300">
+              Duración (minutos)
+            </label>
 
-          <input
-            type="number"
-            value={form.depositAmount}
-            onChange={(e) =>
-              setForm({ ...form, depositAmount: e.target.value })
-            }
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-            placeholder="Seña"
-          />
+            <input
+              type="number"
+              value={form.durationMinutes}
+              onChange={(e) =>
+                setForm({ ...form, durationMinutes: e.target.value })
+              }
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              placeholder="30"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-300">
+              Precio
+            </label>
+
+            <input
+              type="number"
+              value={form.price}
+              onChange={(e) =>
+                setForm({ ...form, price: e.target.value })
+              }
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              placeholder="0"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-300">
+              Monto de seña
+            </label>
+
+            <input
+              type="number"
+              value={form.depositAmount}
+              onChange={(e) =>
+                setForm({ ...form, depositAmount: e.target.value })
+              }
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              placeholder="0"
+            />
+          </div>
         </div>
 
-        <textarea
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-          className="mt-4 min-h-24 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
-          placeholder="Descripción opcional"
-        />
+        <div className="mt-4">
+          <label className="mb-2 block text-sm font-medium text-neutral-300">
+            Descripción
+          </label>
+
+          <textarea
+            value={form.description}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
+            className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            placeholder="Descripción opcional del servicio"
+          />
+        </div>
 
         <label className="mt-4 flex items-center gap-3 text-sm text-neutral-300">
           <input
@@ -165,7 +199,7 @@ export default function ServicesPage() {
 
         <button
           disabled={saving}
-          className="mt-5 rounded-xl bg-brand px-5 py-3 font-medium text-white disabled:opacity-60"
+          className="mt-5 rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] disabled:opacity-60"
         >
           {saving ? "Guardando..." : "Crear servicio"}
         </button>
@@ -188,11 +222,11 @@ export default function ServicesPage() {
             </p>
 
             <h2 className="mt-4 text-xl font-bold">{service.name}</h2>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted)]">
               {service.description || "Sin descripción"}
             </p>
 
-            <div className="mt-5 space-y-1 text-sm text-neutral-400">
+            <div className="mt-5 space-y-1 text-sm text-[var(--muted)]">
               <p>{service.durationMinutes} minutos</p>
               <p>${service.price}</p>
               {service.requiresDeposit && <p>Seña: ${service.depositAmount}</p>}

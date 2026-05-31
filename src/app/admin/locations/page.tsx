@@ -78,11 +78,11 @@ export default function AdminLocationsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 p-6 text-white">
+    <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
         <h1 className="text-3xl font-bold">Localidades</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Cargá ciudades manualmente para que aparezcan en la búsqueda pública.
         </p>
 
@@ -96,7 +96,7 @@ export default function AdminLocationsPage() {
               setForm({ ...form, province: e.target.value })
             }
             placeholder="Provincia"
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -105,7 +105,7 @@ export default function AdminLocationsPage() {
               setForm({ ...form, city: e.target.value })
             }
             placeholder="Ciudad"
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -114,10 +114,10 @@ export default function AdminLocationsPage() {
               setForm({ ...form, country: e.target.value })
             }
             placeholder="País"
-            className="rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
           />
 
-          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand-hover">
+          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover">
             Crear localidad
           </button>
         </form>
@@ -142,13 +142,13 @@ export default function AdminLocationsPage() {
                 {location.city}
               </h2>
 
-              <p className="mt-1 text-sm text-neutral-400">
+              <p className="mt-1 text-sm text-[var(--muted)]">
                 {location.province}, {location.country}
               </p>
 
               <button
                 onClick={() => toggleLocation(location)}
-                className="mt-5 rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-900"
+                className="mt-5 rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
               >
                 {location.isActive ? "Desactivar" : "Activar"}
               </button>

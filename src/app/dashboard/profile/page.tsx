@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type Category = {
   _id: string;
@@ -18,6 +19,7 @@ type ProfessionalProfile = {
   phone?: string;
   address?: string;
   city?: string;
+  imageUrl?: string;
   province?: string;
   price?: number;
   appointmentDurationMinutes?: number;
@@ -33,6 +35,7 @@ export default function DashboardProfilePage() {
     category: "",
     bio: "",
     phone: "",
+    imageUrl: "",
     address: "",
     city: "",
     province: "",
@@ -59,6 +62,7 @@ export default function DashboardProfilePage() {
           bio: profileData.bio || "",
           phone: profileData.phone || "",
           address: profileData.address || "",
+          imageUrl: profileData.imageUrl || "",
           city: profileData.city || "",
           province: profileData.province || "",
           price: String(profileData.price || ""),
@@ -123,15 +127,33 @@ export default function DashboardProfilePage() {
       <section className="mx-auto max-w-3xl">
         <h1 className="text-3xl font-bold">Mi perfil profesional</h1>
 
-        <p className="mt-2 text-neutral-400">
+        <p className="mt-2 text-[var(--muted)]">
           Estos datos van a aparecer en tu perfil público para que los clientes
           puedan reservar turnos.
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="mt-8 space-y-5 rounded-2xl border border-neutral-800 bg-neutral-900 p-6"
+          className="mt-8 space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
         >
+          <div>
+            <label className="mb-2 block text-sm text-neutral-300">
+              Foto profesional
+            </label>
+
+            <ImageUploader
+              value={form.imageUrl}
+              folder="central-turnos/professionals"
+              label="Subir foto"
+              onChange={(url) =>
+                setForm({
+                  ...form,
+                  imageUrl: url,
+                })
+              }
+            />
+          </div>
+
           <div>
             <label className="mb-2 block text-sm text-neutral-300">
               Nombre visible
@@ -141,7 +163,7 @@ export default function DashboardProfilePage() {
               autoComplete="name"
               value={form.displayName}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Lic. Juan Pérez"
             />
           </div>
@@ -154,7 +176,7 @@ export default function DashboardProfilePage() {
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
             >
               <option value="">Seleccionar categoría</option>
 
@@ -174,7 +196,7 @@ export default function DashboardProfilePage() {
               name="bio"
               value={form.bio}
               onChange={handleChange}
-              className="min-h-28 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="min-h-28 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Contá quién sos, qué hacés y cómo trabajás."
             />
           </div>
@@ -190,7 +212,7 @@ export default function DashboardProfilePage() {
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: 2926..."
               />
             </div>
@@ -205,7 +227,7 @@ export default function DashboardProfilePage() {
                 type="number"
                 value={form.price}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: 12000"
               />
             </div>
@@ -220,7 +242,7 @@ export default function DashboardProfilePage() {
                 name="city"
                 value={form.city}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: Coronel Suárez"
               />
             </div>
@@ -233,7 +255,7 @@ export default function DashboardProfilePage() {
                 name="province"
                 value={form.province}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: Buenos Aires"
               />
             </div>
@@ -247,7 +269,7 @@ export default function DashboardProfilePage() {
               name="address"
               value={form.address}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Av. Alsina 123"
             />
           </div>
@@ -261,7 +283,7 @@ export default function DashboardProfilePage() {
               type="number"
               value={form.appointmentDurationMinutes}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3"
+              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
               placeholder="30"
             />
           </div>
