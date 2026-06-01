@@ -15,7 +15,7 @@ export default function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)]/60 p-10 text-center">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-xl">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--card-soft)] text-xl">
         ✦
       </div>
 

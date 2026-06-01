@@ -129,6 +129,13 @@ export default async function PublicLocationsPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
+        <Link
+          href="/"
+          className="text-sm text-[var(--muted)] underline text-brand"
+        >
+          volver
+        </Link>
+
         <p className="text-sm text-brand">Central Turnos</p>
 
         <h1 className="mt-4 text-5xl font-bold">
@@ -159,7 +166,7 @@ export default async function PublicLocationsPage() {
                 )}`}
                 className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-xl font-semibold text-white">
                   {location.city}
                 </h2>
 
@@ -167,7 +174,7 @@ export default async function PublicLocationsPage() {
                   {location.province}, {location.country}
                 </p>
 
-                <p className="mt-4 text-sm text-neutral-500">
+                <p className="mt-4 text-sm text-white">
                   {location.count} profesionales
                 </p>
               </Link>

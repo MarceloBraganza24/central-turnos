@@ -73,7 +73,7 @@ export default async function CategoryProfessionalsPage({ params }: Props) {
               <Link
                 key={professional._id.toString()}
                 href={`/profesionales/${professional._id.toString()}`}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-neutral-800"
+                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-[var(--card-soft)]"
               >
                 <h2 className="text-lg font-semibold">
                   {professional.displayName}

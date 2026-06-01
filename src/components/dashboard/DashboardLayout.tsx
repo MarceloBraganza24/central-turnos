@@ -1,6 +1,7 @@
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardTopbar from "./DashboardTopbar";
 import DashboardBottomNav from "./DashboardBottomNav";
+import PendingAppointmentsNotifier from "@/components/dashboard/PendingAppointmentsNotifier";
 
 export default function DashboardLayout({
   children,
@@ -20,6 +21,7 @@ export default function DashboardLayout({
 
         <DashboardBottomNav />
       </div>
+      <PendingAppointmentsNotifier />
     </div>
   );
 }

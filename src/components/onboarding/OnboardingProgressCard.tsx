@@ -83,7 +83,7 @@ export default function OnboardingProgressCard() {
             empezar a recibir turnos.
           </p>
 
-          <div className="mt-5 h-2 overflow-hidden rounded-full bg-neutral-800">
+          <div className="mt-5 h-2 overflow-hidden rounded-full bg-[var(--card-soft)]">
             <div
               className="h-full rounded-full bg-brand"
               style={{
@@ -99,7 +99,7 @@ export default function OnboardingProgressCard() {
                 className={`rounded-full border px-3 py-1 text-xs ${
                   step.done
                     ? "border-green-900 text-green-400"
-                    : "border-neutral-700 text-[var(--muted)]"
+                    : "border-[var(--border)] text-[var(--muted)]"
                 }`}
               >
                 {step.done ? "✓" : "•"} {step.label}

@@ -1,19 +1,11 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import { Professional } from "@/models/Professional";
+import { getCurrentTenant } from "@/lib/get-current-tenant";
 import { Availability } from "@/models/Availability";
 import { Appointment } from "@/models/Appointment";
-import { Tenant } from "@/models/Tenant";
 import { ScheduleException } from "@/models/ScheduleException";
-import { Service } from "@/models/Service";
 
 export const runtime = "nodejs";
-
-type Props = {
-  params: Promise<{
-    id: string;
-  }>;
-};
 
 type AvailabilityBlock = {
   startTime: string;
@@ -55,30 +47,35 @@ function rangesOverlap(
   startB: string,
   endB: string
 ) {
-  return timeToMinutes(startA) < timeToMinutes(endB) &&
-    timeToMinutes(endA) > timeToMinutes(startB);
+  return (
+    timeToMinutes(startA) < timeToMinutes(endB) &&
+    timeToMinutes(endA) > timeToMinutes(startB)
+  );
 }
 
-function getTodayDate() {
-  return new Date().toISOString().split("T")[0];
-}
-
-function getCurrentTime() {
-  const now = new Date();
-
-  return `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")}`;
-}
-
-export async function GET(request: Request, { params }: Props) {
+export async function GET(request: Request) {
   await connectDB();
 
-  const { id } = await params;
-  const { searchParams } = new URL(request.url);
+  const context = await getCurrentTenant();
 
+  if (!context) {
+    return NextResponse.json(
+      { message: "No autorizado" },
+      { status: 401 }
+    );
+  }
+
+  if (!context.tenant) {
+    return NextResponse.json(
+      { message: "Primero completá la configuración de tu espacio" },
+      { status: 400 }
+    );
+  }
+
+  const { tenant, professional } = context;
+
+  const { searchParams } = new URL(request.url);
   const date = searchParams.get("date");
-  const serviceId = searchParams.get("serviceId");
 
   if (!date) {
     return NextResponse.json(
@@ -86,49 +83,6 @@ export async function GET(request: Request, { params }: Props) {
       { status: 400 }
     );
   }
-
-  const professional = await Professional.findOne({
-    _id: id,
-    isActive: true,
-  });
-
-  if (!professional) {
-    return NextResponse.json(
-      { message: "Profesional no encontrado" },
-      { status: 404 }
-    );
-  }
-
-  const tenant = await Tenant.findOne({
-    professional: professional._id,
-    isActive: true,
-  });
-
-  if (!tenant) {
-    return NextResponse.json(
-      { message: "Espacio profesional no encontrado" },
-      { status: 404 }
-    );
-  }
-
-  let duration =
-    Number(professional.appointmentDurationMinutes) || 30;
-
-  if (serviceId) {
-    const service = await Service.findOne({
-      _id: serviceId,
-      tenant: tenant._id,
-      professional: professional._id,
-      isActive: true,
-    });
-
-    if (service) {
-      duration = Number(service.durationMinutes) || duration;
-    }
-  }
-
-  const bufferMinutes =
-    Number(professional.appointmentBufferMinutes) || 0;
 
   const exception = await ScheduleException.findOne({
     tenant: tenant._id,
@@ -183,10 +137,13 @@ export async function GET(request: Request, { params }: Props) {
     status: { $ne: "cancelled" },
   }).lean()) as AppointmentItem[];
 
-  const slots: string[] = [];
+  const duration =
+    Number(professional.appointmentDurationMinutes) || 30;
 
-  const nowTime = getCurrentTime();
-  const isToday = date === getTodayDate();
+  const bufferMinutes =
+    Number(professional.appointmentBufferMinutes) || 0;
+
+  const slots: string[] = [];
 
   for (const block of availabilityBlocks) {
     let currentTime = block.startTime;
@@ -213,10 +170,7 @@ export async function GET(request: Request, { params }: Props) {
         )
       );
 
-      const isPastSlot =
-        isToday && timeToMinutes(slotStart) <= timeToMinutes(nowTime);
-
-      if (!overlapsAppointment && !overlapsManualBlock && !isPastSlot) {
+      if (!overlapsAppointment && !overlapsManualBlock) {
         slots.push(slotStart);
       }
 

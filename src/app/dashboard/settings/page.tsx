@@ -146,7 +146,7 @@ export default function DashboardSettingsPage() {
                         Number(e.target.value),
                     })
                   }
-                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 />
               </div>
 
@@ -166,7 +166,7 @@ export default function DashboardSettingsPage() {
                         Number(e.target.value),
                     })
                   }
-                  className="mt-2 w-full rounded-2xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 />
               </div>
             </div>
@@ -244,7 +244,7 @@ export default function DashboardSettingsPage() {
                       primaryColor: e.target.value,
                     })
                   }
-                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-[var(--background)]"
+                  className="mt-2 h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]"
                 />
               </div>
 
@@ -262,7 +262,7 @@ export default function DashboardSettingsPage() {
                       accentColor: e.target.value,
                     })
                   }
-                  className="mt-2 h-14 w-full rounded-2xl border border-neutral-700 bg-[var(--background)]"
+                  className="mt-2 h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]"
                 />
               </div>
             </div>

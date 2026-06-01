@@ -126,7 +126,7 @@ export default async function ReservationSuccessPage({ params }: Props) {
           <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 text-left">
             <div className="grid gap-5 md:grid-cols-2">
               <div>
-                <p className="text-sm text-neutral-500">Profesional</p>
+                <p className="text-sm text-[var(--muted)]">Profesional</p>
                 <p className="mt-1 font-medium">
                   {professional.displayName}
                 </p>
@@ -136,20 +136,20 @@ export default async function ReservationSuccessPage({ params }: Props) {
               </div>
 
               <div>
-                <p className="text-sm text-neutral-500">Cliente</p>
+                <p className="text-sm text-[var(--muted)]">Cliente</p>
                 <p className="mt-1 font-medium">{client.fullName}</p>
                 <p className="text-sm text-[var(--muted)]">{client.phone}</p>
               </div>
 
               <div>
-                <p className="text-sm text-neutral-500">Fecha</p>
+                <p className="text-sm text-[var(--muted)]">Fecha</p>
                 <p className="mt-1 font-medium">
                   {appointment.appointmentDate}
                 </p>
               </div>
 
               <div>
-                <p className="text-sm text-neutral-500">Horario</p>
+                <p className="text-sm text-[var(--muted)]">Horario</p>
                 <p className="mt-1 font-medium">
                   {appointment.startTime} a {appointment.endTime}
                 </p>
@@ -157,13 +157,13 @@ export default async function ReservationSuccessPage({ params }: Props) {
 
               {location && (
                 <div className="md:col-span-2">
-                  <p className="text-sm text-neutral-500">Ubicación</p>
+                  <p className="text-sm text-[var(--muted)]">Ubicación</p>
                   <p className="mt-1 font-medium">{location}</p>
                 </div>
               )}
 
               <div>
-                <p className="text-sm text-neutral-500">Pago</p>
+                <p className="text-sm text-[var(--muted)]">Pago</p>
                 <StatusBadge
                   type="payment"
                   status={appointment.paymentStatus || "unpaid"}
@@ -184,7 +184,7 @@ export default async function ReservationSuccessPage({ params }: Props) {
             <a
               href={whatsappUrl}
               target="_blank"
-              className="rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)] transition hover:bg-neutral-800"
+              className="rounded-xl border border-[var(--border)] px-5 py-3 font-medium text-[var(--foreground)] transition hover:bg-[var(--card-soft)]"
             >
               Compartir por WhatsApp
             </a>

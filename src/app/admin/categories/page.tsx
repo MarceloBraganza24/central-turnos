@@ -160,7 +160,7 @@ export default function AdminCategoriesPage() {
                   name: e.target.value,
                 })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Odontología"
             />
           </div>
@@ -177,7 +177,7 @@ export default function AdminCategoriesPage() {
                   description: e.target.value,
                 })
               }
-              className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="min-h-24 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Breve descripción de la categoría"
             />
           </div>
@@ -212,7 +212,7 @@ export default function AdminCategoriesPage() {
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded-xl border border-neutral-700 px-6 py-3 font-medium text-[var(--foreground)] hover:bg-neutral-800"
+                className="rounded-xl border border-[var(--border)] px-6 py-3 font-medium text-[var(--foreground)] hover:bg-[var(--card-soft)]"
               >
                 Cancelar
               </button>
@@ -234,7 +234,7 @@ export default function AdminCategoriesPage() {
                 >
                   <div>
                     <p className="font-medium">{category.name}</p>
-                    <p className="mt-1 text-sm text-neutral-500">
+                    <p className="mt-1 text-sm text-[var(--muted)]">
                       /{category.slug}
                     </p>
                     {category.description && (
@@ -245,7 +245,7 @@ export default function AdminCategoriesPage() {
                   </div>
 
                   <div>
-                    <p className="text-sm text-neutral-500">Estado</p>
+                    <p className="text-sm text-[var(--muted)]">Estado</p>
                     <p
                       className={`mt-1 font-medium ${
                         category.isActive
@@ -260,14 +260,14 @@ export default function AdminCategoriesPage() {
                   <div className="flex flex-wrap gap-2 md:justify-end">
                     <button
                       onClick={() => startEditing(category)}
-                      className="rounded-xl border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800"
+                      className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--card-soft)]"
                     >
                       Editar
                     </button>
 
                     <button
                       onClick={() => toggleCategory(category)}
-                      className="rounded-xl border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800"
+                      className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--card-soft)]"
                     >
                       {category.isActive ? "Desactivar" : "Activar"}
                     </button>

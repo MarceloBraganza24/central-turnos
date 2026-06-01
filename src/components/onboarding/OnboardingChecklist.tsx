@@ -118,14 +118,14 @@ export default function OnboardingChecklist() {
 
         <button
           onClick={dismiss}
-          className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
+          className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
         >
           Ocultar
         </button>
       </div>
 
       <div className="mt-6">
-        <div className="h-3 overflow-hidden rounded-full bg-neutral-800">
+        <div className="h-3 overflow-hidden rounded-full bg-[var(--card-soft)]">
           <div
             className="h-full rounded-full bg-brand transition-all"
             style={{
@@ -159,7 +159,7 @@ export default function OnboardingChecklist() {
                   className={`mt-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                     completed
                       ? "bg-green-500 text-black"
-                      : "bg-neutral-800 text-[var(--muted)]"
+                      : "bg-[var(--card-soft)] text-[var(--muted)]"
                   }`}
                 >
                   {completed ? "✓" : ""}

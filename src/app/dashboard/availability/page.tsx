@@ -144,13 +144,13 @@ export default function AvailabilityPage() {
           className="mt-8 grid gap-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 md:grid-cols-4"
         >
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">Día</label>
+            <label className="mb-2 block text-sm text-black">Día</label>
             <select
               value={form.dayOfWeek}
               onChange={(e) =>
                 setForm({ ...form, dayOfWeek: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             >
               {days.map((day) => (
                 <option key={day.value} value={day.value}>
@@ -161,7 +161,7 @@ export default function AvailabilityPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Desde
             </label>
             <input
@@ -170,26 +170,26 @@ export default function AvailabilityPage() {
               onChange={(e) =>
                 setForm({ ...form, startTime: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Hasta
             </label>
             <input
               type="time"
               value={form.endTime}
               onChange={(e) => setForm({ ...form, endTime: e.target.value })}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             />
           </div>
 
           <div className="flex items-end">
             <button
               disabled={saving}
-              className="w-full rounded-xl bg-white py-3 font-medium text-black disabled:opacity-60"
+              className="w-full rounded-xl py-3 font-medium bg-brand text-white  hover:bg-brand-hover disabled:opacity-60"
             >
               {saving ? "Guardando..." : "Agregar"}
             </button>
@@ -221,7 +221,7 @@ export default function AvailabilityPage() {
 
                   <button
                     onClick={() => handleDelete(item._id)}
-                    className="rounded-xl border border-red-900 px-4 py-2 text-sm text-red-400 transition hover:bg-red-950"
+                    className="rounded-xl border px-4 py-2 text-sm bg-brand text-white  hover:bg-brand-hover"
                   >
                     Eliminar
                   </button>

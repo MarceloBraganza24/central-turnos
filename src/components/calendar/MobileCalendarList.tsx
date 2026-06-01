@@ -65,17 +65,17 @@ export default function MobileCalendarList({
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-semibold">{dayNames[index]}</p>
-                <p className="text-sm text-neutral-500">{formattedDate}</p>
+                <p className="text-sm text-[var(--muted)]">{formattedDate}</p>
               </div>
 
-              <span className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-[var(--muted)]">
+              <span className="rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--muted)]">
                 {dayAppointments.length} turnos
               </span>
             </div>
 
             <div className="mt-4 space-y-3">
               {dayAppointments.length === 0 ? (
-                <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--background)] p-4 text-sm text-neutral-500">
+                <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--background)] p-4 text-sm text-[var(--muted)]">
                   Sin turnos
                 </p>
               ) : (
@@ -89,7 +89,7 @@ export default function MobileCalendarList({
                         <p className="text-xl font-bold">
                           {appointment.startTime}
                         </p>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-[var(--muted)]">
                           hasta {appointment.endTime}
                         </p>
                       </div>
@@ -124,7 +124,7 @@ export default function MobileCalendarList({
                           e.target.value as Appointment["status"]
                         )
                       }
-                      className="mt-4 min-h-12 w-full rounded-xl border border-neutral-700 bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] disabled:opacity-60"
+                      className="mt-4 min-h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] disabled:opacity-60"
                     >
                       <option value="pending">Pendiente</option>
                       <option value="confirmed">Confirmado</option>

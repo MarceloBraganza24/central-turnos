@@ -98,7 +98,7 @@ export default async function CityCategoriesPage({
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl bg-[var(--background)] p-5">
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-[var(--muted)]">
                   Profesionales
                 </p>
 
@@ -108,7 +108,7 @@ export default async function CityCategoriesPage({
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-5">
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-[var(--muted)]">
                   Categorías
                 </p>
 
@@ -118,7 +118,7 @@ export default async function CityCategoriesPage({
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-5">
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-[var(--muted)]">
                   Disponibles hoy
                 </p>
 
@@ -319,17 +319,17 @@ export default async function CityCategoriesPage({
       <section className="mx-auto max-w-7xl">
         <Link
           href="/turnos"
-          className="text-sm text-[var(--muted)] underline"
+          className="text-sm text-brand underline"
         >
           Cambiar ciudad
         </Link>
 
         <div className="premium-card premium-gradient mt-6 rounded-3xl p-8">
-          <p className="text-sm text-brand">
+          <p className="text-sm text-white">
             Central Turnos
           </p>
 
-          <h1 className="mt-4 text-5xl font-bold">
+          <h1 className="mt-4 text-5xl font-bold text-white">
             Turnos en {cityName}
           </h1>
 
@@ -341,7 +341,7 @@ export default async function CityCategoriesPage({
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl bg-[var(--background)] p-5">
-              <p className="text-sm text-neutral-500">
+              <p className="text-sm text-[var(--muted)]">
                 Profesionales
               </p>
 
@@ -351,7 +351,7 @@ export default async function CityCategoriesPage({
             </div>
 
             <div className="rounded-2xl bg-[var(--background)] p-5">
-              <p className="text-sm text-neutral-500">
+              <p className="text-sm text-[var(--muted)]">
                 Categorías
               </p>
 
@@ -361,7 +361,7 @@ export default async function CityCategoriesPage({
             </div>
 
             <div className="rounded-2xl bg-[var(--background)] p-5">
-              <p className="text-sm text-neutral-500">
+              <p className="text-sm text-[var(--muted)]">
                 Disponibles hoy
               </p>
 
@@ -383,9 +383,9 @@ export default async function CityCategoriesPage({
                 <Link
                   key={category._id}
                   href={`/turnos/${province}/${city}/${category.slug}`}
-                  className="premium-card premium-card-hover rounded-3xl p-6"
+                  className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
                 >
-                  <h3 className="text-xl font-semibold">
+                  <h3 className="text-xl font-semibold text-white">
                     {category.name}
                   </h3>
 
@@ -417,7 +417,7 @@ export default async function CityCategoriesPage({
                       href={`/profesionales/${professional._id}`}
                       className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
                     >
-                      <h3 className="text-xl font-semibold">
+                      <h3 className="text-xl font-semibold text-white">
                         {
                           professional.displayName
                         }

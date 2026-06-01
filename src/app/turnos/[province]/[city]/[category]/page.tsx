@@ -203,29 +203,29 @@ export default async function CityProfessionalsPage({
       <section className="mx-auto max-w-7xl">
         <Link
           href={`/turnos/${province}/${city}`}
-          className="text-sm text-[var(--muted)] underline"
+          className="text-sm text-brand underline"
         >
           Volver a categorías
         </Link>
 
-        <h1 className="mt-4 text-5xl font-bold">
+        <h1 className="mt-4 text-5xl font-bold ">
           {selectedCategory.name} en {cityName}
         </h1>
 
-        <p className="mt-4 text-[var(--muted)]">{provinceName}</p>
+        <p className="mt-4 text-black">{provinceName}</p>
 
-        <form className="premium-card mt-8 grid gap-3 rounded-3xl p-5 md:grid-cols-6">
+        <form className="premium-card premium-gradient mt-8 grid gap-3 rounded-3xl p-5 md:grid-cols-6">
           <input
             name="neighborhood"
             placeholder="Barrio"
             defaultValue={filters.neighborhood || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <select
             name="online"
             defaultValue={filters.online || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           >
             <option value="">Modalidad</option>
             <option value="true">Online</option>
@@ -235,14 +235,14 @@ export default async function CityProfessionalsPage({
             name="language"
             placeholder="Idioma"
             defaultValue={filters.language || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <input
             name="insurance"
             placeholder="Obra social"
             defaultValue={filters.insurance || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -250,27 +250,27 @@ export default async function CityProfessionalsPage({
             type="number"
             placeholder="Precio máx."
             defaultValue={filters.maxPrice || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <select
             name="availableToday"
             defaultValue={filters.availableToday || ""}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           >
             <option value="">Disponibilidad</option>
             <option value="true">Disponible hoy</option>
           </select>
 
-          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] md:col-span-6">
+          <button className="rounded-xl bg-brand px-5 py-3 font-medium text-white md:col-span-6">
             Aplicar filtros
           </button>
         </form>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {professionals.length === 0 ? (
-            <div className="premium-card rounded-3xl border-dashed p-10 text-center md:col-span-3">
-              <h2 className="text-xl font-bold">
+            <div className="premium-card premium-gradient rounded-3xl border-dashed p-10 text-center md:col-span-3">
+              <h2 className="text-xl font-bold text-white">
                 No encontramos profesionales
               </h2>
 
@@ -289,7 +289,7 @@ export default async function CityProfessionalsPage({
                   {professional.displayName.charAt(0)}
                 </div>
 
-                <h2 className="mt-5 text-xl font-semibold">
+                <h2 className="mt-5 text-xl font-semibold text-white">
                   {professional.displayName}
                 </h2>
 
@@ -298,7 +298,7 @@ export default async function CityProfessionalsPage({
                     "Profesional adherido a Central Turnos."}
                 </p>
 
-                <div className="mt-5 space-y-1 text-sm text-neutral-500">
+                <div className="mt-5 space-y-1 text-sm text-[var(--muted)]">
                   {professional.neighborhood && (
                     <p>{professional.neighborhood}</p>
                   )}
@@ -306,7 +306,7 @@ export default async function CityProfessionalsPage({
                   {professional.offersOnline && <p>Atiende online</p>}
 
                   {(professional.price ?? 0) > 0 && (
-                    <p>Desde ${professional.price}</p>
+                    <p className="text-white">Desde ${professional.price}</p>
                   )}
 
                   {(professional.ratingAverage ?? 0) > 0 && (

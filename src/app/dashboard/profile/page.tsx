@@ -137,7 +137,7 @@ export default function DashboardProfilePage() {
           className="mt-8 space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
         >
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Foto profesional
             </label>
 
@@ -155,7 +155,7 @@ export default function DashboardProfilePage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Nombre visible
             </label>
             <input
@@ -163,20 +163,20 @@ export default function DashboardProfilePage() {
               autoComplete="name"
               value={form.displayName}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Lic. Juan Pérez"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Categoría profesional
             </label>
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             >
               <option value="">Seleccionar categoría</option>
 
@@ -189,21 +189,21 @@ export default function DashboardProfilePage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Descripción / Bio
             </label>
             <textarea
               name="bio"
               value={form.bio}
               onChange={handleChange}
-              className="min-h-28 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="min-h-28 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Contá quién sos, qué hacés y cómo trabajás."
             />
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm text-neutral-300">
+              <label className="mb-2 block text-sm text-black">
                 Teléfono
               </label>
               <input
@@ -212,13 +212,13 @@ export default function DashboardProfilePage() {
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-                placeholder="Ej: 2926..."
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                placeholder="Ej: 5492926453622"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-neutral-300">
+              <label className="mb-2 block text-sm text-black">
                 Precio de consulta
               </label>
               <input
@@ -227,7 +227,7 @@ export default function DashboardProfilePage() {
                 type="number"
                 value={form.price}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: 12000"
               />
             </div>
@@ -235,47 +235,47 @@ export default function DashboardProfilePage() {
 
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm text-neutral-300">
+              <label className="mb-2 block text-sm text-black">
                 Ciudad
               </label>
               <input
                 name="city"
                 value={form.city}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: Coronel Suárez"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-neutral-300">
+              <label className="mb-2 block text-sm text-black">
                 Provincia
               </label>
               <input
                 name="province"
                 value={form.province}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: Buenos Aires"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Dirección
             </label>
             <input
               name="address"
               value={form.address}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Av. Alsina 123"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-neutral-300">
+            <label className="mb-2 block text-sm text-black">
               Duración del turno en minutos
             </label>
             <input
@@ -283,14 +283,14 @@ export default function DashboardProfilePage() {
               type="number"
               value={form.appointmentDurationMinutes}
               onChange={handleChange}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="30"
             />
           </div>
 
           <button
             disabled={saving}
-            className="w-full rounded-xl bg-white py-3 font-medium text-black disabled:opacity-60"
+            className="w-full rounded-xl bg-brand py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
           >
             {saving ? "Guardando..." : "Guardar perfil"}
           </button>

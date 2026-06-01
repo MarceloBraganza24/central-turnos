@@ -60,14 +60,14 @@ export default function ShareProfilePage() {
             </div>
 
             <div>
-              <p className="text-sm text-neutral-500">Link público</p>
-              <p className="mt-2 break-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-neutral-300">
+              <p className="text-sm text-black">Link público</p>
+              <p className="mt-2 break-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-black">
                 {data.publicUrl}
               </p>
 
               <button
                 onClick={copyLink}
-                className="mt-4 rounded-xl bg-white px-5 py-3 font-medium text-black"
+                className="mt-4 rounded-xl bg-brand px-5 py-3 font-medium text-white  hover:bg-brand-hover"
               >
                 Copiar link
               </button>
@@ -75,7 +75,7 @@ export default function ShareProfilePage() {
               <a
                 href={data.qr}
                 download="perfil-qr.png"
-                className="ml-3 inline-flex rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)]"
+                className="ml-3 inline-flex rounded-xl border bg-brand border-[var(--border)] text-white  hover:bg-brand-hover px-5 py-3 font-medium text-[var(--foreground)]"
               >
                 Descargar QR
               </a>

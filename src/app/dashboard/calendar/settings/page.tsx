@@ -207,7 +207,7 @@ export default function CalendarSettingsPage() {
             onSubmit={saveBuffer}
             className="premium-card premium-gradient rounded-3xl p-6"
           >
-            <h2 className="text-xl font-semibold">Buffer entre turnos</h2>
+            <h2 className="text-xl font-semibold text-white">Buffer entre turnos</h2>
 
             <p className="mt-2 text-sm text-[var(--muted)]">
               Tiempo extra entre un turno y el siguiente. Sirve para limpiar,
@@ -224,14 +224,14 @@ export default function CalendarSettingsPage() {
                 min={0}
                 value={bufferMinutes}
                 onChange={(e) => setBufferMinutes(e.target.value)}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: 15"
               />
             </div>
 
             <button
               disabled={savingBuffer}
-              className="mt-5 w-full rounded-xl bg-white py-3 font-medium text-black disabled:opacity-60"
+              className="mt-5 w-full rounded-xl bg-brand py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
             >
               {savingBuffer ? "Guardando..." : "Guardar buffer"}
             </button>
@@ -240,9 +240,9 @@ export default function CalendarSettingsPage() {
           <FadeIn delay={0.1}>
             <form
               onSubmit={createException}
-              className="premium-card rounded-3xl p-6"
+              className="premium-card premium-gradient rounded-3xl p-6"
             >
-              <h2 className="text-xl font-semibold">Nueva excepción</h2>
+              <h2 className="text-xl font-semibold text-white">Nueva excepción</h2>
 
               <p className="mt-2 text-sm text-[var(--muted)]">
                 Configurá un día especial, vacaciones, feriados o bloqueos
@@ -263,7 +263,7 @@ export default function CalendarSettingsPage() {
                         type: e.target.value as ExceptionType,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   >
                     <option value="vacation">Vacaciones / día libre</option>
                     <option value="holiday">Feriado</option>
@@ -271,7 +271,7 @@ export default function CalendarSettingsPage() {
                     <option value="manual_block">Bloqueo rápido</option>
                   </select>
 
-                  <p className="mt-2 text-xs text-neutral-500">
+                  <p className="mt-2 text-xs text-[var(--muted)]">
                     {typeDescriptions[form.type]}
                   </p>
                 </div>
@@ -290,7 +290,7 @@ export default function CalendarSettingsPage() {
                         date: e.target.value,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
@@ -310,7 +310,7 @@ export default function CalendarSettingsPage() {
                             startTime: e.target.value,
                           })
                         }
-                        className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                       />
                     </div>
 
@@ -328,7 +328,7 @@ export default function CalendarSettingsPage() {
                             endTime: e.target.value,
                           })
                         }
-                        className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                       />
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function CalendarSettingsPage() {
                         reason: e.target.value,
                       })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                     placeholder="Ej: vacaciones, feriado, trámite, capacitación..."
                   />
                 </div>
@@ -355,7 +355,7 @@ export default function CalendarSettingsPage() {
 
               <button
                 disabled={savingException}
-                className="mt-5 w-full rounded-xl bg-white py-3 font-medium text-black disabled:opacity-60"
+                className="mt-5 w-full rounded-xl bg-brand py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
               >
                 {savingException ? "Guardando..." : "Agregar configuración"}
               </button>
@@ -364,8 +364,8 @@ export default function CalendarSettingsPage() {
         </div>
 
         <FadeIn delay={0.1}>
-          <div className="premium-card rounded-3xl p-6">
-            <h2 className="text-xl font-semibold">Configuraciones cargadas</h2>
+          <div className="premium-card premium-gradient rounded-3xl p-6">
+            <h2 className="text-xl font-semibold text-white">Configuraciones cargadas</h2>
 
             <p className="mt-2 text-sm text-[var(--muted)]">
               Estas reglas modifican la disponibilidad real del calendario.
@@ -375,7 +375,7 @@ export default function CalendarSettingsPage() {
               {exceptions.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--background)] p-8 text-center">
                   <p className="font-medium">Sin excepciones cargadas</p>
-                  <p className="mt-2 text-sm text-neutral-500">
+                  <p className="mt-2 text-sm text-[var(--muted)]">
                     Cuando agregues vacaciones, feriados o bloqueos, van a
                     aparecer acá.
                   </p>
@@ -388,7 +388,7 @@ export default function CalendarSettingsPage() {
                   >
                     <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
                       <div>
-                        <span className="inline-flex rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-300">
+                        <span className="inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-xs text-neutral-300">
                           {typeLabels[item.type]}
                         </span>
 
@@ -404,7 +404,7 @@ export default function CalendarSettingsPage() {
                         )}
 
                         {item.reason && (
-                          <p className="mt-2 text-sm text-neutral-500">
+                          <p className="mt-2 text-sm text-[var(--muted)]">
                             {item.reason}
                           </p>
                         )}

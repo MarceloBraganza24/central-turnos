@@ -106,7 +106,7 @@ export default function ServicesPage() {
         onSubmit={createService}
         className="mt-8 premium-card premium-card-hover premium-gradient rounded-3xl p-6"
       >
-        <h2 className="text-xl font-semibold">Nuevo servicio</h2>
+        <h2 className="text-xl font-semibold text-white">Nuevo servicio</h2>
 
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <div>
@@ -117,7 +117,7 @@ export default function ServicesPage() {
             <input
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="Ej: Consulta inicial"
             />
           </div>
@@ -133,7 +133,7 @@ export default function ServicesPage() {
               onChange={(e) =>
                 setForm({ ...form, durationMinutes: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="30"
             />
           </div>
@@ -149,7 +149,7 @@ export default function ServicesPage() {
               onChange={(e) =>
                 setForm({ ...form, price: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="0"
             />
           </div>
@@ -165,7 +165,7 @@ export default function ServicesPage() {
               onChange={(e) =>
                 setForm({ ...form, depositAmount: e.target.value })
               }
-              className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               placeholder="0"
             />
           </div>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
             onChange={(e) =>
               setForm({ ...form, description: e.target.value })
             }
-            className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="min-h-24 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             placeholder="Descripción opcional del servicio"
           />
         </div>
@@ -199,7 +199,7 @@ export default function ServicesPage() {
 
         <button
           disabled={saving}
-          className="mt-5 rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] disabled:opacity-60"
+          className="mt-5 rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
         >
           {saving ? "Guardando..." : "Crear servicio"}
         </button>
@@ -221,20 +221,20 @@ export default function ServicesPage() {
               {service.isActive ? "Activo" : "Inactivo"}
             </p>
 
-            <h2 className="mt-4 text-xl font-bold">{service.name}</h2>
+            <h2 className="mt-4 text-xl font-bold text-white">{service.name}</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
               {service.description || "Sin descripción"}
             </p>
 
             <div className="mt-5 space-y-1 text-sm text-[var(--muted)]">
               <p>{service.durationMinutes} minutos</p>
-              <p>${service.price}</p>
+              <p className="text-white">${service.price}</p>
               {service.requiresDeposit && <p>Seña: ${service.depositAmount}</p>}
             </div>
 
             <button
               onClick={() => toggleService(service)}
-              className="mt-5 rounded-xl border border-neutral-700 px-4 py-2 text-sm"
+              className="mt-5 rounded-xl border border-black text-white hover:bg-brand-hover bg-brand  px-4 py-2 text-sm"
             >
               {service.isActive ? "Desactivar" : "Activar"}
             </button>

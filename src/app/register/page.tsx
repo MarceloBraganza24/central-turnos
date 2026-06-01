@@ -52,11 +52,11 @@ export default function RegisterPage() {
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-6 text-[var(--foreground)]">
       <form
         onSubmit={handleRegister}
-        className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
+        className="w-full max-w-md bg-brand rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6"
       >
-        <h1 className="text-2xl font-bold">Crear cuenta profesional</h1>
+        <h1 className="text-2xl font-bold text-white">Crear cuenta profesional</h1>
 
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm text-white">
           Creá tu cuenta y configurá tu perfil en minutos.
         </p>
 
@@ -65,7 +65,7 @@ export default function RegisterPage() {
             type="text"
             autoComplete="name"
             placeholder="Nombre completo"
-            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
@@ -74,7 +74,7 @@ export default function RegisterPage() {
             type="email"
             autoComplete="email"
             placeholder="Email"
-            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -84,7 +84,7 @@ export default function RegisterPage() {
             inputMode="tel"
             autoComplete="tel"
             placeholder="WhatsApp. Ej: 5492926..."
-            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -92,7 +92,7 @@ export default function RegisterPage() {
           <input
             type="password"
             placeholder="Contraseña"
-            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -102,9 +102,9 @@ export default function RegisterPage() {
           </button>
         </div>
 
-        <p className="mt-4 text-sm text-[var(--muted)]">
+        <p className="mt-4 text-sm text-white">
           ¿Ya tenés cuenta?{" "}
-          <Link href="/login" className="text-[var(--foreground)] underline">
+          <Link href="/login" className="text-white underline">
             Iniciá sesión
           </Link>
         </p>

@@ -115,7 +115,7 @@ export default function AdminAppointmentsPage() {
               onChange={(e) =>
                 setStatus(e.target.value)
               }
-              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             >
               <option value="">
                 Todos los estados
@@ -143,7 +143,7 @@ export default function AdminAppointmentsPage() {
               onChange={(e) =>
                 setPaymentStatus(e.target.value)
               }
-              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+              className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             >
               <option value="">
                 Todos los pagos
@@ -185,7 +185,7 @@ export default function AdminAppointmentsPage() {
                   <div className="premium-card premium-card-hover premium-gradient rounded-3xl p-6">
                     <div className="grid gap-6 md:grid-cols-[1fr_1fr_1fr_1fr]">
                       <div>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-[var(--muted)]">
                           Fecha
                         </p>
 
@@ -205,7 +205,7 @@ export default function AdminAppointmentsPage() {
                       </div>
 
                       <div>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-[var(--muted)]">
                           Profesional
                         </p>
 
@@ -227,7 +227,7 @@ export default function AdminAppointmentsPage() {
                       </div>
 
                       <div>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-[var(--muted)]">
                           Cliente
                         </p>
 

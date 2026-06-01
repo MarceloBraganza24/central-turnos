@@ -80,7 +80,7 @@ export default async function TenantPublicPage({ params }: Props) {
                   className="h-20 w-20 rounded-3xl object-cover"
                 />
               )} : (
-                <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-black/20 text-3xl font-bold">
+                <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-[var(--card)]/20 text-3xl font-bold">
                   {tenant.name.charAt(0)}
                 </div>
               )
@@ -137,14 +137,14 @@ export default async function TenantPublicPage({ params }: Props) {
 
             <aside className="space-y-4">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-                <p className="text-sm text-neutral-500">Profesional</p>
+                <p className="text-sm text-[var(--muted)]">Profesional</p>
                 <p className="mt-1 text-xl font-semibold">
                   {professional.displayName}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-                <p className="text-sm text-neutral-500">Valor</p>
+                <p className="text-sm text-[var(--muted)]">Valor</p>
                 <p className="mt-1 text-3xl font-bold">
                   {professional.price > 0 ? `$${professional.price}` : "Consultar"}
                 </p>
@@ -152,7 +152,7 @@ export default async function TenantPublicPage({ params }: Props) {
 
               {tenant.requiresDeposit && (
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm text-neutral-500">Seña requerida</p>
+                  <p className="text-sm text-[var(--muted)]">Seña requerida</p>
                   <p className="mt-1 text-xl font-semibold">
                     ${tenant.defaultDepositAmount}
                   </p>

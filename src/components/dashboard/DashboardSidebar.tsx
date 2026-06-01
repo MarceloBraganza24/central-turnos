@@ -64,7 +64,7 @@ export default function DashboardSidebar() {
   return (
     <aside className="sticky top-0 h-screen w-72 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)]">
       <div className="border-b border-[var(--border)] p-6">
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">Turnero Pro</h1>
+        <h1 className="text-2xl font-bold text-[var(--foreground)]">Central Turnos</h1>
 
         <p className="mt-1 text-sm text-[var(--muted)]">
           Panel profesional
@@ -81,8 +81,8 @@ export default function DashboardSidebar() {
               href={link.href}
               className={`block rounded-2xl px-4 py-3 text-sm font-medium transition ${
                 active
-                  ? "bg-brand text-[var(--foreground)] hover:bg-brand-hover"
-                  : "text-neutral-300 hover:bg-[var(--card)] hover:text-[var(--foreground)]"
+                  ? "bg-brand text-white hover:bg-brand-hover"
+                  : "text-black hover:bg-[var(--card)] hover:text-[var(--foreground)]"
               }`}
             >
               {link.label}

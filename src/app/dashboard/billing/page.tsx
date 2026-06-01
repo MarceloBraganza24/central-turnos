@@ -139,7 +139,7 @@ export default function BillingPage() {
               {planKey === "free" ? (
                 <button
                   disabled
-                  className="mt-8 w-full rounded-xl border border-neutral-700 px-5 py-3 font-medium opacity-60"
+                  className="mt-8 w-full rounded-xl border border-[var(--border)] px-5 py-3 font-medium opacity-60"
                 >
                   Plan gratuito
                 </button>
@@ -166,7 +166,7 @@ export default function BillingPage() {
       </div>
 
       <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-        <p className="text-sm text-neutral-500">Estado de suscripción</p>
+        <p className="text-sm text-[var(--muted)]">Estado de suscripción</p>
         <p className="mt-1 font-medium">
           {billing.subscriptionStatus || "none"}
         </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -29,7 +30,14 @@ export default function ReportProblemPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <div className="mx-auto max-w-2xl">
-        <p className="text-sm text-brand">
+        <Link
+          href="/turnos"
+          className="text-sm text-[var(--muted)] underline text-brand"
+        >
+          Buscar profesionales
+        </Link>
+
+        <p className="text-sm text-brand pt-4">
           Soporte
         </p>
 
@@ -50,13 +58,13 @@ export default function ReportProblemPage() {
             onChange={(e) => setMessage(e.target.value)}
             rows={8}
             placeholder="Ej: no puedo cargar horarios, error al reservar..."
-            className="w-full rounded-2xl border border-neutral-700 bg-[var(--background)] p-4"
+            className="w-full rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 rounded-xl bg-brand px-6 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60"
+            className="mt-6 rounded-xl bg-brand px-6 py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
           >
             {loading
               ? "Enviando..."

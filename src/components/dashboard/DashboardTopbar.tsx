@@ -12,7 +12,7 @@ export default async function DashboardTopbar() {
         <DashboardMobileNav />
 
         <div>
-          <p className="text-sm text-neutral-500">Central Turnos</p>
+          <p className="text-sm text-[var(--muted)]">Central Turnos</p>
           <p className="text-sm font-medium text-[var(--foreground)]">
             {session?.user?.email || "Usuario"}
           </p>

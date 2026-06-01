@@ -145,12 +145,12 @@ export default function AdminProfessionalsPage() {
 
           <div className="flex gap-3">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-3">
-              <p className="text-xs text-neutral-500">Activos</p>
+              <p className="text-xs text-[var(--muted)]">Activos</p>
               <p className="text-xl font-bold">{activeCount}</p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-3">
-              <p className="text-xs text-neutral-500">Pendientes</p>
+              <p className="text-xs text-[var(--muted)]">Pendientes</p>
               <p className="text-xl font-bold">{pendingCount}</p>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function AdminProfessionalsPage() {
                   className="grid gap-5 p-5 md:grid-cols-[1.4fr_1fr_0.9fr_1fr]"
                 >
                   <div>
-                    <p className="text-sm text-neutral-500">Profesional</p>
+                    <p className="text-sm text-[var(--muted)]">Profesional</p>
 
                     <p className="mt-1 font-medium">
                       {professional.displayName}
@@ -180,7 +180,7 @@ export default function AdminProfessionalsPage() {
                     </p>
 
                     {professional.phone && (
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-[var(--muted)]">
                         {professional.phone}
                       </p>
                     )}
@@ -193,7 +193,7 @@ export default function AdminProfessionalsPage() {
                   </div>
 
                   <div>
-                    <p className="text-sm text-neutral-500">Categoría</p>
+                    <p className="text-sm text-[var(--muted)]">Categoría</p>
 
                     <p className="mt-1 font-medium">
                       {professional.category?.name || "Sin categoría"}
@@ -206,14 +206,14 @@ export default function AdminProfessionalsPage() {
                     )}
 
                     {professional.price ? (
-                      <p className="mt-1 text-sm text-neutral-500">
+                      <p className="mt-1 text-sm text-[var(--muted)]">
                         ${professional.price}
                       </p>
                     ) : null}
                   </div>
 
                   <div>
-                    <p className="text-sm text-neutral-500">Plan</p>
+                    <p className="text-sm text-[var(--muted)]">Plan</p>
 
                     <select
                       value={professional.user?.plan || "free"}
@@ -228,7 +228,7 @@ export default function AdminProfessionalsPage() {
                           e.target.value as Plan
                         )
                       }
-                      className="mt-2 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
+                      className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
                     >
                       <option value="free">{planLabels.free}</option>
                       <option value="pro">{planLabels.pro}</option>

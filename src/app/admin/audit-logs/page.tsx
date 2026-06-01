@@ -80,7 +80,7 @@ export default function AdminAuditLogsPage() {
           <select
             value={severity}
             onChange={(e) => setSeverity(e.target.value)}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           >
             <option value="">Todas las severidades</option>
             <option value="info">Info</option>
@@ -91,7 +91,7 @@ export default function AdminAuditLogsPage() {
           <input
             value={action}
             onChange={(e) => setAction(e.target.value)}
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
             placeholder="Filtrar por acción. Ej: appointment.created"
           />
         </div>
@@ -116,35 +116,35 @@ export default function AdminAuditLogsPage() {
 
                     <p className="mt-3 font-medium">{log.action}</p>
 
-                    <p className="mt-1 text-sm text-neutral-500">
+                    <p className="mt-1 text-sm text-[var(--muted)]">
                       {new Date(log.createdAt).toLocaleString("es-AR")}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-sm text-neutral-500">Mensaje</p>
+                    <p className="text-sm text-[var(--muted)]">Mensaje</p>
                     <p className="mt-1 text-sm text-neutral-300">
                       {log.message || "Sin mensaje"}
                     </p>
 
-                    <p className="mt-3 text-xs text-neutral-500">
+                    <p className="mt-3 text-xs text-[var(--muted)]">
                       {log.entityType} · {log.entityId}
                     </p>
 
                     {log.tenant && (
-                      <p className="mt-1 text-xs text-neutral-500">
+                      <p className="mt-1 text-xs text-[var(--muted)]">
                         Tenant: {log.tenant.name} / {log.tenant.slug}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <p className="text-sm text-neutral-500">Actor</p>
+                    <p className="text-sm text-[var(--muted)]">Actor</p>
                     <p className="mt-1 text-sm text-neutral-300">
                       {log.actor?.email || "Sistema / usuario público"}
                     </p>
 
-                    <p className="mt-3 text-xs text-neutral-500">
+                    <p className="mt-3 text-xs text-[var(--muted)]">
                       IP: {log.ipAddress || "N/A"}
                     </p>
 

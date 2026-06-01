@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const items = [
   {
     title: "¿Cómo cargo horarios?",
@@ -28,7 +30,13 @@ export default function HelpPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-6 py-20 text-[var(--foreground)]">
       <div className="mx-auto max-w-4xl">
-        <p className="text-sm text-brand">
+        <Link
+          href="/turnos"
+          className="text-sm text-[var(--muted)] underline text-brand"
+        >
+          Buscar profesionales
+        </Link>
+        <p className="text-sm text-brand pt-4">
           Centro de ayuda
         </p>
 
@@ -42,7 +50,7 @@ export default function HelpPage() {
               key={item.title}
               className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
             >
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-semibold text-white">
                 {item.title}
               </h2>
 

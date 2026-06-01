@@ -93,7 +93,7 @@ export default function ReviewPage() {
                       className={`flex h-12 w-12 items-center justify-center rounded-xl border text-xl ${
                         rating >= value
                           ? "border-brand bg-brand text-[var(--foreground)]"
-                          : "border-neutral-700 bg-[var(--background)] text-neutral-500"
+                          : "border-[var(--border)] bg-[var(--background)] text-[var(--muted)]"
                       }`}
                     >
                       ★
@@ -111,11 +111,11 @@ export default function ReviewPage() {
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   maxLength={500}
-                  className="min-h-32 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="min-h-32 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   placeholder="Contá brevemente cómo fue tu experiencia..."
                 />
 
-                <p className="mt-2 text-xs text-neutral-500">
+                <p className="mt-2 text-xs text-[var(--muted)]">
                   {comment.length}/500
                 </p>
               </div>

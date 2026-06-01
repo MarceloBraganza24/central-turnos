@@ -32,7 +32,7 @@ export default async function CategoriesPage() {
             <Link
               key={category._id.toString()}
               href={`/categorias/${category.slug}`}
-              className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-neutral-800"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 transition hover:bg-[var(--card-soft)]"
             >
               <h2 className="text-lg font-semibold">{category.name}</h2>
 

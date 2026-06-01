@@ -72,49 +72,49 @@ export default function DashboardClientsPage() {
           historial.
         </p>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--border)]">
           {clients.length === 0 ? (
             <p className="p-6 text-[var(--muted)]">
               Todavía no tenés clientes registrados.
             </p>
           ) : (
-            <div className="divide-y divide-neutral-800">
+            <div className="divide-y divide-neutral-800 flex flex-col gap-2">
               {clients.map((client) => {
                 const isOpen = openClientId === client._id;
 
                 return (
-                  <div key={client._id} className="p-5">
+                  <div key={client._id} className="p-5 premium-gradient rounded-2xl">
                     <div className="grid gap-4 md:grid-cols-[1.4fr_1fr_1fr_0.7fr]">
                       <div>
-                        <p className="text-sm text-neutral-500">Cliente</p>
-                        <p className="mt-1 font-medium">{client.fullName}</p>
-                        <p className="text-sm text-[var(--muted)]">
+                        <p className="text-sm text-white">Cliente</p>
+                        <p className="mt-1 font-medium text-white">{client.fullName}</p>
+                        <p className="text-sm text-white">
                           {client.phone}
                         </p>
                         {client.email && (
-                          <p className="text-sm text-neutral-500">
+                          <p className="text-sm text-white">
                             {client.email}
                           </p>
                         )}
                       </div>
 
                       <div>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-white">
                           Total de turnos
                         </p>
-                        <p className="mt-1 font-medium">
+                        <p className="mt-1 font-medium text-white">
                           {client.totalAppointments}
                         </p>
                       </div>
 
                       <div>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-white">
                           Último turno
                         </p>
-                        <p className="mt-1 font-medium">
+                        <p className="mt-1 font-medium text-white">
                           {client.lastAppointmentDate}
                         </p>
-                        <p className="text-sm text-[var(--muted)]">
+                        <p className="text-sm text-white">
                           {client.lastAppointmentTime}
                         </p>
                       </div>
@@ -124,7 +124,7 @@ export default function DashboardClientsPage() {
                           onClick={() =>
                             setOpenClientId(isOpen ? null : client._id)
                           }
-                          className="rounded-xl border border-neutral-700 px-4 py-2 text-sm transition hover:bg-neutral-800"
+                          className="rounded-xl border border-[var(--border)] text-white px-4 py-2 text-sm transition hover:bg-[var(--card-soft)] hover:text-black"
                         >
                           {isOpen ? "Ocultar" : "Ver historial"}
                         </button>
@@ -133,7 +133,7 @@ export default function DashboardClientsPage() {
 
                     {isOpen && (
                       <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
-                        <div className="border-b border-[var(--border)] p-4">
+                        <div className="border-b border-[var(--border)] p-4 ">
                           <h2 className="font-semibold">
                             Historial de turnos
                           </h2>
@@ -146,20 +146,20 @@ export default function DashboardClientsPage() {
                               className="grid gap-3 p-4 md:grid-cols-[1fr_1fr_1fr]"
                             >
                               <div>
-                                <p className="text-sm text-neutral-500">
+                                <p className="text-sm text-black">
                                   Fecha
                                 </p>
                                 <p className="font-medium">
                                   {appointment.appointmentDate}
                                 </p>
-                                <p className="text-sm text-[var(--muted)]">
+                                <p className="text-sm text-black">
                                   {appointment.startTime} a{" "}
                                   {appointment.endTime}
                                 </p>
                               </div>
 
                               <div>
-                                <p className="text-sm text-neutral-500">
+                                <p className="text-sm text-black">
                                   Estado
                                 </p>
                                 <p className="font-medium">
@@ -168,10 +168,10 @@ export default function DashboardClientsPage() {
                               </div>
 
                               <div>
-                                <p className="text-sm text-neutral-500">
+                                <p className="text-sm text-black">
                                   Notas
                                 </p>
-                                <p className="text-sm text-[var(--muted)]">
+                                <p className="text-sm text-black">
                                   {appointment.notes || "Sin notas"}
                                 </p>
                               </div>

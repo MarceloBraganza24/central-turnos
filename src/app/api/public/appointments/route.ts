@@ -3,8 +3,6 @@ import { connectDB } from "@/lib/mongodb";
 import { Professional } from "@/models/Professional";
 import { Client } from "@/models/Client";
 import { Appointment } from "@/models/Appointment";
-import { User } from "@/models/User";
-import { PLAN_LIMITS, PlanName } from "@/lib/plans";
 import { sendWhatsAppText } from "@/lib/whatsapp";
 import {
   isPastDate,
@@ -18,6 +16,8 @@ import { isTenantBillingBlocked } from "@/lib/billing-guard";
 import { Service } from "@/models/Service";
 import { reservationRateLimit, getIp } from "@/lib/rate-limit";
 import crypto from "crypto";
+import { PLAN_LIMITS, type PlanName } from "@/lib/plans";
+import "@/models/User";
 
 export const runtime = "nodejs";
 
@@ -27,17 +27,6 @@ function addMinutes(time: string, minutes: number) {
   date.setHours(hours, mins + minutes, 0, 0);
 
   return date.toTimeString().slice(0, 5);
-}
-
-function getMonthRange(date: string) {
-  const current = new Date(date + "T00:00:00");
-  const year = current.getFullYear();
-  const month = current.getMonth();
-
-  const start = new Date(year, month, 1).toISOString().split("T")[0];
-  const end = new Date(year, month + 1, 0).toISOString().split("T")[0];
-
-  return { start, end };
 }
 
 export async function POST(request: Request) {
@@ -101,7 +90,7 @@ export async function POST(request: Request) {
     const professional = await Professional.findOne({
       _id: professionalId,
       isActive: true,
-    }).populate("user");
+    });
 
     if (!professional) {
       return NextResponse.json(
@@ -150,20 +139,43 @@ export async function POST(request: Request) {
       );
     }
 
-    const professionalUser = await User.findById(professional.user);
-    const plan = (professionalUser?.plan || "free") as PlanName;
+    const plan: PlanName =
+      tenant.plan === "pro" || tenant.plan === "premium"
+        ? tenant.plan
+        : "free";
+
     const limits = PLAN_LIMITS[plan];
 
-    const { start, end } = getMonthRange(appointmentDate);
+    const now = new Date();
 
-    const monthlyAppointments = await Appointment.countDocuments({
-      tenant: tenant._id,
-      professional: professional._id,
-      appointmentDate: { $gte: start, $lte: end },
-      status: { $ne: "cancelled" },
-    });
+    const startOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
 
-    if (monthlyAppointments >= limits.monthlyAppointments) {
+    const endOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      0,
+      23,
+      59,
+      59
+    );
+
+    const monthlyAppointments =
+      await Appointment.countDocuments({
+        tenant: tenant._id,
+        createdAt: {
+          $gte: startOfMonth,
+          $lte: endOfMonth,
+        },
+      });
+
+    if (
+      limits.monthlyAppointments !== -1 &&
+      monthlyAppointments >= limits.monthlyAppointments
+    ) {
       return NextResponse.json(
         {
           message:
@@ -216,8 +228,9 @@ export async function POST(request: Request) {
       startTime,
       endTime,
       notes,
-      status: shouldPayDeposit ? "pending" : "confirmed",
+      status: "pending",
       paymentStatus: shouldPayDeposit ? "pending" : "unpaid",
+      source: "public",
       service: selectedService?._id || null,
       serviceName: selectedService?.name || "",
       servicePrice: selectedService?.price || 0,
@@ -255,7 +268,7 @@ export async function POST(request: Request) {
 Profesional: ${professional.displayName}
 Fecha: ${appointmentDate}
 Horario: ${startTime} a ${endTime}
-Estado: ${shouldPayDeposit ? "pendiente de pago" : "confirmado"}
+Estado: pendiente de confirmación
 
 Detalle:
 ${successUrl}
@@ -308,7 +321,6 @@ ${cancelUrl}`;
 
     await appointment.save();
     
-
     return NextResponse.json(
       {
         message: "Turno reservado correctamente",
@@ -318,9 +330,13 @@ ${cancelUrl}`;
       },
       { status: 201 }
     );
-  } catch {
+  } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
-      { message: "Error al reservar turno" },
+      {
+        message: "Error al reservar turno",
+      },
       { status: 500 }
     );
   }

@@ -141,7 +141,7 @@ export default function TeamPage() {
           value={form.fullName}
           autoComplete="name"
           onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           placeholder="Nombre"
         />
 
@@ -150,7 +150,7 @@ export default function TeamPage() {
           value={form.email}
           autoComplete="email"
           onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           placeholder="Email"
         />
 
@@ -158,7 +158,7 @@ export default function TeamPage() {
           type="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           placeholder="Contraseña inicial"
         />
 
@@ -167,7 +167,7 @@ export default function TeamPage() {
           onChange={(e) =>
             setForm({ ...form, role: e.target.value as TenantRole })
           }
-          className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
         >
           {Object.entries(roleLabels).map(([value, label]) => (
             <option key={value} value={value}>
@@ -178,7 +178,7 @@ export default function TeamPage() {
 
         <button
           disabled={saving}
-          className="rounded-xl bg-white px-5 py-3 font-medium text-black disabled:opacity-60"
+          className="rounded-xl bg-brand hover:bg-brand-hover px-5 py-3 font-medium text-white disabled:opacity-60"
         >
           {saving ? "Guardando..." : "Agregar"}
         </button>
@@ -192,17 +192,17 @@ export default function TeamPage() {
             {members.map((member) => (
               <div
                 key={member._id}
-                className="grid gap-4 p-5 md:grid-cols-[1.4fr_1fr_1fr]"
+                className="grid gap-4 p-5 md:grid-cols-[1.4fr_1fr_1fr] premium-gradient"
               >
                 <div>
-                  <p className="font-medium">{member.user.fullName}</p>
-                  <p className="text-sm text-[var(--muted)]">
+                  <p className="font-medium text-white">{member.user.fullName}</p>
+                  <p className="text-sm text-white">
                     {member.user.email}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-neutral-500">Rol</p>
+                  <p className="text-sm text-white">Rol</p>
                   <select
                     value={member.role}
                     onChange={(e) =>
@@ -210,7 +210,7 @@ export default function TeamPage() {
                         role: e.target.value,
                       })
                     }
-                    className="mt-2 rounded-xl border border-neutral-700 bg-[var(--background)] px-3 py-2 text-sm"
+                    className="mt-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm"
                   >
                     {Object.entries(roleLabels).map(([value, label]) => (
                       <option key={value} value={value}>

@@ -9,7 +9,7 @@ export default function WhatsAppSection() {
             Automatización por WhatsApp
           </p>
 
-          <h2 className="mt-4 text-4xl font-bold md:text-5xl">
+          <h2 className=" mt-4 text-4xl font-bold md:text-5xl">
             Confirmaciones y recordatorios automáticos.
           </h2>
 
@@ -20,8 +20,8 @@ export default function WhatsAppSection() {
           </p>
 
           <div className="mt-10 space-y-4">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-              <h3 className="font-semibold">
+            <div className="premium-card premium-card-hover premium-gradient rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
+              <h3 className="font-semibold text-white!">
                 Confirmaciones automáticas
               </h3>
 
@@ -31,8 +31,8 @@ export default function WhatsAppSection() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-              <h3 className="font-semibold">
+            <div className="premium-card premium-card-hover premium-gradient rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
+              <h3 className="font-semibold text-white!">
                 Recordatorios inteligentes
               </h3>
 
@@ -42,8 +42,8 @@ export default function WhatsAppSection() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-              <h3 className="font-semibold">
+            <div className="premium-card premium-card-hover premium-gradient rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
+              <h3 className="font-semibold text-white!">
                 Links directos de reserva
               </h3>
 
@@ -58,9 +58,9 @@ export default function WhatsAppSection() {
         <div className="relative mx-auto max-w-85">
           <div className="absolute inset-0 bg-brand/20 blur-3xl" />
 
-          <div className="relative overflow-hidden rounded-[42px] border border-[var(--border)] bg-black shadow-2xl">
+          <div className="relative overflow-hidden rounded-[42px] border border-[var(--border)] bg-[var(--card)] shadow-2xl">
             <Image
-              src="/screenshots/whatsapp-confirmation.png"
+              src="/screenshots/w-c.webp"
               alt="WhatsApp Central Turnos"
               width={340}
               height={680}

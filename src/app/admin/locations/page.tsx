@@ -96,7 +96,7 @@ export default function AdminLocationsPage() {
               setForm({ ...form, province: e.target.value })
             }
             placeholder="Provincia"
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -105,7 +105,7 @@ export default function AdminLocationsPage() {
               setForm({ ...form, city: e.target.value })
             }
             placeholder="Ciudad"
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <input
@@ -114,7 +114,7 @@ export default function AdminLocationsPage() {
               setForm({ ...form, country: e.target.value })
             }
             placeholder="País"
-            className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
           />
 
           <button className="rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover">
@@ -148,7 +148,7 @@ export default function AdminLocationsPage() {
 
               <button
                 onClick={() => toggleLocation(location)}
-                className="mt-5 rounded-xl border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
+                className="mt-5 rounded-xl border border-[var(--border)] px-4 py-2 text-sm text-neutral-300 hover:bg-[var(--card)]"
               >
                 {location.isActive ? "Desactivar" : "Activar"}
               </button>

@@ -152,12 +152,12 @@ export default function TenantSettingsPage() {
       >
         <div className="space-y-6">
           <FadeIn delay={0.1}>
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-semibold">Identidad pública</h2>
+            <div className="premium-card premium-gradient rounded-3xl p-6">
+              <h2 className="text-xl font-semibold text-white">Identidad pública</h2>
 
               <div className="mt-5 space-y-4">
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Nombre del espacio
                   </label>
                   <input
@@ -165,13 +165,13 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, name: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                     placeholder="Ej: Nutrición Juan Pérez"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Link público
                   </label>
                   <input
@@ -179,16 +179,16 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, slug: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                     placeholder="dr-juan-perez"
                   />
-                  <p className="mt-2 text-xs text-neutral-500">
+                  <p className="mt-2 text-xs text-white">
                     Tu link será: /p/{form.slug}
                   </p>
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Subdominio
                   </label>
                   <input
@@ -196,16 +196,16 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, subdomain: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                     placeholder="drjuan"
                   />
-                  <p className="mt-2 text-xs text-neutral-500">
+                  <p className="mt-2 text-xs text-white">
                     Futuro: {form.subdomain || "nombre"}.tudominio.com
                   </p>
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Dominio propio opcional
                   </label>
                   <input
@@ -213,7 +213,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, customDomain: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                     placeholder="turnos.drjuanperez.com"
                   />
                 </div>
@@ -223,12 +223,12 @@ export default function TenantSettingsPage() {
           
 
           <FadeIn delay={0.1}>
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-semibold">Branding</h2>
+            <div className="premium-card premium-gradient  rounded-3xl p-6">
+              <h2 className="text-xl font-semibold text-white">Branding</h2>
 
               <div className="mt-5 space-y-4">
                 <div>
-                  <label className="text-sm text-[var(--muted)]">
+                  <label className="text-sm text-white">
                     Logo / imagen del espacio
                   </label>
 
@@ -249,7 +249,7 @@ export default function TenantSettingsPage() {
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-sm text-neutral-300">
+                    <label className="mb-2 block text-sm text-white">
                       Color principal
                     </label>
                     <input
@@ -258,12 +258,12 @@ export default function TenantSettingsPage() {
                       onChange={(e) =>
                         setForm({ ...form, primaryColor: e.target.value })
                       }
-                      className="h-12 w-full rounded-xl border border-neutral-700 bg-[var(--background)] p-2"
+                      className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] p-2"
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm text-neutral-300">
+                    <label className="mb-2 block text-sm text-white">
                       Color secundario
                     </label>
                     <input
@@ -272,7 +272,7 @@ export default function TenantSettingsPage() {
                       onChange={(e) =>
                         setForm({ ...form, accentColor: e.target.value })
                       }
-                      className="h-12 w-full rounded-xl border border-neutral-700 bg-[var(--background)] p-2"
+                      className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] p-2"
                     />
                   </div>
                 </div>
@@ -281,12 +281,12 @@ export default function TenantSettingsPage() {
           </FadeIn>
           
           <FadeIn delay={0.1}>
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-semibold">Reglas de reserva</h2>
+            <div className="premium-card premium-gradient  rounded-3xl p-6">
+              <h2 className="text-xl font-semibold text-white">Reglas de reserva</h2>
 
               <div className="mt-5 space-y-4">
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Mensaje de bienvenida
                   </label>
                   <textarea
@@ -295,12 +295,12 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, welcomeMessage: e.target.value })
                     }
-                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="min-h-24 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Política de cancelación
                   </label>
                   <textarea
@@ -309,11 +309,11 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, cancellationPolicy: e.target.value })
                     }
-                    className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="min-h-24 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   />
                 </div>
 
-                <label className="flex items-center gap-3 text-sm text-neutral-300">
+                <label className="flex items-center gap-3 text-sm text-white">
                   <input
                     type="checkbox"
                     checked={form.requiresDeposit}
@@ -325,7 +325,7 @@ export default function TenantSettingsPage() {
                 </label>
 
                 <div>
-                  <label className="mb-2 block text-sm text-neutral-300">
+                  <label className="mb-2 block text-sm text-white">
                     Monto de seña por defecto
                   </label>
                   <input
@@ -334,7 +334,7 @@ export default function TenantSettingsPage() {
                     onChange={(e) =>
                       setForm({ ...form, defaultDepositAmount: e.target.value })
                     }
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   />
                 </div>
               </div>
@@ -343,74 +343,130 @@ export default function TenantSettingsPage() {
         </div>
 
         <FadeIn delay={0.1}>
-          <div className="premium-card rounded-3xl p-6">
-            <h2 className="text-xl font-semibold">Ubicación y filtros</h2>
+          <div className="premium-card premium-gradient rounded-3xl p-6">
+            <h2 className="text-xl font-semibold text-white">
+              Ubicación y filtros
+            </h2>
 
             <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <input
-                value={form.province}
-                onChange={(e) => setForm({ ...form, province: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-                placeholder="Provincia. Ej: Buenos Aires"
-              />
+              <div>
+                <label className="mb-2 block text-sm font-medium text-white">
+                  Provincia
+                </label>
+
+                <input
+                  value={form.province}
+                  onChange={(e) =>
+                    setForm({ ...form, province: e.target.value })
+                  }
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                  placeholder="Ej: Buenos Aires"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-white">
+                  Ciudad
+                </label>
+
+                <input
+                  value={form.city}
+                  onChange={(e) =>
+                    setForm({ ...form, city: e.target.value })
+                  }
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                  placeholder="Ej: Coronel Suárez"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-white">
+                  Barrio / Zona
+                </label>
+
+                <input
+                  value={form.neighborhood}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      neighborhood: e.target.value,
+                    })
+                  }
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                  placeholder="Opcional"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-white">
+                  País
+                </label>
+
+                <input
+                  value={form.country}
+                  onChange={(e) =>
+                    setForm({ ...form, country: e.target.value })
+                  }
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                  placeholder="Argentina"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label className="mb-2 block text-sm font-medium text-white">
+                Idiomas de atención
+              </label>
 
               <input
-                value={form.city}
-                onChange={(e) => setForm({ ...form, city: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-                placeholder="Ciudad. Ej: Coronel Suárez"
-              />
-
-              <input
-                value={form.neighborhood}
-                onChange={(e) => setForm({ ...form, neighborhood: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-                placeholder="Barrio / zona opcional"
-              />
-
-              <input
-                value={form.country}
-                onChange={(e) => setForm({ ...form, country: e.target.value })}
-                className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-                placeholder="País"
+                value={form.languages.join(", ")}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    languages: e.target.value
+                      .split(",")
+                      .map((item) => item.trim()),
+                  })
+                }
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                placeholder="Español, Inglés, Portugués"
               />
             </div>
 
-            <input
-              value={form.languages.join(", ")}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  languages: e.target.value.split(",").map((item) => item.trim()),
-                })
-              }
-              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-              placeholder="Idiomas. Ej: Español, Inglés"
-            />
+            <div className="mt-4">
+              <label className="mb-2 block text-sm font-medium text-white">
+                Obras sociales aceptadas
+              </label>
 
-            <input
-              value={insuranceProvidersInput}
-              onChange={(e) => setInsuranceProvidersInput(e.target.value)}
-              className="rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
-              placeholder="Ej: OSDE 210, Swiss Medical, IOMA, PAMI"
-            />
+              <input
+                value={insuranceProvidersInput}
+                onChange={(e) =>
+                  setInsuranceProvidersInput(e.target.value)
+                }
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
+                placeholder="OSDE 210, Swiss Medical, IOMA, PAMI"
+              />
+            </div>
 
-            <label className="mt-5 flex items-center gap-3 text-sm text-neutral-300">
+            <label className="mt-5 flex items-center gap-3 text-sm text-white">
               <input
                 type="checkbox"
                 checked={form.offersOnline}
                 onChange={(e) =>
-                  setForm({ ...form, offersOnline: e.target.checked })
+                  setForm({
+                    ...form,
+                    offersOnline: e.target.checked,
+                  })
                 }
               />
               También atiendo online
             </label>
           </div>
-        </FadeIn>            
+        </FadeIn>          
 
         <aside className="h-fit space-y-4">
           <div className="premium-card premium-gradient rounded-3xl p-6">
-            <h2 className="text-xl font-semibold">Vista previa</h2>
+            <h2 className="text-xl font-semibold text-white">Vista previa</h2>
 
             <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
               {form.logoUrl ? (
@@ -438,7 +494,7 @@ export default function TenantSettingsPage() {
                 {form.welcomeMessage || "Mensaje de bienvenida"}
               </p>
 
-              <div className="mt-5 h-2 rounded-full bg-neutral-800">
+              <div className="mt-5 h-2 rounded-full bg-[var(--card-soft)]">
                 <div
                   className="h-2 w-2/3 rounded-full"
                   style={{ backgroundColor: form.primaryColor }}
@@ -446,14 +502,14 @@ export default function TenantSettingsPage() {
               </div>
             </div>
 
-            <p className="mt-4 break-all text-xs text-neutral-500">
+            <p className="mt-4 break-all text-xs text-white">
               {publicUrl}
             </p>
           </div>
 
           <button
             disabled={saving}
-            className="w-full rounded-xl bg-white py-3 font-medium text-black disabled:opacity-60"
+            className="w-full rounded-xl bg-brand py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60"
           >
             {saving ? "Guardando..." : "Guardar configuración"}
           </button>

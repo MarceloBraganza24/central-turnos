@@ -133,6 +133,17 @@ const AppointmentSchema = new Schema(
       unique: true,
       index: true,
     },
+    source: {
+      type: String,
+      enum: ["public", "manual"],
+      default: "public",
+    },
+
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
   },
   {
     timestamps: true,

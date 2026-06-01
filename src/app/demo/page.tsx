@@ -25,17 +25,17 @@ export default function DemoPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl">
-        <Link href="/" className="text-sm text-[var(--muted)] underline">
+        <Link href="/" className="text-sm text-brand underline">
           Volver al inicio
         </Link>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.8fr]">
           <div className="premium-card premium-gradient rounded-3xl p-8">
-            <p className="inline-flex rounded-full border border-brand/30 bg-brand/10 px-4 py-2 text-sm text-brand">
+            <p className="inline-flex rounded-full border border-brand/30 bg-brand/10 px-4 py-2 text-sm text-white! text-brand">
               Demo interactiva
             </p>
 
-            <h1 className="mt-5 text-4xl font-bold md:text-5xl">
+            <h1 className="mt-5 text-4xl font-bold md:text-5xl text-white">
               Probá cómo reserva un cliente.
             </h1>
 
@@ -51,7 +51,7 @@ export default function DemoPage() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-neutral-500">Estética / bienestar</p>
+                  <p className="text-sm text-[var(--muted)]">Estética / bienestar</p>
                   <h2 className="text-2xl font-bold">Espacio Demo</h2>
                   <p className="mt-2 text-sm text-[var(--muted)]">
                     Servicio de ejemplo para mostrar cómo una persona reserva un turno online sin escribir por WhatsApp.
@@ -61,17 +61,17 @@ export default function DemoPage() {
 
               <div className="mt-6 grid gap-4 md:grid-cols-3">
                 <div className="rounded-2xl bg-[var(--card)] p-4">
-                  <p className="text-sm text-neutral-500">Valor</p>
+                  <p className="text-sm text-[var(--muted)]">Valor</p>
                   <p className="mt-1 text-xl font-bold">$12.000</p>
                 </div>
 
                 <div className="rounded-2xl bg-[var(--card)] p-4">
-                  <p className="text-sm text-neutral-500">Duración</p>
+                  <p className="text-sm text-[var(--muted)]">Duración</p>
                   <p className="mt-1 text-xl font-bold">30 min</p>
                 </div>
 
                 <div className="rounded-2xl bg-[var(--card)] p-4">
-                  <p className="text-sm text-neutral-500">Modalidad</p>
+                  <p className="text-sm text-[var(--muted)]">Modalidad</p>
                   <p className="mt-1 text-xl font-bold">Presencial</p>
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function DemoPage() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full rounded-xl border border-neutral-700 bg-[var(--card)] px-4 py-3"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3"
                   />
                 </div>
 
@@ -107,7 +107,7 @@ export default function DemoPage() {
                         className={`rounded-xl border px-4 py-3 text-sm transition ${
                           slot === item
                             ? "border-brand bg-brand text-[var(--foreground)]"
-                            : "border-neutral-700 bg-[var(--card)] text-[var(--foreground)] hover:bg-neutral-800"
+                            : "border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--card-soft)]"
                         }`}
                       >
                         {item}
@@ -120,19 +120,19 @@ export default function DemoPage() {
                   <input
                     value="Cliente Demo"
                     readOnly
-                    className="rounded-xl border border-neutral-700 bg-[var(--card)] px-4 py-3 text-neutral-300"
+                    className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-neutral-300"
                   />
 
                   <input
                     value="5492926000000"
                     readOnly
-                    className="rounded-xl border border-neutral-700 bg-[var(--card)] px-4 py-3 text-neutral-300"
+                    className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-neutral-300"
                   />
                 </div>
 
                 <button
                   onClick={handleConfirm}
-                  className="mt-6 w-full rounded-xl bg-brand py-3 font-medium text-[var(--foreground)] transition hover:bg-brand-hover"
+                  className="mt-6 w-full rounded-xl bg-brand py-3 font-medium text-white transition hover:bg-brand-hover"
                 >
                   Confirmar reserva demo
                 </button>
@@ -143,7 +143,7 @@ export default function DemoPage() {
                   ✓
                 </div>
 
-                <h3 className="mt-5 text-2xl font-bold">
+                <h3 className="mt-5 text-2xl font-bold text-white">
                   Reserva demo confirmada
                 </h3>
 
@@ -153,7 +153,7 @@ export default function DemoPage() {
                 </p>
 
                 <div className="mt-5 rounded-2xl bg-[var(--background)] p-5">
-                  <p className="text-sm text-neutral-500">Detalle</p>
+                  <p className="text-sm text-[var(--muted)]">Detalle</p>
                   <p className="mt-2 font-medium">Lic. Natalia Demo</p>
                   <p className="text-sm text-[var(--muted)]">
                     {date} · {slot}
@@ -166,7 +166,7 @@ export default function DemoPage() {
                     setDate("");
                     setSlot("");
                   }}
-                  className="mt-5 rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)] hover:bg-[var(--card)]"
+                  className="mt-5 rounded-xl border border-[var(--border)] px-5 py-3 font-medium text-white hover:bg-[var(--card)] hover:text-black"
                 >
                   Probar de nuevo
                 </button>
@@ -176,8 +176,8 @@ export default function DemoPage() {
 
           <aside className="space-y-5">
             <FadeIn delay={0.1}>
-              <div className="premium-card rounded-3xl p-6">
-                <h2 className="text-xl font-bold">Qué pasa detrás</h2>
+              <div className="premium-card premium-card-hover premium-gradient rounded-3xl p-6">
+                <h2 className="text-xl font-bold text-white">Qué pasa detrás</h2>
 
                 <div className="mt-5 space-y-4">
                   <div className="rounded-2xl bg-[var(--background)] p-4">
@@ -205,10 +205,10 @@ export default function DemoPage() {
             </FadeIn>
 
             <div className="premium-card premium-gradient rounded-3xl p-6">
-              <h2 className="text-xl font-bold">Vista profesional</h2>
+              <h2 className="text-xl font-bold text-white">Vista profesional</h2>
 
               <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
-                <p className="text-sm text-neutral-500">Calendario</p>
+                <p className="text-sm text-[var(--muted)]">Calendario</p>
 
                 <div className="mt-4 space-y-3">
                   <div className="rounded-xl border border-brand/30 bg-brand/10 p-3">
@@ -227,7 +227,7 @@ export default function DemoPage() {
 
               <Link
                 href="/register"
-                className="mt-6 block rounded-xl bg-brand px-5 py-3 text-center font-medium text-black hover:bg-brand-hover"
+                className="mt-6 block rounded-xl bg-brand px-5 py-3 text-center font-medium text-white hover:bg-brand-hover"
               >
                 Crear cuenta gratis
               </Link>

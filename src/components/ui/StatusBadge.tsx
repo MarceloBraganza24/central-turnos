@@ -21,7 +21,7 @@ const appointmentLabels = {
 };
 
 const paymentStyles = {
-  unpaid: "bg-[var(--card)] text-[var(--muted)] border-neutral-700",
+  unpaid: "bg-[var(--card)] text-[var(--muted)] border-[var(--border)]",
   pending: "bg-yellow-950 text-yellow-400 border-yellow-900",
   paid: "bg-green-950 text-green-400 border-green-900",
   failed: "bg-red-950 text-red-400 border-red-900",

@@ -127,11 +127,11 @@ export default function OnboardingPage() {
   return (
     <section className="max-w-5xl text-[var(--foreground)]">
       <div className="premium-card premium-gradient rounded-3xl p-8">
-        <p className="inline-flex rounded-full border border-neutral-700 px-4 py-2 text-sm text-neutral-300">
+        <p className="inline-flex rounded-full border border-[var(--border)] px-4 py-2 text-sm text-neutral-300">
           Primeros pasos
         </p>
 
-        <h1 className="mt-5 text-4xl font-bold">
+        <h1 className="mt-5 text-4xl font-bold text-white">
           Configurá tu cuenta profesional
         </h1>
 
@@ -162,7 +162,7 @@ export default function OnboardingPage() {
           <span className="font-semibold">{data.progress}%</span>
         </div>
 
-        <div className="mt-3 h-3 overflow-hidden rounded-full bg-neutral-800">
+        <div className="mt-3 h-3 overflow-hidden rounded-full bg-[var(--card-soft)]">
           <div
             className="h-full rounded-full bg-green-500 transition-all"
             style={{
@@ -179,20 +179,20 @@ export default function OnboardingPage() {
           return (
             <div
               key={step.key}
-              className="premium-card premium-card-hover grid gap-4 rounded-2xl p-5 md:grid-cols-[auto_1fr_auto]"
+              className="premium-card premium-gradient premium-card-hover grid gap-4 rounded-2xl p-5 md:grid-cols-[auto_1fr_auto]"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--background)]">
                 {isDone ? (
                   <CheckCircle className="text-green-400" size={24} />
                 ) : (
-                  <Circle className="text-neutral-500" size={24} />
+                  <Circle className="text-[var(--muted)]" size={24} />
                 )}
               </div>
 
               <div>
-                <p className="text-sm text-neutral-500">Paso {index + 1}</p>
+                <p className="text-sm text-[var(--muted)]">Paso {index + 1}</p>
 
-                <h2 className="mt-1 text-lg font-semibold">
+                <h2 className="mt-1 text-lg font-semibold text-white">
                   {step.title}
                 </h2>
 
@@ -206,7 +206,7 @@ export default function OnboardingPage() {
                   href={step.href}
                   className={`rounded-xl px-5 py-3 text-sm font-medium transition ${
                     isDone
-                      ? "border border-neutral-700 text-[var(--foreground)] hover:bg-neutral-800"
+                      ? "border border-[var(--border)] text-white hover:bg-[var(--card-soft)] hover:text-black"
                       : "bg-brand text-[var(--foreground)] hover:bg-brand-hover"
                   }`}
                 >
@@ -222,14 +222,14 @@ export default function OnboardingPage() {
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/dashboard"
-            className="rounded-xl bg-white px-6 py-3 text-center font-medium text-black"
+            className="rounded-xl bg-brand text-white px-6 py-3 text-center font-medium hover:bg-brand-hover"
           >
             Ir al dashboard
           </Link>
 
           <Link
             href="/dashboard/calendar"
-            className="rounded-xl border border-neutral-700 px-6 py-3 text-center font-medium text-[var(--foreground)]"
+            className="rounded-xl border border-[var(--border)] bg-brand text-white hover:bg-brand-hover px-6 py-3 text-center font-medium text-[var(--foreground)]"
           >
             Ver calendario
           </Link>

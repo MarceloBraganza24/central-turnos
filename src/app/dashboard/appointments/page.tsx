@@ -140,37 +140,37 @@ export default function DashboardAppointmentsPage() {
                 <div className="premium-card premium-card-hover premium-gradient rounded-3xl p-6">
                   <div className="grid gap-6 md:grid-cols-[1.2fr_1.2fr_1fr_1fr]">
                     <div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-white">
                         Fecha y hora
                       </p>
 
-                      <p className="mt-1 font-medium">
+                      <p className="mt-1 font-medium text-white">
                         {appointment.appointmentDate}
                       </p>
 
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-white">
                         {appointment.startTime} a{" "}
                         {appointment.endTime}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-white">
                         Cliente
                       </p>
 
-                      <p className="mt-1 font-medium">
+                      <p className="mt-1 font-medium text-white">
                         {
                           appointment.client?.fullName
                         }
                       </p>
 
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-white">
                         {appointment.client?.phone}
                       </p>
 
                       {appointment.client?.email && (
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm text-white">
                           {
                             appointment.client.email
                           }
@@ -179,7 +179,7 @@ export default function DashboardAppointmentsPage() {
                     </div>
 
                     <div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-white">
                         Estado
                       </p>
 
@@ -201,7 +201,7 @@ export default function DashboardAppointmentsPage() {
                       </div>
 
                       {appointment.notes && (
-                        <p className="mt-3 text-sm text-[var(--muted)]">
+                        <p className="mt-3 text-sm text-white">
                           {appointment.notes}
                         </p>
                       )}
@@ -226,7 +226,7 @@ export default function DashboardAppointmentsPage() {
                     </div>
 
                     <div>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-white">
                         Acciones
                       </p>
 

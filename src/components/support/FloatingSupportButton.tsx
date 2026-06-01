@@ -16,14 +16,29 @@ export default function FloatingSupportButton() {
               Soporte Central Turnos
             </p>
 
-            <h3 className="mt-1 text-lg font-semibold">
+            <h3 className="mt-1 text-lg font-semibold text-white">
               ¿Necesitás ayuda?
             </h3>
           </div>
 
           <div className="space-y-3 p-4">
+            <Link
+              href="/"
+              className="flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 transition hover:border-brand/40"
+            >
+              <div>
+                <p className="font-medium text-[var(--foreground)]">
+                  Ir al inicio
+                </p>
+
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  Volver
+                </p>
+              </div>
+            </Link>
+
             <a
-              href="https://wa.me/5490000000000"
+              href="https://wa.me/5492926459172"
               target="_blank"
               className="flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 transition hover:border-brand/40"
             >
@@ -39,7 +54,7 @@ export default function FloatingSupportButton() {
             </a>
 
             <a
-              href="mailto:soporte@centralturnos.com"
+              href="mailto:marceebraga@gmail.com"
               className="flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 transition hover:border-brand/40"
             >
               <div>

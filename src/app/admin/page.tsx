@@ -78,7 +78,7 @@ export default function AdminPage() {
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <Link
             href="/admin/professionals"
-            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-neutral-800"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-[var(--card-soft)]"
           >
             <h2 className="text-lg font-semibold">Profesionales</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
@@ -88,7 +88,7 @@ export default function AdminPage() {
 
           <Link
             href="/admin/categories"
-            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-neutral-800"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-[var(--card-soft)]"
           >
             <h2 className="text-lg font-semibold">Categorías</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
@@ -98,7 +98,7 @@ export default function AdminPage() {
 
           <Link
             href="/admin/appointments"
-            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-neutral-800"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-[var(--card-soft)]"
           >
             <h2 className="text-lg font-semibold">Turnos</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
@@ -108,7 +108,7 @@ export default function AdminPage() {
 
           <Link
             href="/admin/audit-logs"
-            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-neutral-800"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 transition hover:bg-[var(--card-soft)]"
           >
             <h2 className="text-lg font-semibold">Auditoría</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">

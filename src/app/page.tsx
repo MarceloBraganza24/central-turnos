@@ -116,14 +116,14 @@ export default function HomePage() {
           <nav className="flex items-center gap-3">
             <Link
               href="/login"
-              className="rounded-xl border border-neutral-700 px-4 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--card)]"
+              className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--card)]"
             >
               Iniciar sesión
             </Link>
 
             <Link
               href="/register"
-              className="rounded-xl bg-brand px-4 py-2 text-sm font-medium text-black transition hover:bg-neutral-200"
+              className="rounded-xl bg-brand px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-hover"
             >
               Crear cuenta gratis
             </Link>
@@ -133,7 +133,7 @@ export default function HomePage() {
 
       <section className="mx-auto flex min-h-[calc(100vh-73px)] max-w-7xl flex-col justify-center px-6 py-20">
         <div className="max-w-4xl">
-          <p className="inline-flex rounded-full border border-neutral-700 px-4 py-2 text-sm text-neutral-300">
+          <p className="inline-flex rounded-full border border-[var(--border)] px-4 py-2 text-sm text-black! text-neutral-300">
             Sistema de turnos para negocios, oficios y profesionales
           </p>
 
@@ -148,17 +148,10 @@ export default function HomePage() {
             gestionar reservas, clientes y horarios desde un solo lugar.
           </p>
 
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="/register"
-              className="rounded-xl bg-brand px-6 py-3 text-center font-medium text-black transition hover:bg-neutral-200"
-            >
-              Crear cuenta gratis
-            </Link>
-
+          <div className="mt-8 flex justify-center">
             <Link
               href="/turnos"
-              className="rounded-xl border border-neutral-700 px-6 py-3 text-center font-medium text-[var(--foreground)] transition hover:bg-[var(--card)]"
+              className="w-full max-w-xs rounded-xl bg-brand px-6 py-3 text-center font-medium text-white transition hover:bg-brand-hover"
             >
               Buscar profesionales
             </Link>
@@ -166,12 +159,12 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16 grid gap-4 md:grid-cols-3">
-          {features.slice(0, 3).map((feature) => (
+          {features.slice(0, 6).map((feature) => (
             <div
               key={feature}
               className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
             >
-              <h2 className="font-semibold">{feature}</h2>
+              <h2 className="font-semibold text-white!">{feature}</h2>
               <p className="mt-2 text-sm text-[var(--muted)]">
                 Una función pensada para ahorrar tiempo, reducir olvidos y
                 ordenar la atención.
@@ -184,7 +177,7 @@ export default function HomePage() {
       <section className="border-t border-neutral-900 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm text-neutral-500">Casos de uso</p>
+            <p className="text-sm text-[var(--muted)]">Casos de uso</p>
 
             <h2 className="mt-3 text-4xl font-bold">
               Funciona para cualquier negocio que trabaje con reservas.
@@ -202,7 +195,7 @@ export default function HomePage() {
                 key={item}
                 className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
-                <h3 className="text-xl font-semibold">{item}</h3>
+                <h3 className="text-xl font-semibold text-white!">{item}</h3>
 
                 <p className="mt-2 text-sm text-[var(--muted)]">
                   Reservas online, historial de clientes y agenda ordenada.
@@ -217,7 +210,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="text-sm text-neutral-500">Cómo funciona</p>
+              <p className="text-sm text-[var(--muted)]">Cómo funciona</p>
 
               <h2 className="mt-3 text-4xl font-bold">
                 Empezá a recibir reservas en menos de 10 minutos.
@@ -233,13 +226,13 @@ export default function HomePage() {
                 {steps.map((step, index) => (
                   <div
                     key={step.title}
-                    className="premium-card premium-card-hover rounded-3xl p-5"
+                    className="premium-card premium-card-hover premium-gradient rounded-3xl p-5"
                   >
                     <p className="text-sm text-brand">Paso {index + 1}</p>
-                    <h3 className="mt-2 text-xl font-semibold">
+                    <h3 className="mt-2 text-xl font-semibold text-white!">
                       {step.title}
                     </h3>
-                    <p className="mt-2 text-sm text-[var(--muted)]">
+                    <p className="mt-2 text-sm text-[var(--muted)] ">
                       {step.text}
                     </p>
                   </div>
@@ -249,9 +242,9 @@ export default function HomePage() {
 
             <div className="space-y-6">
               <div className="premium-card premium-gradient rounded-3xl p-6">
-                <p className="text-sm text-neutral-500">Demo integrada</p>
+                <p className="text-sm text-[var(--muted)]">Demo integrada</p>
 
-                <h3 className="mt-2 text-2xl font-bold">
+                <h3 className="mt-2 text-2xl font-bold text-white!">
                   Así se ve el flujo para tus clientes.
                 </h3>
 
@@ -264,7 +257,7 @@ export default function HomePage() {
                   ].map((item) => (
                     <div
                       key={item}
-                      className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-neutral-300"
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm text-black"
                     >
                       ✓ {item}
                     </div>
@@ -274,14 +267,14 @@ export default function HomePage() {
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/turnos"
-                    className="rounded-xl bg-brand px-5 py-3 text-center font-medium text-black"
+                    className="rounded-xl bg-brand px-5 py-3 text-center font-medium text-white"
                   >
                     Ver búsqueda pública
                   </Link>
 
                   <Link
                     href="/demo"
-                    className="rounded-xl border border-neutral-700 px-5 py-3 text-center font-medium text-[var(--foreground)] hover:bg-[var(--card)]"
+                    className="rounded-xl border border-[var(--border)] px-5 py-3 text-center font-medium text-white! hover:bg-[var(--card)] hover:text-black!"
                   >
                     Ver demo interactiva
                   </Link>
@@ -290,7 +283,7 @@ export default function HomePage() {
 
               <div className="premium-card premium-gradient rounded-3xl p-6">
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm text-neutral-500">Dashboard</p>
+                  <p className="text-sm text-[var(--muted)]">Dashboard</p>
 
                   <h3 className="mt-2 text-2xl font-bold">
                     Turnos de esta semana
@@ -302,14 +295,14 @@ export default function HomePage() {
                         key={day}
                         className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4"
                       >
-                        <p className="text-sm text-neutral-500">{day}</p>
+                        <p className="text-sm text-[var(--muted)]">{day}</p>
 
                         <div className="mt-4 space-y-3">
-                          <div className="rounded-xl bg-neutral-800 p-3 text-sm">
+                          <div className="rounded-xl bg-[var(--card-soft)] p-3 text-sm">
                             09:00 · Juan
                           </div>
 
-                          <div className="rounded-xl bg-neutral-800 p-3 text-sm">
+                          <div className="rounded-xl bg-[var(--card-soft)] p-3 text-sm">
                             11:30 · María
                           </div>
                         </div>
@@ -319,7 +312,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm text-neutral-500">Reserva pública</p>
+                  <p className="text-sm text-[var(--muted)]">Reserva pública</p>
 
                   <h3 className="mt-2 text-xl font-semibold">
                     Elegir fecha → elegir horario → confirmar turno
@@ -347,7 +340,7 @@ export default function HomePage() {
               key={label}
               className="premium-card premium-gradient rounded-3xl p-6 text-center"
             >
-              <p className="text-4xl font-bold">{number}</p>
+              <p className="text-4xl font-bold text-white">{number}</p>
               <p className="mt-2 text-sm text-[var(--muted)]">{label}</p>
             </div>
           ))}
@@ -357,7 +350,7 @@ export default function HomePage() {
       <section className="border-t border-neutral-900 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm text-neutral-500">Planes</p>
+            <p className="text-sm text-[var(--muted)]">Planes</p>
 
             <h2 className="mt-3 text-4xl font-bold">
               Empezá gratis y escalá cuando lo necesites.
@@ -403,8 +396,8 @@ export default function HomePage() {
                   href="/register"
                   className={`mt-8 block rounded-xl px-5 py-3 text-center font-medium ${
                     plan.highlighted
-                      ? "bg-black text-[var(--foreground)]"
-                      : "bg-brand text-black"
+                      ? "bg-[var(--card)] text-[var(--foreground)] hover:bg-brand-hover hover:text-white"
+                      : "bg-brand text-white hover:bg-brand-hover"
                   }`}
                 >
                   {plan.cta}
@@ -413,7 +406,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <p className="mt-6 text-sm text-neutral-500">
+          <p className="mt-6 text-sm text-[var(--muted)]">
             Los precios pueden ajustarse según funcionalidades, rubro o etapa de
             lanzamiento.
           </p>
@@ -423,7 +416,7 @@ export default function HomePage() {
       <section className="border-t border-neutral-900 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm text-neutral-500">Testimonios</p>
+            <p className="text-sm text-[var(--muted)]">Testimonios</p>
 
             <h2 className="mt-3 text-4xl font-bold">
               Diseñado para resolver problemas cotidianos.
@@ -436,9 +429,9 @@ export default function HomePage() {
                 key={item.name}
                 className="premium-card premium-card-hover premium-gradient rounded-3xl p-6"
               >
-                <p className="text-neutral-300">“{item.quote}”</p>
+                <p className="text-white">“{item.quote}”</p>
 
-                <p className="mt-5 text-sm font-medium text-neutral-500">
+                <p className="mt-5 text-sm font-medium text-[var(--muted)]">
                   {item.name}
                 </p>
               </div>
@@ -453,7 +446,7 @@ export default function HomePage() {
             Empezá a recibir turnos online esta semana.
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-neutral-600">
+          <p className="mx-auto mt-4 max-w-2xl text-white">
             Creá tu cuenta, completá tu perfil, cargá tus horarios y compartí tu
             link público con tus clientes.
           </p>
@@ -461,14 +454,14 @@ export default function HomePage() {
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/register"
-              className="rounded-xl bg-black px-6 py-3 font-medium text-[var(--foreground)]"
+              className="rounded-xl bg-[var(--card)] px-6 py-3 font-medium text-[var(--foreground)]"
             >
               Crear cuenta gratis
             </Link>
 
             <Link
               href="/turnos"
-              className="rounded-xl border border-neutral-300 px-6 py-3 font-medium text-black"
+              className="rounded-xl bg-[var(--card)] px-6 py-3 font-medium text-[var(--foreground)]"
             >
               Buscar profesionales
             </Link>

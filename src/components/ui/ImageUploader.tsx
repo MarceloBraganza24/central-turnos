@@ -81,7 +81,7 @@ export default function ImageUploader({
         type="button"
         disabled={uploading}
         onClick={() => inputRef.current?.click()}
-        className="rounded-xl border border-neutral-700 px-4 py-3 text-sm text-neutral-200 hover:bg-[var(--card)] disabled:opacity-60"
+        className="rounded-xl border border-black px-4 py-3 text-sm text-blaack bg-brand text-white hover:bg-brand-hover disabled:opacity-60"
       >
         {uploading ? "Subiendo..." : label}
       </button>

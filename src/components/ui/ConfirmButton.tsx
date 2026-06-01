@@ -29,7 +29,7 @@ export default function ConfirmButton({
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--card)]/70 p-6">
           <div className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--background)] p-6 text-[var(--foreground)]">
             <h2 className="text-xl font-bold">{confirmTitle}</h2>
 
@@ -38,7 +38,7 @@ export default function ConfirmButton({
             <div className="mt-6 flex gap-3">
               <button
                 onClick={() => setOpen(false)}
-                className="min-h-12 flex-1 rounded-xl border border-neutral-700 px-5 py-3 font-medium text-[var(--foreground)]"
+                className="min-h-12 flex-1 rounded-xl border border-[var(--border)] px-5 py-3 font-medium text-[var(--foreground)]"
               >
                 Cancelar
               </button>

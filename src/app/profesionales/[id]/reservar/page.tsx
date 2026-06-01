@@ -160,14 +160,14 @@ export default function ReservarTurnoPage() {
         <h1 className="text-3xl font-bold">Reservar turno</h1>
 
         <div>
-          <label className="mb-2 block text-sm text-neutral-300">
+          <label className="mb-2 block text-sm text-black">
             Servicio
           </label>
 
           <select
             value={selectedServiceId}
             onChange={(e) => setSelectedServiceId(e.target.value)}
-            className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+            className="w-full rounded-xl border border-brand bg-[var(--background)] px-4 py-3"
           >
             <option value="">Seleccionar servicio</option>
 
@@ -179,7 +179,7 @@ export default function ReservarTurnoPage() {
           </select>
         </div>
 
-        <p className="mt-2 text-[var(--muted)]">
+        <p className="mt-2 text-black">
           Elegí fecha, horario y completá tus datos para confirmar la reserva.
         </p>
 
@@ -197,7 +197,7 @@ export default function ReservarTurnoPage() {
                 min={today}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
               />
             </div>
 
@@ -228,7 +228,7 @@ export default function ReservarTurnoPage() {
                       className={`rounded-xl border px-4 py-3 text-sm ${
                         selectedSlot === slot
                           ? "border-brand bg-brand text-[var(--foreground)]"
-                          : "border-neutral-700 bg-[var(--background)] text-[var(--foreground)]"
+                          : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
                       }`}
                     >
                       {slot}
@@ -249,7 +249,7 @@ export default function ReservarTurnoPage() {
                   onChange={(e) =>
                     setForm({ ...form, fullName: e.target.value })
                   }
-                  className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   placeholder="Tu nombre"
                 />
               </div>
@@ -261,7 +261,7 @@ export default function ReservarTurnoPage() {
                 <input
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   placeholder="Ej: 5492926..."
                 />
               </div>
@@ -276,7 +276,7 @@ export default function ReservarTurnoPage() {
                 autoComplete="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="tu@email.com"
               />
             </div>
@@ -288,7 +288,7 @@ export default function ReservarTurnoPage() {
               <textarea
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="min-h-28 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                className="min-h-28 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                 placeholder="Ej: primera consulta, control, dolor, objetivo, etc."
               />
             </div>
@@ -304,7 +304,7 @@ export default function ReservarTurnoPage() {
                 onChange={(e) =>
                   setForm({ ...form, depositAmount: e.target.value })
                 }
-                className="w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3 disabled:opacity-60"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 disabled:opacity-60"
                 placeholder="Ej: 3000"
               />
               {tenantConfig?.requiresDeposit ? (
@@ -312,7 +312,7 @@ export default function ReservarTurnoPage() {
                   Este profesional requiere una seña de ${tenantConfig.defaultDepositAmount} para reservar.
                 </p>
               ) : (
-                <p className="mt-2 text-xs text-neutral-500">
+                <p className="mt-2 text-xs text-[var(--muted)]">
                   Si cargás una seña, el turno queda pendiente hasta que se pague.
                 </p>
               )}
@@ -320,30 +320,30 @@ export default function ReservarTurnoPage() {
           </div>
 
           <aside className="h-fit premium-card premium-card-hover premium-gradient rounded-3xl p-6">
-            <h2 className="text-xl font-bold">Resumen</h2>
+            <h2 className="text-xl font-bold text-white">Resumen</h2>
 
             <div className="mt-5 space-y-4 text-sm">
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-neutral-500">Fecha</p>
+                <p className="text-[var(--muted)]">Fecha</p>
                 <p className="mt-1 font-medium">{date || "Sin seleccionar"}</p>
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-neutral-500">Horario</p>
+                <p className="text-[var(--muted)]">Horario</p>
                 <p className="mt-1 font-medium">
                   {selectedSlot || "Sin seleccionar"}
                 </p>
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-neutral-500">Cliente</p>
+                <p className="text-[var(--muted)]">Cliente</p>
                 <p className="mt-1 font-medium">
                   {form.fullName || "Sin completar"}
                 </p>
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-neutral-500">Seña</p>
+                <p className="text-[var(--muted)]">Seña</p>
                 <p className="mt-1 font-medium">
                   ${Number(form.depositAmount) || 0}
                 </p>
@@ -353,7 +353,7 @@ export default function ReservarTurnoPage() {
           <button
             type="submit"
             disabled={saving}
-            className="mt-6 hidden w-full rounded-xl bg-brand px-5 py-3 font-medium text-[var(--foreground)] hover:bg-brand-hover disabled:opacity-60 lg:block"
+            className="mt-6 hidden w-full rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand-hover disabled:opacity-60 lg:block"
           >
             {saving ? "Reservando..." : "Confirmar reserva"}
           </button>

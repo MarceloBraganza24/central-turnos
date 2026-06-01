@@ -19,9 +19,9 @@ export default async function DashboardPage() {
         <OnboardingProgressCard />
 
         <div className="premium-card premium-gradient rounded-3xl p-8">
-          <p className="text-sm text-brand">Central Turnos</p>
+          <p className="text-sm text-white">Central Turnos</p>
 
-          <h1 className="mt-3 text-3xl font-bold">
+          <h1 className="mt-3 text-3xl font-bold text-white">
             Panel principal
           </h1>
 
@@ -34,9 +34,9 @@ export default async function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-3">
           <Link
             href="/dashboard/calendar"
-            className="premium-card premium-card-hover rounded-3xl p-6"
+            className="premium-card premium-gradient premium-card-hover rounded-3xl p-6"
           >
-            <h2 className="text-xl font-semibold">Calendario</h2>
+            <h2 className="text-xl font-semibold text-white">Calendario</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
               Visualizá tus turnos y cambiá estados rápidamente.
             </p>
@@ -44,9 +44,9 @@ export default async function DashboardPage() {
 
           <Link
             href="/dashboard/services"
-            className="premium-card premium-card-hover rounded-3xl p-6"
+            className="premium-card premium-gradient premium-card-hover rounded-3xl p-6"
           >
-            <h2 className="text-xl font-semibold">Servicios</h2>
+            <h2 className="text-xl font-semibold text-white">Servicios</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
               Cargá precios, duración y señas por servicio.
             </p>
@@ -54,9 +54,9 @@ export default async function DashboardPage() {
 
           <Link
             href="/dashboard/availability"
-            className="premium-card premium-card-hover rounded-3xl p-6"
+            className="premium-card premium-gradient premium-card-hover rounded-3xl p-6"
           >
-            <h2 className="text-xl font-semibold">Horarios</h2>
+            <h2 className="text-xl font-semibold text-white">Horarios</h2>
             <p className="mt-2 text-sm text-[var(--muted)]">
               Definí cuándo pueden reservar tus clientes.
             </p>

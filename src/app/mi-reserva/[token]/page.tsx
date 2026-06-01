@@ -140,14 +140,14 @@ Estado: ${getStatusLabel(appointment.status)}`
   return (
     <main className="min-h-screen bg-[var(--background)] px-6 py-16 text-[var(--foreground)]">
       <section className="mx-auto max-w-4xl">
-        <Link href="/" className="text-sm text-[var(--muted)] underline">
+        <Link href="/" className="text-sm text-brand underline">
           Volver al inicio
         </Link>
 
         <div className="premium-card premium-gradient mt-6 rounded-3xl p-8">
-          <p className="text-sm text-brand">Central Turnos</p>
+          <p className="text-sm text-white">Central Turnos</p>
 
-          <h1 className="mt-4 text-4xl font-bold">
+          <h1 className="mt-4 text-4xl font-bold text-white">
             Detalle de tu reserva
           </h1>
 
@@ -158,14 +158,14 @@ Estado: ${getStatusLabel(appointment.status)}`
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl bg-[var(--background)] p-5">
-              <p className="text-sm text-neutral-500">Estado</p>
+              <p className="text-sm text-[var(--muted)]">Estado</p>
               <p className="mt-1 text-2xl font-bold">
                 {getStatusLabel(appointment.status)}
               </p>
             </div>
 
             <div className="rounded-2xl bg-[var(--background)] p-5">
-              <p className="text-sm text-neutral-500">Pago</p>
+              <p className="text-sm text-[var(--muted)]">Pago</p>
               <p className="mt-1 text-2xl font-bold">
                 {getPaymentLabel(appointment.paymentStatus)}
               </p>
@@ -174,12 +174,12 @@ Estado: ${getStatusLabel(appointment.status)}`
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="premium-card rounded-3xl p-6">
-            <h2 className="text-2xl font-bold">Resumen del turno</h2>
+          <section className="premium-card premium-gradient rounded-3xl p-6">
+            <h2 className="text-2xl font-bold text-white">Resumen del turno</h2>
 
             <div className="mt-6 space-y-4">
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-sm text-neutral-500">Profesional</p>
+                <p className="text-lg text-black">Profesional</p>
                 <p className="mt-1 font-medium">
                   {appointment.professional?.displayName || "-"}
                 </p>
@@ -187,14 +187,14 @@ Estado: ${getStatusLabel(appointment.status)}`
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-2xl bg-[var(--background)] p-4">
-                  <p className="text-sm text-neutral-500">Fecha</p>
+                  <p className="text-lg text-black">Fecha</p>
                   <p className="mt-1 font-medium">
                     {appointment.appointmentDate}
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-[var(--background)] p-4">
-                  <p className="text-sm text-neutral-500">Horario</p>
+                  <p className="text-lg text-black">Horario</p>
                   <p className="mt-1 font-medium">
                     {appointment.startTime} a {appointment.endTime}
                   </p>
@@ -202,19 +202,19 @@ Estado: ${getStatusLabel(appointment.status)}`
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-sm text-neutral-500">Servicio</p>
+                <p className="text-lg text-black">Servicio</p>
                 <p className="mt-1 font-medium">
                   {appointment.service?.name || "Turno"}
                 </p>
               </div>
 
               <div className="rounded-2xl bg-[var(--background)] p-4">
-                <p className="text-sm text-neutral-500">Cliente</p>
+                <p className="text-lg text-black">Cliente</p>
                 <p className="mt-1 font-medium">
                   {appointment.client?.fullName || "-"}
                 </p>
                 {appointment.client?.phone && (
-                  <p className="mt-1 text-sm text-[var(--muted)]">
+                  <p className="mt-1 text-sm text-black">
                     {appointment.client.phone}
                   </p>
                 )}
@@ -222,8 +222,8 @@ Estado: ${getStatusLabel(appointment.status)}`
 
               {appointment.notes && (
                 <div className="rounded-2xl bg-[var(--background)] p-4">
-                  <p className="text-sm text-neutral-500">Comentario</p>
-                  <p className="mt-1 text-sm text-neutral-300">
+                  <p className="text-lg text-black">Comentario</p>
+                  <p className="mt-1 text-sm text-black">
                     {appointment.notes}
                   </p>
                 </div>
@@ -232,8 +232,8 @@ Estado: ${getStatusLabel(appointment.status)}`
           </section>
 
           <aside className="space-y-4">
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-bold">Acciones</h2>
+            <div className="premium-card premium-gradient rounded-3xl p-6">
+              <h2 className="text-xl font-bold text-white">Acciones</h2>
 
               <div className="mt-5 space-y-3">
                 <a
@@ -249,7 +249,7 @@ Estado: ${getStatusLabel(appointment.status)}`
                   href={`https://wa.me/?text=${whatsappText}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="block rounded-xl border border-neutral-700 px-5 py-3 text-center font-medium text-[var(--foreground)] hover:bg-[var(--card)]"
+                  className="block rounded-xl border border-[var(--border)] px-5 py-3 text-center font-medium text-white hover:bg-[var(--card)] hover:text-black"
                 >
                   Compartir por WhatsApp
                 </a>
@@ -259,7 +259,7 @@ Estado: ${getStatusLabel(appointment.status)}`
                     href={`https://wa.me/${appointment.professional.phone}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="block rounded-xl border border-neutral-700 px-5 py-3 text-center font-medium text-[var(--foreground)] hover:bg-[var(--card)]"
+                    className="block rounded-xl border border-[var(--border)] px-5 py-3 text-center font-medium text-white hover:bg-[var(--card)] hover:text-black"
                   >
                     Escribir al profesional
                   </a>
@@ -267,8 +267,8 @@ Estado: ${getStatusLabel(appointment.status)}`
               </div>
             </div>
 
-            <div className="premium-card rounded-3xl p-6">
-              <h2 className="text-xl font-bold">Ubicación</h2>
+            <div className="premium-card premium-gradient rounded-3xl p-6">
+              <h2 className="text-xl font-bold text-white">Ubicación</h2>
 
               <p className="mt-3 text-sm text-[var(--muted)]">
                 {[
@@ -282,8 +282,8 @@ Estado: ${getStatusLabel(appointment.status)}`
             </div>
 
             {appointment.tenant?.cancellationPolicy && (
-              <div className="premium-card rounded-3xl p-6">
-                <h2 className="text-xl font-bold">
+              <div className="premium-card premium-gradient rounded-3xl p-6">
+                <h2 className="text-xl font-bold text-white">
                   Política de cancelación
                 </h2>
 

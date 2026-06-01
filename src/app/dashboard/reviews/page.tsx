@@ -86,7 +86,7 @@ export default function DashboardReviewsPage() {
                     {review.comment || "Sin comentario"}
                   </p>
 
-                  <p className="mt-3 text-sm text-neutral-500">
+                  <p className="mt-3 text-sm text-[var(--muted)]">
                     {review.client?.fullName || "Cliente"} ·{" "}
                     {new Date(review.createdAt).toLocaleDateString("es-AR")}
                   </p>
@@ -108,7 +108,7 @@ export default function DashboardReviewsPage() {
 
               {review.professionalReply && (
                 <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
-                  <p className="text-sm text-neutral-500">Tu respuesta</p>
+                  <p className="text-sm text-[var(--muted)]">Tu respuesta</p>
                   <p className="mt-2 text-sm text-neutral-300">
                     {review.professionalReply}
                   </p>
@@ -124,7 +124,7 @@ export default function DashboardReviewsPage() {
                       [review._id]: e.target.value,
                     })
                   }
-                  className="min-h-24 w-full rounded-xl border border-neutral-700 bg-[var(--background)] px-4 py-3"
+                  className="min-h-24 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3"
                   placeholder="Responder reseña..."
                 />
 
